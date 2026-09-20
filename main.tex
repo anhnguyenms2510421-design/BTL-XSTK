@@ -1,0 +1,79 @@
+\documentclass[12pt, a4paper]{article}
+
+\input{Package/package.tex}
+\geometry{a4paper, margin=2cm}
+
+
+\begin{document}
+	%Trang trí viền trang bìa
+	\begin{tikzpicture}[remember picture,overlay,inner sep=0,outer sep=0]
+		\draw[blue!70!black,line width=4pt] ([xshift=-1.5cm,yshift=-2cm]current page.north east) coordinate (A)--([xshift=1.5cm,yshift=-2cm]current page.north west) coordinate(B)--([xshift=1.5cm,yshift=2cm]current page.south west) coordinate (C)--([xshift=-1.5cm,yshift=2cm]current page.south east) coordinate(D)--cycle;
+		
+		\draw ([yshift=0.5cm,xshift=-0.5cm]A)-- ([yshift=0.5cm,xshift=0.5cm]B)--
+		([yshift=-0.5cm,xshift=0.5cm]B) --([yshift=-0.5cm,xshift=-0.5cm]B)--([yshift=0.5cm,xshift=-0.5cm]C)--([yshift=0.5cm,xshift=0.5cm]C)--([yshift=-0.5cm,xshift=0.5cm]C)-- ([yshift=-0.5cm,xshift=-0.5cm]D)--([yshift=0.5cm,xshift=-0.5cm]D)--([yshift=0.5cm,xshift=0.5cm]D)--([yshift=-0.5cm,xshift=0.5cm]A)--([yshift=-0.5cm,xshift=-0.5cm]A)--([yshift=0.5cm,xshift=-0.5cm]A);
+		
+		
+		\draw ([yshift=-0.3cm,xshift=0.3cm]A)-- ([yshift=-0.3cm,xshift=-0.3cm]B)--
+		([yshift=0.3cm,xshift=-0.3cm]B) --([yshift=0.3cm,xshift=0.3cm]B)--([yshift=-0.3cm,xshift=0.3cm]C)--([yshift=-0.3cm,xshift=-0.3cm]C)--([yshift=0.3cm,xshift=-0.3cm]C)-- ([yshift=0.3cm,xshift=0.3cm]D)--([yshift=-0.3cm,xshift=0.3cm]D)--([yshift=-0.3cm,xshift=-0.3cm]D)--([yshift=0.3cm,xshift=-0.3cm]A)--([yshift=0.3cm,xshift=0.3cm]A)--([yshift=-0.3cm,xshift=0.3cm]A);
+	\end{tikzpicture}
+	
+	%Trang 1 (trang bìa)
+	\thispagestyle{empty}
+	\begin{center}
+		{
+			\textbf{ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH} \\ [3pt]
+			\textbf{TRƯỜNG ĐẠI HỌC BÁCH KHOA} \\ [3pt]
+			\textbf{KHOA KHOA HỌC ỨNG DỤNG} \\ [3pt]
+		}
+		\begin{tikzpicture}
+			\draw[yshift=-0.3cm, dash pattern=on 3pt off 1pt] (0,0) -- (12,0);
+		\end{tikzpicture}
+	\end{center}
+	
+	\vspace{08pt}
+	
+	\begin{center}
+		\includegraphics[width=2.5in]{Image/logo}
+	\end{center}
+	
+	\begin{center}
+		{\Large \textbf{\MakeUppercase{BÁO CÁO BÀI TẬP LỚN}}} \\ 
+		{\Large \textbf{\MakeUppercase{MÔN: XÁC SUẤT THỐNG KÊ (MT2013)}}} 
+		\rule{16cm}{1pt} % Gạch chân dài 16cm, dày 1pt
+		\\[10pt] % Khoảng cách giữa gạch chân và đề tài
+		{\Large \textbf{\MakeUppercase{ĐỀ TÀI}}}  %Tên đề tài
+	\end{center}
+	
+	\vspace{1cm}
+	
+	\begin{center}
+		\renewcommand{\arraystretch}{1.3}
+		\begin{tabular}{rl}
+			GVHD: & Nguyễn Bá Thi \\
+			Lớp: & A01 \\
+			Nhóm: & 12 \\
+			Danh sách thành viên: & Nguyễn Hoàng Anh - 2510421 \\
+			& Nguyễn Minh Đức - 2510519 \\
+			& Nguyễn Hải Dương - 2510532  \\
+			& Đặng Hoàng Anh - 2510415 \\
+			& Nguyễn Thái  Dương - 2510534 \\
+		\end{tabular}
+	\end{center}
+	%\vspace{0.5cm}
+	\vfill
+	\begin{center}
+		{\footnotesize Tp. Hồ Chí Minh, Tháng 12/2026}
+	\end{center}
+	\pagebreak
+
+\include{Chapter/Chapter_1.tex}
+\include{Chapter/Chapter_2.tex}
+\include{Chapter/Chapter_3.tex}
+\include{Chapter/Chapter_4.tex}
+\include{Chapter/Chapter_5.tex}
+\include{Chapter/Chapter_6.tex}
+\include{Chapter/Chapter_7.tex}
+
+
+
+\end{document}
