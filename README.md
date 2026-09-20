@@ -6,11 +6,21 @@ cd LaTeX_XSTK
 git switch -c [Tên branch] (VD: git switch -c new_branch )
 code .
 
+VD: cd /d D:\VScode\LaTeX 
+    git clone https://github.com/anhnguyen2510421-design/BTL-XSTK.git
+    cd BTL-XSTK
+    git switch -c tv1
+    code .
+
 Sau đó chỉnh sửa code. Khi chỉnh sửa xong, copy-paste:
 
 git add .
 git commit -m "[Tên commit]" (VD: git commit -m "Update Chapter 2" )
 git push -u origin [Tên branch] (VD: git push -u origin new_branch)
+
+VD: git add .
+    git commit -m Update Chapter 2
+    git push -u origin tv1
 
 Sau đó vào Github:
 
