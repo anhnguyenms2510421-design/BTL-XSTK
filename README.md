@@ -1,11 +1,20 @@
-Cách lấy folder:
+
+/********************* Đăng nhâp tài khoản github trên CMD ********/
+
+git config --global user.name "[Tên TK Github]"
+git config --global user.email "[Email đăng ký Github]"
+
+/******************************************************************/
+
+
+/***************** Cách lấy folder và chỉnh sửa *******************/
 
 B1: mở CMD, vào folder cần lữu trữ.
 
 B2:
 git clone https://github.com/anhnguyenms2510421-design/BTL-XSTK
 cd BTL-XSTK
-git switch -c chapter1
+git switch -c [tên tự đặt 1]
 git branch
 code .
 
@@ -17,9 +26,33 @@ B4:
 git status
 git add .
 git status
-git commit -m "Update chapter x"
+git commit -m "[tên tự đặt 2]"
 
 quan sát sự thay đổi trước khi push code
 
 B5:
-git push -u origin chapter1
+git push -u origin [tên tự đặt 1]
+
+/******************************************************************/
+
+/********************************* Ví dụ **************************/
+
+Lấy folder:
+
+git clone https://github.com/anhnguyenms2510421-design/BTL-XSTK
+cd BTL-XSTK
+git switch -c thanh_vien_1
+git branch
+code .
+
+* Chỉnh sửa code *
+
+Push lên github
+
+git status
+git add .
+git status
+git commit -m "Update Chapter 1"
+git push -u origin thanh_vien_1
+
+/******************************************************************/
