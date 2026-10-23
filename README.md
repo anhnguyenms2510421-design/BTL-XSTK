@@ -34,6 +34,7 @@ quan sát sự thay đổi trước khi push code
 B5:
 git push -u origin [tên tự đặt 1]
 
+Lưu ý phần [tên tự đặt 1] phải trùng với tên ở phần "git switch -c" ở B2 nhé.
 /******************************************************************/
 
 /********************************* Ví dụ **************************/
