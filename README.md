@@ -21,7 +21,7 @@ code .
 
 B3: 
 chỉnh sửa phần làm của mình.
-Lưu ý: chỉ chỉnh sửa phần Chapter, Image, Package của chapter tương ứng, không chỉnh sửa code trong main
+Lưu ý: chỉ chỉnh sửa phần Chapter, Image, Package, Source_code của chapter tương ứng, không chỉnh sửa code trong main
 
 B4: 
 git status
