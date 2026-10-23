@@ -1,1 +1,37 @@
 \section{Tổng quan dữ liệu}
+	\subsection{ Tổng quan về dữ liệu}
+	Bộ dữ liệu \textit{Transactional Retail Dataset of Electronics Store} được trích xuất từ nền tảng Kaggle, ghi nhận 500 giao dịch phát sinh trong năm 2019 của một cửa hàng bán lẻ thiết bị điện tử tại Melbourne, Úc vận hành qua 3 nhà kho trung tâm: Nickolson, Thompson và Bakers. Với 16 biến đặc trưng bao quát từ thông tin định danh, cấu trúc chi phí, đến tọa độ địa lý và phản hồi sau mua, tệp \texttt{dirty\_data.csv} mang đặc điểm của dữ liệu thô chưa qua chuẩn hóa, tồn tại nhiều lỗi thực tế như định dạng ngày tháng không nhất quán, quy cách viết hoa, thường lộn xộn, sai lệch tọa độ và sai số trong công thức tính tổng tiền cần được xử lý làm sạch trước khi phân tích.\\[0.2 cm]
+	Dữ liệu gốc:  \href{https://www.kaggle.com/datasets/muhammadshahrayar/transactional-retail-dataset-of-electronics-store}{Kaggle Dataset}.
+	\subsection{Các biến trong dữ liệu}
+
+\begin{table}[H]
+	\centering
+	\footnotesize
+	\renewcommand{\arraystretch}{1.2}
+	\setlength{\tabcolsep}{3pt}
+	\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+	\newcolumntype{C}{>{\Centering\arraybackslash}X}
+	\begin{tabularx}{\textwidth}{|c|>{\RaggedRight\arraybackslash}p{3.1cm}|C|C|C|C|}
+		\hline
+		\textbf{STT} & \textbf{Tên biến} & \textbf{Phân loại} & \textbf{Đơn vị / Giá trị} & \textbf{Ý nghĩa nghiệp vụ}  \\
+		\hline
+		1 & \texttt{order\_\allowbreak id} & Định danh & Chuỗi ký tự & Mã số duy nhất xác định mỗi đơn hàng  \\ \hline
+		2 & \texttt{customer\_\allowbreak id} & Định danh & Chuỗi ký tự & Mã định danh duy nhất của từng khách hàng  \\ \hline
+		3 & \texttt{date} & Thời gian & YYYY-MM-DD & Ngày phát sinh giao dịch đơn hàng  \\ \hline
+		4 & \texttt{nearest\_\allowbreak warehouse} & Định tính & Thompson, Nickolson, Bakers & Tên kho hàng nằm gần địa chỉ khách hàng nhất \\ \hline
+		5 & \texttt{shopping\_\allowbreak cart} & Phi cấu trúc & Danh sách mặt hàng & Danh sách tên sản phẩm và số lượng đặt mua  \\ \hline
+		6 & \texttt{order\_\allowbreak price} & Định lượng & USD & Tổng giá trị hàng hóa niêm yết (chưa trừ giảm giá và phí giao)  \\ \hline
+		7 & \texttt{delivery\_\allowbreak charges} & Định lượng & USD & Cước phí vận chuyển đơn hàng  \\ \hline
+		8 & \texttt{customer\_\allowbreak lat} & Định lượng & Độ ($^\circ$) & Vĩ độ định vị khách hàng  \\ \hline
+		9 & \texttt{customer\_\allowbreak long} & Định lượng & Độ ($^\circ$) & Kinh độ định vị khách hàng  \\ \hline
+		10 & \texttt{coupon\_\allowbreak discount} & Định lượng & \% (0 -- 25\%) & Tỷ lệ chiết khấu giảm giá được áp dụng \\ \hline
+		11 & \texttt{order\_\allowbreak total} & Định lượng & USD & Tổng số tiền khách trả sau chiết khấu và phí giao hàng  \\ \hline
+		12 & \texttt{season} & Định tính & Spring, Summer, Autumn, Winter & Mùa trong năm tại thời điểm phát sinh đơn hàng  \\ \hline
+		13 & \texttt{is\_\allowbreak expedited\_\allowbreak delivery} & Nhị phân & TRUE / FALSE & Yêu cầu sử dụng dịch vụ giao hàng nhanh  \\ \hline
+		14 & \texttt{distance\_\allowbreak to\_\allowbreak nearest\_\allowbreak warehouse} & Định lượng & km & Khoảng cách từ khách hàng tới kho gần nhất  \\ \hline
+		15 & \texttt{latest\_\allowbreak customer\_\allowbreak review} & Phi cấu trúc & Văn bản & Nội dung bình luận, phản hồi về đơn hàng  \\ \hline
+		16 & \texttt{is\_\allowbreak happy\_\allowbreak customer} & Nhị phân & TRUE / FALSE & Mức độ hài lòng của khách hàng sau mua \\ \hline
+	\end{tabularx}
+	\caption{Mô tả chi tiết 16 biến của bộ dữ liệu \texttt{dirty\_data.csv}}
+	\label{tab:variables_summary}
+\end{table}

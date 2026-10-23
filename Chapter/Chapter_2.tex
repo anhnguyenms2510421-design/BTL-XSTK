@@ -1,1 +1,326 @@
 \section{Kiến thức nền}
+	\subsection{Câu hỏi và mục tiêu nghiên cứu}	
+	Nghiên cứu này tập trung vào việc ứng dụng hệ thống các phương pháp thống kê mô tả, thống kê suy diễn và mô hình hồi quy tuyến tính bội nhằm phân tích dữ liệu giao dịch của cửa hàng điện tử trực tuyến, từ đó khảo sát và dự báo Chi phí giao hàng (\texttt{delivery\_charges}).Trong đó nhóm đặt ra những câu hỏi sau:
+	
+	
+	\begin{itemize}
+		\item Các đặc trưng của đơn hàng và dịch vụ vận chuyển --- bao gồm khoảng cách địa lý từ khách hàng đến kho hàng gần nhất, yêu cầu dịch vụ giao hàng nhanh, tổng giá trị đơn hàng, chính sách chiết khấu , vị trí kho xuất hàng, yếu tố mùa vụ  và mức độ hài lòng của khách hàng tác động theo chiều hướng và mức độ như thế nào đến chi phí giao hàng?
+		\item Có sự khác biệt có ý nghĩa thống kê về chi phí vận chuyển hoặc giá trị đơn hàng giữa nhóm sử dụng dịch vụ giao hàng nhanh so với giao hàng tiêu chuẩn, cũng như giữa 4 mùa: Xuân, Hạ, Thu, Đông trong năm và giữa 3 khu vực kho hàng (\textit{Bakers}, \textit{Nickolson}, \textit{Thompson}) hay không?
+		\item Mô hình hồi quy tuyến tính bội nào là tối ưu nhất sau khi sàng lọc biến để giải thích sự biến thiên và dự báo chính xác chi phí giao hàng cho các đơn hàng mới trong tương lai?
+	\end{itemize}
+	
+	
+	\subsection{Thống kê mô tả và Trực quan hóa dữ liệu}
+	
+	Trước khi thực hiện các suy diễn thống kê và xây dựng mô hình hồi quy, dữ liệu cần được làm sạch, kiểm tra công thức tính toán thực tế của tổng giá trị đơn hàng:
+	\begin{equation}
+		\text{\texttt{order\_total}} = \text{\texttt{order\_price}} \times \left(1 - \frac{\text{\texttt{coupon\_discount}}}{100}\right) + \text{\texttt{delivery\_charges}}
+	\end{equation}
+	và tóm tắt đặc trưng thông qua các đại lượng thống kê mô tả.
+	
+	\subsubsection{Các đại lượng thống kê mô tả mẫu}
+	
+	Giả sử có một mẫu ngẫu nhiên kích thước $n$ gồm các quan sát $x_1, x_2, \dots, x_n$ của một biến định lượng liên tục:
+	
+	\begin{itemize}
+		\item Trung bình mẫu ( $\bar{x}$): Đặc trưng cho xu hướng trung tâm của dữ liệu:
+		\begin{equation}
+			\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i
+		\end{equation}
+		\item Trung vị mẫu ( $Me$): Là giá trị nằm ở vị trí chính giữa của mẫu sau khi đã sắp xếp theo thứ tự không giảm $x_{(1)} \le x_{(2)} \le \dots \le x_{(n)}$:
+		\begin{equation}
+			Me = \begin{cases}
+				x_{\left(\frac{n+1}{2}\right)} & \text{nếu } n \text{ lẻ}, \\[6pt]
+				\dfrac{1}{2}\left(x_{\left(\frac{n}{2}\right)} + x_{\left(\frac{n}{2}+1\right)}\right) & \text{nếu } n \text{ chẵn}.
+			\end{cases}
+		\end{equation}
+		\item Phương sai mẫu ($s^2$) và Độ lệch chuẩn mẫu ( $s$): Đo lường mức độ biến thiên và phân tán của các quan sát xung quanh trung bình mẫu:
+		\begin{equation}
+			s^2 = \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})^2, \qquad s = \sqrt{s^2}
+		\end{equation}
+		\item Khoảng tứ phân vị ($IQR$) và Quy tắc phát hiện ngoại lai:
+		Các tứ phân vị $Q_1$, $Q_2$ và $Q_3$ chia mẫu đã sắp xếp thành 4 phần đều nhau. Khoảng tứ phân vị được xác định bởi:
+		\begin{equation}
+			IQR = Q_3 - Q_1
+		\end{equation}
+		Theo quy tắc rào chắn Tukey, một quan sát $x_i$ được nhận diện là giá trị ngoại lai cần được xử lý trong bước làm sạch dữ liệu nếu thỏa mãn:
+		\begin{equation}
+			x_i < Q_1 - 1.5 \times IQR \quad \text{hoặc} \quad x_i > Q_3 + 1.5 \times IQR
+		\end{equation}
+	\end{itemize}
+	
+	\subsubsection{Các công cụ trực quan hóa và Phân tích tương quan tuyến tính}
+	
+	\begin{itemize}
+		\item Biểu đồ tần số: Biểu diễn phân phối thực nghiệm của các biến định lượng, giúp đánh giá tính đối xứng, độ lệch và sự tập trung của dữ liệu.
+		\item Biểu đồ cột: Thể hiện bảng tần số của các biến phân loại, giúp so sánh quy mô đơn hàng giữa các danh mục.
+		\item Biểu đồ hộp: Trực quan hóa 5 thông số ($\min, Q_1, Me, Q_3, \max$) của biến định lượng theo từng nhóm phân loại, hỗ trợ đối chiếu phân phối giữa các nhóm và phát hiện các điểm ngoại lai trước và sau khi làm sạch.
+				\item Biểu đồ tương tác: Biểu diễn trung bình mẫu của biến định lượng theo từng tổ hợp của hai nhân tố phân loại và giúp quan sát trực quan xem các đường biểu diễn có song song hay cắt nhau, từ đó dự đoán sự tồn tại của hiệu ứng tương tác trước khi kiểm định bằng ANOVA.
+		\item Biểu đồ phân tán và Hệ số tương quan mẫu Pearson ($r$): Để đánh giá mức độ liên kết tuyến tính giữa hai biến định lượng $X$ và $Y$ từ $n$ cặp quan sát $(x_i, y_i)$, hệ số tương quan mẫu Pearson được tính theo công thức:
+		\begin{equation}
+			r = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n} (x_i - \bar{x})^2} \sqrt{\sum_{i=1}^{n} (y_i - \bar{y})^2}}, \qquad r \in [-1; 1]
+		\end{equation}
+		Để kiểm định xem hệ số tương quan tổng thể $\rho$ có thực sự khác 0 hay không ($H_0: \rho = 0$ đối với $H_1: \rho \neq 0$), ta sử dụng thống kê kiểm định $t$:
+		\begin{equation}
+			t_0 = \frac{r\sqrt{n - 2}}{\sqrt{1 - r^2}} \sim t(n - 2)
+		\end{equation}
+	\end{itemize}
+	
+	\subsection{Ước lượng khoảng tin cậy và Kiểm định giả thuyết hai mẫu}
+	
+	\subsubsection{Ước lượng khoảng tin cậy}
+	
+	Khoảng tin cậy với độ tin cậy $1 - \alpha$, thường chọn $1 - \alpha = 95\%$, ứng với mức ý nghĩa $\alpha = 0.05$, xác định một miền giá trị ước lượng cho tham số tổng thể chưa biết:
+	
+	\begin{itemize}
+		\item Khoảng tin cậy đối xứng cho trung bình tổng thể $\mu$ (trường hợp mẫu lớn $n \ge 30$, chưa biết $\sigma^2$):
+		Áp dụng để ước lượng chi phí giao hàng trung bình  hoặc tổng giá trị đơn hàng trung bình. Theo Định lý giới hạn trung tâm, sai số ước lượng $\varepsilon$ và khoảng tin cậy $1-\alpha$ được xác định bởi:
+		\begin{equation}
+			\varepsilon = z_{\alpha/2} \frac{s}{\sqrt{n}}, \qquad \bar{x} - z_{\alpha/2} \frac{s}{\sqrt{n}} \le \mu \le \bar{x} + z_{\alpha/2} \frac{s}{\sqrt{n}}
+		\end{equation}
+		\begin{center}
+			trong đó $z_{\alpha/2}$ là phân vị chuẩn tắc thỏa mãn $P(Z > z_{\alpha/2}) = \alpha/2$ \\
+			với $\alpha = 0.05 \implies z_{0.025} \approx 1.96$.
+		\end{center}		
+	
+		
+		\item Khoảng tin cậy đối xứng cho tỷ lệ tổng thể $p$ (trường hợp mẫu lớn):
+		Áp dụng khi ước lượng tỷ lệ đơn hàng yêu cầu giao hàng nhanh hoặc tỷ lệ khách hàng hài lòng. Khi tỷ lệ mẫu $\hat{p} = \frac{x}{n}$ thỏa mãn điều kiện xấp xỉ chuẩn $n\hat{p} \ge 5$ và $n(1 - \hat{p}) \ge 5$, sai số ước lượng và khoảng tin cậy $1-\alpha$ là:
+		\begin{equation}
+			\varepsilon = z_{\alpha/2} \sqrt{\frac{\hat{p}(1 - \hat{p})}{n}}, \qquad \hat{p} - \varepsilon \le p \le \hat{p} + \varepsilon
+		\end{equation}
+		
+		
+	\end{itemize}
+	
+	\subsubsection{Kiểm định giả thuyết so sánh hai mẫu độc lập}
+	
+	Phương pháp kiểm định hai mẫu độc lập được áp dụng để sàng lọc biến và đánh giá sự khác biệt giữa hai nhóm khách hàng hoặc hai loại hình dịch vụ:
+	
+	\begin{itemize}
+		\item Kiểm định so sánh hai trung bình tổng thể $\mu_1$ và $\mu_2$ với mẫu lớn ($n_1 \ge 30, n_2 \ge 30$):
+		Áp dụng để kiểm tra xem chi phí giao hàng trung bình của nhóm giao hàng nhanh có cao hơn nhóm giao hàng tiêu chuẩn hay không.
+		\begin{itemize}[label={$+$}, leftmargin=*]
+			\item Giả thuyết kiểm định:
+			\begin{equation*}
+				H_0: \mu_1 = \mu_2 \quad \text{đối với} \quad H_1: \mu_1 \neq \mu_2 \quad (\text{hoặc } H_1: \mu_1 > \mu_2)
+			\end{equation*}
+			\item Thống kê kiểm định:
+			\begin{equation}
+				z_0 = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}
+			\end{equation}
+		\end{itemize}
+		
+		\item Kiểm định so sánh hai tỷ lệ tổng thể ($p_1$ và $p_2$):
+		Áp dụng khi so sánh tỷ lệ khách hàng hài lòng hoặc tỷ lệ chọn giao hàng nhanh giữa nhóm đơn hàng có áp dụng mã giảm giá và nhóm không có mã giảm giá.
+		\begin{itemize}[label={$+$}, leftmargin=*]
+			\item Giả thuyết kiểm định:
+			\begin{equation*}
+				H_0: p_1 = p_2 \quad \text{đối với} \quad H_1: p_1 \neq p_2 \quad (\text{hoặc } H_1: p_1 > p_2)
+			\end{equation*}
+			\item Tỷ lệ mẫu gộp và Thống kê kiểm định:
+			\begin{equation}
+				\hat{p}_c = \frac{x_1 + x_2}{n_1 + n_2}, \qquad z_0 = \frac{\hat{p}_1 - \hat{p}_2}{\sqrt{\hat{p}_c(1 - \hat{p}_c)\left(\frac{1}{n_1} + \frac{1}{n_2}\right)}}
+			\end{equation}
+		\end{itemize}
+		
+		\item Quy tắc quyết định: Với mức ý nghĩa $\alpha = 5\%$, ta bác bỏ giả thuyết $H_0$ nếu $p\text{-value} < \alpha$ hoặc khi thống kê $z_0$ rơi vào miền bác bỏ $W_\alpha$.
+		
+		
+	\end{itemize}
+	
+	\subsection{Phân tích phương sai ANOVA nhiều nhân tố }
+
+Phân tích phương sai ANOVA nhiều nhân tố được sử dụng để kiểm định đồng thời ảnh hưởng của hai hay nhiều nhân tố phân loại, cũng như hiệu ứng tương tác giữa chúng, lên trung bình của một biến định lượng. 
+
+Trong bài này, ta xét trường hợp hai nhân tố, gồm nhân tố $A$ là mùa đặt hàng: \textit{Spring, Summer, Autumn, Winter}, $a = 4$ mức; và nhân tố $B$ là kho hàng gần nhất: \textit{Bakers, Nickolson, Thompson}, $b = 3$ mức, tạo thành $a \times b = 12$ tổ hợp nhóm. 
+
+\subsubsection{Mô hình và Giả thuyết kiểm định}
+
+Gọi $x_{ijk}$ là quan sát thứ $k$ của ô $(i, j)$, tức là thuộc mức $i$ của nhân tố $A$ và mức $j$ của nhân tố $B$. Mô hình ANOVA hai nhân tố có tương tác được viết dưới dạng:
+\begin{equation}
+	x_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \varepsilon_{ijk}, \qquad i = 1, \dots, a;\; j = 1, \dots, b;\; k = 1, \dots, n_{ij}
+\end{equation}
+trong đó:
+\begin{itemize}
+	\item $\mu$: trung bình chung của tổng thể.
+	\item $\alpha_i$: hiệu ứng chính của mức thứ $i$ của nhân tố $A$.
+	\item $\beta_j$: hiệu ứng chính của mức thứ $j$ của nhân tố $B$.
+	\item $(\alpha\beta)_{ij}$: hiệu ứng tương tác giữa mức $i$ của $A$ và mức $j$ của $B$, thể hiện phần chênh lệch mà hai hiệu ứng chính không giải thích được.
+	\item Các ràng buộc: $\sum_{i=1}^{a} \alpha_i = 0$, $\sum_{j=1}^{b} \beta_j = 0$, $\sum_{i=1}^{a} (\alpha\beta)_{ij} = \sum_{j=1}^{b} (\alpha\beta)_{ij} = 0$.
+	\item $\varepsilon_{ijk} \sim \mathcal{N}(0, \sigma^2)$: sai số ngẫu nhiên độc lập, có phương sai $\sigma^2$ không đổi giữa các ô.
+\end{itemize}
+
+Ba cặp giả thuyết được kiểm định tương ứng với ba nguồn biến thiên:
+\begin{itemize}
+	\item Hiệu ứng chính của nhân tố $A$ : $H_0: \alpha_1 = \alpha_2 = \dots = \alpha_a = 0$ đối với $H_1: \exists i$ sao cho $\alpha_i \neq 0$.
+	\item Hiệu ứng chính của nhân tố $B$: $H_0: \beta_1 = \beta_2 = \dots = \beta_b = 0$ đối với $H_1: \exists j$ sao cho $\beta_j \neq 0$.
+	\item Hiệu ứng tương tác $A \times B$: $H_0: (\alpha\beta)_{ij} = 0$ với mọi $i, j$ đối với $H_1: \exists (i, j)$ sao cho $(\alpha\beta)_{ij} \neq 0$.
+\end{itemize}
+
+\subsubsection{Các giả định của mô hình ANOVA và phương pháp kiểm tra}
+
+Trước khi đọc kết quả ANOVA, dữ liệu cần được kiểm tra 3 giả định nền tảng:
+\begin{itemize}
+	\item Giả định 1 (Tính phân phối chuẩn): Các quan sát trong mỗi ô $(i, j)$ có phân phối chuẩn $\mathcal{N}(\mu_{ij}, \sigma^2)$, hay tương đương phần dư của mô hình có phân phối chuẩn. Giả định này được kiểm tra trực quan bằng đồ thị Normal Q-Q Plot và kiểm định định lượng Shapiro-Wilk với cặp giả thuyết:
+	\begin{itemize}[label={$+$}, leftmargin=*]
+		\item $H_0$: Dữ liệu ở ô $(i, j)$ hoặc phần dư của mô hình tuân theo phân phối chuẩn.
+		\item $H_1$: Dữ liệu ở ô $(i, j)$ hoặc phần dư của mô hình không tuân theo phân phối chuẩn.
+	\end{itemize}
+	\item Giả định 2 (Tính đồng nhất phương sai) : Phương sai của $a \times b$ ô bằng nhau. Được kiểm tra bằng kiểm định Levene's Test với cặp giả thuyết:
+	\begin{itemize}
+		\item $H_0: \sigma_{11}^2 = \sigma_{12}^2 = \dots = \sigma_{ab}^2$.
+		\item $H_1: \exists (i, j) \neq (i', j')$ sao cho $\sigma_{ij}^2 \neq \sigma_{i'j'}^2$.
+	\end{itemize}
+	\item Giả định 3 (Tính độc lập): Các quan sát được thu thập hoàn toàn độc lập giữa các đơn hàng.
+\end{itemize}
+
+
+\subsubsection{Phân rã phương sai và Thống kê kiểm định $F$}
+
+Với tổng số quan sát $N = \sum_{i=1}^{a}\sum_{j=1}^{b} n_{ij}$, ký hiệu $\bar{x}_{ij\cdot}$ là trung bình mẫu của ô $(i, j)$, $\bar{x}_{i\cdot\cdot}$ là trung bình của mức $i$ nhân tố $A$, $\bar{x}_{\cdot j \cdot}$ là trung bình của mức $j$ nhân tố $B$ và $\bar{x}$ là trung bình chung toàn mẫu. Tổng bình phương độ lệch toàn bộ được phân rã thành bốn thành phần:
+\begin{equation}
+	SST = SSA + SSB + SSAB + SSE
+\end{equation}
+Với thiết kế cân bằng ($n_{ij} = n$ với mọi ô, $N = abn$), các thành phần được xác định bởi:
+\begin{align}
+	SSA &= bn \sum_{i=1}^{a} (\bar{x}_{i\cdot\cdot} - \bar{x})^2, \qquad SSB = an \sum_{j=1}^{b} (\bar{x}_{\cdot j\cdot} - \bar{x})^2 \\
+	SSAB &= n \sum_{i=1}^{a} \sum_{j=1}^{b} (\bar{x}_{ij\cdot} - \bar{x}_{i\cdot\cdot} - \bar{x}_{\cdot j\cdot} + \bar{x})^2, \qquad SSE = \sum_{i=1}^{a} \sum_{j=1}^{b} \sum_{k=1}^{n} (x_{ijk} - \bar{x}_{ij\cdot})^2
+\end{align}
+Trung bình bình phương là $MS = SS/df$, và thống kê kiểm định của mỗi nguồn là $F = MS/MSE$ (Bảng~\ref{tab:anova2}). Dưới $H_0$: $F_A \sim F(a-1, N-ab)$, $F_B \sim F(b-1, N-ab)$, $F_{AB} \sim F((a-1)(b-1), N-ab)$.
+
+\begin{table}[htbp]
+	\centering
+	\label{tab:anova2}
+	\vspace{4pt}
+	\renewcommand{\arraystretch}{1.6}
+	\small
+	\begin{tabular}{|l|c|c|c|c|c|}
+		\hline
+		\textbf{Nguồn} & $df$ & $SS$ & $MS$ & $F$ & $p$ \\ 
+		\hline
+		Nhân tố $A$ & $a - 1$ & $SSA$ & $SSA/(a-1)$ & $MSA/MSE$ & $p_A$ \\ \hline
+		Nhân tố $B$ & $b - 1$ & $SSB$ & $SSB/(b-1)$ & $MSB/MSE$ & $p_B$ \\ \hline
+		Tương tác $A \times B$ & $(a-1)(b-1)$ & $SSAB$ & $SSAB/[(a-1)(b-1)]$ & $MSAB/MSE$ & $p_{AB}$ \\ \hline
+		Sai số & $N - ab$ & $SSE$ & $SSE/(N-ab)$ & & \\ \hline
+		\textbf{Tổng} & $N - 1$ & $SST$ & & & \\ \hline
+	\end{tabular}
+	\caption{Bảng tóm tắt ANOVA hai nhân tố có tương tác}
+	\label{tab:anova2}
+\end{table}
+
+\textbf{Quy tắc quyết định và kiểm định hậu định:} Với mỗi nguồn biến thiên, nếu $p\text{-value} < \alpha$ thì bác bỏ $H_0$ tương ứng. Kết quả được đọc theo thứ tự kiểm tra hiệu ứng tương tác $A \times B$ trước:
+\begin{itemize}
+	\item Nếu tương tác có ý nghĩa thống kê: không diễn giải riêng lẻ các hiệu ứng chính, vì ảnh hưởng của nhân tố này thay đổi theo từng mức của nhân tố kia. Khi đó dùng biểu đồ tương tác và kiểm định hậu định Tukey HSD trên các cặp ô $(i, j)$ để chỉ ra cụ thể tổ hợp nào khác nhau.
+	\item Nếu tương tác không có ý nghĩa thống kê: diễn giải các hiệu ứng chính; với nhân tố có ý nghĩa và có từ 3 mức trở lên, dùng Tukey HSD để chỉ ra cụ thể cặp mức nào khác nhau. Có thể loại bỏ số hạng tương tác và ước lượng lại mô hình cộng tính (chỉ gồm hai hiệu ứng chính).
+\end{itemize}
+
+	\subsection{Mô hình Hồi quy Tuyến tính Bội }
+	
+	Do biến phụ thuộc \texttt{delivery\_charges} ($Y$) là biến định lượng liên tục, nhóm nghiên cứu sử dụng Mô hình Hồi quy Tuyến tính Bội làm mô hình trung tâm để định lượng tác động đồng thời của nhiều yếu tố đầu vào và dự báo chi phí vận chuyển.
+	
+	\subsubsection{Định nghĩa mô hình và Mã hóa biến giả}
+	
+	Mô hình hồi quy tuyến tính bội với $p$ biến giải thích $X_1, X_2, \dots, X_p$ có dạng tổng quát:
+	\begin{equation}
+		Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \dots + \beta_p X_{ip} + \varepsilon_i, \qquad i = 1, 2, \dots, n
+	\end{equation}
+	Trong đó:
+	\begin{itemize}
+		\item $Y_i$: Giá trị chi phí giao hàng (\texttt{delivery\_charges}) của đơn hàng thứ $i$.
+		\item $X_{i1}, X_{i2}, \dots, X_{ip}$: Giá trị của các biến độc lập định lượng (\texttt{distance\_to\_nearest\_warehouse}, \texttt{order\_total}, \texttt{coupon\_discount}) và các biến giả đại diện cho biến phân loại.
+		\item $\beta_0$: Hệ số chặn, thể hiện giá trị kỳ vọng của $Y$ khi tất cả các biến $X_j = 0$.
+		\item $\beta_j$ ($j = 1, \dots, p$): Hệ số hồi quy riêng phần, đo lường lượng thay đổi trung bình của \texttt{delivery\_charges} khi biến $X_j$ tăng thêm 1 đơn vị trong điều kiện giữ nguyên các biến độc lập khác không đổi.
+		\item $\varepsilon_i \sim \mathcal{N}(0, \sigma^2)$: Sai số ngẫu nhiên độc lập, có kỳ vọng bằng 0 và phương sai $\sigma^2$ không đổi.
+	\end{itemize}
+	
+	\textbf{Quy tắc mã hóa biến giả:} Một biến phân loại có $m$ phạm trù sẽ được chuyển đổi thành $m - 1$ biến giả nhị phân (nhận giá trị 0 hoặc 1), trong đó 1 phạm trù được chọn làm nhóm cơ sở (nhóm tham chiếu -- Reference level):
+	\begin{itemize}
+		\item Biến \texttt{season} (4 mùa, chọn \textit{Autumn} làm nhóm tham chiếu): Tạo 3 biến giả \texttt{seasonSpring}, \texttt{seasonSummer}, \texttt{seasonWinter}.
+		\item Biến \texttt{nearest\_warehouse} (3 kho, chọn \textit{Bakers} làm nhóm tham chiếu): Tạo 2 biến giả \\ \texttt{nearest\_warehouseNickolson}, \texttt{nearest\_warehouseThompson}.
+		\item Biến \texttt{is\_expedited\_delivery} và \texttt{is\_happy\_customer} (2 mức \texttt{FALSE}/\texttt{TRUE}): Tạo biến giả nhận giá trị $1$ nếu \texttt{TRUE} và $0$ nếu \texttt{FALSE}.
+	\end{itemize}
+	
+	\subsubsection{Ước lượng tham số bằng Phương pháp Bình phương tối tiểu }
+	
+	Phương pháp Bình phương tối tiểu thông thường (OLS)  xác định các ước lượng $\hat{\beta}_0, \hat{\beta}_1, \dots, \hat{\beta}_p$ sao cho tổng bình phương các phần dư ($RSS$) đạt giá trị nhỏ nhất:
+\begin{equation}
+	RSS = \sum_{i=1}^{n} e_i^2 = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 \longrightarrow \min
+\end{equation}
+Dưới dạng ma trận, với $\mathbf{Y}_{n \times 1}$ là vectơ biến phụ thuộc và $\mathbf{X}_{n \times (p+1)}$ là ma trận thiết kế, nghiệm OLS và ước lượng không chệch của phương sai sai số $\sigma^2$ được xác định bởi:
+\begin{equation}
+	\hat{\boldsymbol{\beta}} = (\mathbf{X}^T \mathbf{X})^{-1} \mathbf{X}^T \mathbf{Y}, \qquad \hat{\sigma}^2 = s_e^2 = \frac{RSS}{n - p - 1}
+\end{equation}
+	
+	\subsubsection{Đánh giá độ phù hợp và Kiểm định giả thuyết mô hình hồi quy}
+	
+	\begin{itemize}
+		\item Hệ số xác định bội ($R^2$) và Hệ số xác định hiệu chỉnh ($R^2_{\text{adj}}$):
+		Đo lường tỷ lệ phần trăm biến thiên của \texttt{delivery\_charges} được giải thích bởi các biến độc lập trong mô hình:
+		\begin{equation}
+			R^2 = 1 - \frac{RSS}{TSS}, \qquad R^2_{\text{adj}} = 1 - \left(\frac{1 - R^2}{n - p - 1}\right)(n - 1)
+		\end{equation}
+		trong đó $TSS = \sum_{i=1}^{n} (y_i - \bar{y})^2$ là tổng bình phương độ lệch toàn phần.
+		
+		\item Kiểm định ý nghĩa tổng thể của mô hình:
+		Xét cặp giả thuyết:
+		\begin{equation*}
+			H_0: \beta_1 = \beta_2 = \dots = \beta_p = 0 \quad \text{đối với} \quad H_1: \exists \beta_j \neq 0 \;\; (j \in \{1, \dots, p\})
+		\end{equation*}
+		Thống kê kiểm định $F$ được tính theo công thức:
+		\begin{equation}
+			F_0 = \frac{(TSS - RSS)/p}{RSS/(n - p - 1)} = \frac{R^2 / p}{(1 - R^2)/(n - p - 1)} \sim F(p, n - p - 1)
+		\end{equation}
+		Nếu $p\text{-value} < \alpha$, ta bác bỏ $H_0$ và kết luận mô hình hồi quy tuyến tính bội phù hợp và có ý nghĩa thống kê.
+		
+		\item Kiểm định ý nghĩa của từng hệ số hồi quy riêng phần:
+		Để đánh giá biến độc lập $X_j$ có thực sự ảnh hưởng đến \texttt{delivery\_charges} hay không, ta xét cặp giả thuyết:
+		\begin{equation*}
+			H_0: \beta_j = 0 \quad \text{đối với} \quad H_1: \beta_j \neq 0
+		\end{equation*}
+		Thống kê kiểm định $t$ là:
+		\begin{equation}
+			t_0 = \frac{\hat{\beta}_j}{SE(\hat{\beta}_j)} \sim t(n - p - 1)
+		\end{equation}
+		Nếu $p\text{-value} < \alpha$, ta bác bỏ $H_0$ và kết luận biến $X_j$ có ý nghĩa thống kê trong việc giải thích biến phụ thuộc $Y$.
+		
+		
+	\end{itemize}
+	
+	\subsubsection{Lựa chọn mô hình tối ưu bằng phương pháp Stepwise }
+	
+		Để loại bỏ các biến dư thừa không có ý nghĩa thống kê, phương pháp hồi quy từng bước hai chiều được áp dụng dựa trên việc cực tiểu hóa Tiêu chuẩn thông tin Akaike (AIC):
+	\begin{equation}
+		AIC = 2k - 2\ln(\hat{L}) = n \ln\left(\frac{RSS}{n}\right) + 2k + C
+	\end{equation}
+	trong đó $k = p + 2$ là tổng số tham số ước lượng trong mô hình và $\hat{L}$ là giá trị hợp lý cực đại. Mô hình có $AIC$ càng nhỏ thì càng tốt.
+	
+	\subsubsection{Kiểm tra các giả định của mô hình và Chẩn đoán phần dư}
+	
+	Mô hình hồi quy tuyến tính sau khi tối ưu cần được kiểm định 4 nhóm giả định chẩn đoán:
+	
+	\begin{itemize}
+		\item Tính tuyến tính và Kỳ vọng sai số bằng 0: Kiểm tra thông qua đồ thị Phần dư theo giá trị dự báo. Đường làm trơn màu đỏ cần nằm xấp xỉ đường nằm ngang tại tung độ $e_i = 0$.
+		\item Phương sai sai số đồng nhất: Kiểm tra qua đồ thị \textit{Scale-Location} ($\sqrt{\vert{}e_{\text{std}}\vert{}}$ theo $\hat{y}_i$) và kiểm định Breusch-Pagan. Các điểm phần dư chuẩn hóa cần phân bố đều thành một dải ngang, không tạo hình phễu.
+		\item Phân phối chuẩn của phần dư: Kiểm tra bằng đồ thị \textit{Normal Q-Q Plot} của phần dư chuẩn hóa và kiểm định Shapiro-Wilk trên phần dư.
+		\item Kiểm tra hiện tượng đa cộng tuyến: Đánh giá mức độ phụ thuộc tuyến tính giữa các biến độc lập thông qua Hệ số phóng đại phương sai ($VIF$):
+		\begin{equation}
+			VIF_j = \frac{1}{1 - R_j^2}
+		\end{equation}
+		trong đó $R_j^2$ là hệ số xác định khi hồi quy biến $X_j$ theo tất cả các biến độc lập còn lại. Đối với các biến phân loại có nhiều bậc tự do, hệ số đa cộng tuyến tổng quát $GVIF$ được chuẩn hóa về $GVIF^{1/(2\cdot df)}$. Nếu $VIF_j < 5$, mô hình không gặp hiện tượng đa cộng tuyến nghiêm trọng.
+		\item Kiểm tra các điểm ảnh hưởng mạnh: Sử dụng Khoảng cách Cook ($D_i$) để đo lường mức độ biến động của toàn bộ vectơ hệ số hồi quy khi loại bỏ quan sát thứ $i$:
+		\begin{equation}
+			D_i = \frac{\sum_{j=1}^{n} \left(\hat{y}_j - \hat{y}_{j(i)}\right)^2}{(p + 1)\hat{\sigma}^2} = \frac{r_i^2}{p + 1} \cdot \frac{h_{ii}}{1 - h_{ii}}
+		\end{equation}
+		trong đó $r_i$ là phần dư chuẩn hóa và $h_{ii}$ là độ đòn bẩy của quan sát thứ $i$. Các quan sát vượt ngưỡng cảnh báo $D_i > \frac{4}{n}$ được xem là các điểm có ảnh hưởng lớn cần được lưu ý.
+	\end{itemize}
+	
+	\subsubsection{Đánh giá hiệu năng dự báo trên tập kiểm tra (Train/Test Split)}
+	
+	Để đánh giá khách quan khả năng tổng quát hóa của mô hình và tránh hiện tượng quá khớp, bộ dữ liệu sau khi làm sạch được chia ngẫu nhiên theo tỷ lệ 80\% tập huấn luyện  và 20\% tập kiểm . Trên tập kiểm tra gồm $m$ quan sát với giá trị thực tế $y_i$ và giá trị dự báo $\hat{y}_i$, độ chính xác của mô hình được đo lường qua bộ ba chỉ số sai số:
+	\begin{align}
+		\text{Sai số toàn phương trung bình (MSE):} \quad MSE &= \frac{1}{m} \sum_{i=1}^{m} (y_i - \hat{y}_i)^2 \\
+		\text{Căn bậc hai sai số toàn phương trung bình (RMSE):} \quad RMSE &= \sqrt{\frac{1}{m} \sum_{i=1}^{m} (y_i - \hat{y}_i)^2} \\
+		\text{Sai số tuyệt đối trung bình (MAE):} \quad MAE &= \frac{1}{m} \sum_{i=1}^{m} |y_i - \hat{y}_i|
+	\end{align}
+	Mô hình có giá trị $RMSE$ và $MAE$ trên tập kiểm tra càng nhỏ so với độ lệch chuẩn mẫu của \texttt{delivery\_charges} và hệ số $R^2_{\text{test}}$ càng cao thì khả năng dự báo thực tế càng chính xác.
