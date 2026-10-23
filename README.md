@@ -6,6 +6,7 @@ git config --global user.email "[Email đăng ký Github]"
 
 /******************************************************************/
 
+!!! Gửi cho nhóm trưởng Username github để t add vào contributors thì mới push lên được nhé.
 
 /***************** Cách lấy folder và chỉnh sửa *******************/
 
