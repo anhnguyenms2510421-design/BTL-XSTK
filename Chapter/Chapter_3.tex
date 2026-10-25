@@ -201,6 +201,11 @@ cat("Rows outside tolerance after correction:", mismatch_after, "\n")
             \caption{Kết quá thể hiện số giá trị lệch sau khi sửa.}
             \label{Ket_qua_the_hien_so_gia_tri_lech_sau_khi_sua}
         \end{figure}
-
         
+        Sau khi dữ liệu được xử lý và kiểm duyệt, ta có thể xoá cột "calculated\_total" (biến trung gian cho việc kiểm duyệt chính xác) và xuất đầu ra tập tin dữ liệu sạch "clean\_data.csv"
+        \begin{lstlisting}
+new_data$calculated_total <- NULL
+write_csv(new_data, "clean_data.csv")
+        \end{lstlisting}
+
         
