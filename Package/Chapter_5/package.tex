@@ -1,0 +1,47 @@
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{geometry}
+\geometry{a4paper, left=2.5cm, right=2cm, top=2cm, bottom=2cm}
+\usepackage{indentfirst}
+\usepackage{setspace}
+\usepackage{xcolor}
+\usepackage{listings}
+\onehalfspacing
+
+% Định dạng khung mã R (mã trong khung chỉ dùng ký tự ASCII để tránh lỗi mã hóa)
+\lstdefinestyle{rcode}{
+    language=R,
+    basicstyle=\ttfamily\footnotesize,
+    commentstyle=\color{gray}\itshape,
+    keywordstyle=\color{blue},
+    stringstyle=\color{teal},
+    breaklines=true,
+    breakatwhitespace=false,
+    columns=fullflexible,
+    keepspaces=true,
+    frame=single,
+    rulecolor=\color{black!30},
+    backgroundcolor=\color{black!3},
+    xleftmargin=0.3cm,
+    xrightmargin=0.2cm,
+    aboveskip=0.6em,
+    belowskip=0.6em
+}
+\lstdefinestyle{rout}{
+    language={},
+    basicstyle=\ttfamily\scriptsize,
+    breaklines=true,
+    columns=fullflexible,
+    keepspaces=true,
+    frame=single,
+    rulecolor=\color{black!30},
+    backgroundcolor=\color{yellow!6},
+    xleftmargin=0.3cm,
+    xrightmargin=0.2cm,
+    aboveskip=0.6em,
+    belowskip=0.6em
+}
+\lstset{style=rcode}
