@@ -6,16 +6,16 @@ Nhóm sử dụng bộ dữ liệu \texttt{clean\_data\_full} gồm $n = 500$ đ
 \textbf{Mã R chuẩn bị dữ liệu (dùng cho toàn chương):}
 \begin{lstlisting}
 library(readr)
-library(car)     # leveneTest, vif
-library(lmtest)  # bptest (Breusch-Pagan)
+library(car)     
+library(lmtest)  
 
 dat <- read_csv("clean_data_full.csv", show_col_types = FALSE)
-dat$season                <- factor(dat$season)             # co so: Autumn
-dat$nearest_warehouse     <- factor(dat$nearest_warehouse)  # co so: Bakers
+dat$season                <- factor(dat$season)            
+dat$nearest_warehouse     <- factor(dat$nearest_warehouse) 
 dat$is_expedited_delivery <- factor(dat$is_expedited_delivery, levels = c(FALSE, TRUE))
 dat$is_happy_customer     <- factor(dat$is_happy_customer,     levels = c(FALSE, TRUE))
 n <- nrow(dat); alpha <- 0.05
-print(summary(dat$order_total))   # lech phai rat manh
+print(summary(dat$order_total))   
 \end{lstlisting}
 \textbf{Kết quả chạy:}
 \begin{lstlisting}[style=rout]
@@ -36,7 +36,7 @@ $$ \mu \in (75.389;\ 77.928) \text{ USD}. $$
 \textbf{Mã R:}
 \begin{lstlisting}
 x <- dat$delivery_charges
-me_z <- qnorm(0.975) * sd(x) / sqrt(n)       # cong thuc (9)
+me_z <- qnorm(0.975) * sd(x) / sqrt(n)       
 cat("mean =", mean(x), " sd =", sd(x), " sai so =", me_z, "\n")
 cat("CI (z):", mean(x) - me_z, "-", mean(x) + me_z, "\n")
 \end{lstlisting}
@@ -72,7 +72,7 @@ với điều kiện xấp xỉ chuẩn $n\hat{p} \ge 5$ và $n(1-\hat{p}) \ge 5
 \begin{lstlisting}
 for (v in c("is_expedited_delivery", "is_happy_customer")) {
   k <- sum(dat[[v]] == TRUE); p <- k / n
-  e <- qnorm(0.975) * sqrt(p * (1 - p) / n)      # cong thuc (10)
+  e <- qnorm(0.975) * sqrt(p * (1 - p) / n)      
   cat(v, ": p =", round(p, 4), " CI =", round(p - e, 4), "-", round(p + e, 4),
       " (np =", k, ", n(1-p) =", n - k, ")\n")
 }
@@ -106,7 +106,7 @@ g1 <- dat$delivery_charges[dat$is_expedited_delivery == TRUE]
 g0 <- dat$delivery_charges[dat$is_expedited_delivery == FALSE]
 cat("mean:", mean(g1), mean(g0), " diff =", mean(g1) - mean(g0),
     " sd:", sd(g1), sd(g0), "\n")
-z0 <- (mean(g1) - mean(g0)) / sqrt(var(g1)/length(g1) + var(g0)/length(g0))  # cong thuc (11)
+z0 <- (mean(g1) - mean(g0)) / sqrt(var(g1)/length(g1) + var(g0)/length(g0)) 
 cat("z0 =", z0, " p =", pnorm(z0, lower.tail = FALSE), "\n")
 \end{lstlisting}
 \textbf{Kết quả chạy:}
@@ -262,7 +262,7 @@ Quy tắc quyết định: với mỗi nguồn biến thiên, nếu $p\text{-val
 \textbf{Mã R:}
 \begin{lstlisting}
 m_aov <- aov(delivery_charges ~ season * nearest_warehouse, data = dat)
-print(table(dat$season, dat$nearest_warehouse))   # thiet ke KHONG can bang
+print(table(dat$season, dat$nearest_warehouse))   
 res <- resid(m_aov)
 print(shapiro.test(res))
 png("qqplot_anova.png")
@@ -360,7 +360,7 @@ Residuals                488  76001     156
     Hạ -- Đông  & 8.63  & (4.47; 12.78)  & $< 0.001$ \\ \hline
     Đông -- Thu & $-0.07$ & ($-4.21$; 4.06) & 0.99997 \\ \hline
     \end{tabular}
-    \caption{Tukey HSD theo mùa trên mô hình cộng tính (đầu ra \texttt{TukeyHSD(m\_add, "season")})}
+    \caption{Tukey HSD theo mùa trên mô hình cộng tính (đầu ra \texttt{TukeyHSD(m\_add, \textquotedbl season\textquotedbl)})}
     \label{tab:tukey}
 \end{table}
 
@@ -368,7 +368,7 @@ Residuals                488  76001     156
 \begin{lstlisting}
 m_add <- aov(delivery_charges ~ season + nearest_warehouse, data = dat)
 print(summary(m_add))
-print(TukeyHSD(m_add, "season"))     # chi so sanh nhan to co y nghia
+print(TukeyHSD(m_add, "season"))     
 \end{lstlisting}
 \textbf{Kết quả chạy:}
 \begin{lstlisting}[style=rout]
@@ -410,7 +410,7 @@ Các biến phân loại được mã hóa thành biến giả: \texttt{season} 
 lm_full <- lm(delivery_charges ~ distance_to_nearest_warehouse + order_total + coupon_discount +
                 season + nearest_warehouse + is_expedited_delivery + is_happy_customer, data = dat)
 print(summary(lm_full))
-lm_opt <- step(lm_full, direction = "both", trace = 0)   # MO HINH CUOI
+lm_opt <- step(lm_full, direction = "both", trace = 0)  
 print(summary(lm_opt))
 cat("AIC day du =", AIC(lm_full), " AIC toi uu =", AIC(lm_opt), "\n")
 \end{lstlisting}
@@ -480,9 +480,9 @@ AIC day du = 3198.743  AIC toi uu = 3196.43
 
 \textbf{Mã R:}
 \begin{lstlisting}
-print(vif(lm_opt))                    # GVIF^(1/(2Df)) cho bien phan loai
+print(vif(lm_opt))                    
 print(shapiro.test(resid(lm_opt)))
-print(bptest(lm_opt))                 # Breusch-Pagan
+print(bptest(lm_opt))                 
 cd <- cooks.distance(lm_opt)
 cat("Cook's D > 4/n:", sum(cd > 4 / n), " | max =", max(cd), " | dong:", which.max(cd), "\n")
 png("lm_diagnostics.png", width = 800, height = 600)
@@ -581,7 +581,7 @@ Cook's D > 4/n: 29  | max = 0.04579479  | dong: 468
 
 \textbf{Mã R:}
 \begin{lstlisting}
-# Mo hinh KHONG dung is_happy_customer (bien chi biet sau khi giao hang)
+
 lm_nohappy <- step(update(lm_full, . ~ . - is_happy_customer), direction = "both", trace = 0)
 print(summary(lm_nohappy))
 
@@ -599,7 +599,6 @@ res_tab <- rbind(`Mo hinh cuoi`   = evaluate(formula(lm_opt)),
 print(round(res_tab, 3))
 cat("sd(delivery_charges) =", sd(dat$delivery_charges), "\n")
 
-# Lap 200 lan chia ngau nhien khac nhau
 for (nm in c("Mo hinh cuoi", "Khong co happy")) {
   f <- switch(nm, `Mo hinh cuoi` = formula(lm_opt), `Khong co happy` = formula(lm_nohappy))
   rr <- sapply(1:200, function(s) evaluate(f, seed = s))
@@ -647,4 +646,3 @@ R2_test  0.630 0.054
 
 \textbf{Kết luận:} Mô hình cuối giảm đáng kể sai số so với việc dự báo bằng trung bình và không có dấu hiệu quá khớp. Tuy nhiên vì mức hài lòng chưa biết tại thời điểm đặt hàng, mô hình thực sự dùng được để dự báo chi phí cho đơn hàng mới là mô hình không có \texttt{is\_happy\_customer} (gồm \texttt{season} và \texttt{is\_expedited\_delivery}), với $R^2_{test} \approx 0.63$ và RMSE khoảng $8.6$ USD.
 
-\end{document}

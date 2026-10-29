@@ -10,24 +10,24 @@
     Phần code lập trình xử lý các thông số thống kê:
 
     \begin{lstlisting}
-    clean_data <- read.csv("clean_data_full.csv")
+clean_data <- read.csv("clean_data_full.csv")
 
-    describe_function <- function(x) {
-      c(Mean = mean(x, na.rm = TRUE),
-        Median = median(x, na.rm = TRUE),
-        SD = sd(x, na.rm = TRUE),
-        Min = min(x, na.rm = TRUE),
-        Max = max(x, na.rm = TRUE))
-    }
-    num_vars <- c("delivery_charges", "coupon_discount", "order_total", "distance_to_nearest_warehouse")
-    des_table <- apply(clean_data[, num_vars], 2, describe_function)
-    print(des_table)
+describe_function <- function(x) {
+    c(Mean = mean(x, na.rm = TRUE),
+    Median = median(x, na.rm = TRUE),
+    SD = sd(x, na.rm = TRUE),
+    Min = min(x, na.rm = TRUE),
+    Max = max(x, na.rm = TRUE))
+}
+num_vars <- c("delivery_charges", "coupon_discount", "order_total", "distance_to_nearest_warehouse")
+des_table <- apply(clean_data[, num_vars], 2, describe_function)
+print(des_table)
     \end{lstlisting}
     \textbf{Kết quả thu được:}\\
     Bảng thống kê mô tả cho thấy chi tiết giá trị trung bình, trung vị, độ lệch chuẩn, giá trị lớn nhất và nhỏ nhất của chi phí giao hàng cùng các biến liên quan.
     \begin{figure}[htbp]
         \centering
-        \fbox{\includegraphics[width=0.9\linewidth]{hinh_1.jpg} }
+        \fbox{\includegraphics[width=0.9\linewidth]{Image/Chapter_4/hinh_1.jpg} }
         \caption{Kết quả bảng thống kê mô tả các biến định lượng.}
         \label{Bang_thong_ke_mo_ta}
     \end{figure}\\
@@ -44,15 +44,15 @@
     \end{enumerate}
 
     \begin{lstlisting}
-    freq_season <- table(clean_data$season)
-    freq_expedited <- table(clean_data$is_expedited_delivery)
-    freq_warehouse <- table(clean_data$nearest_warehouse)
-    freq_happy <- table(clean_data$is_happy_customer)
-    
-    print(freq_season)
-    print(freq_expedited)
-    print(freq_warehouse)
-    print(freq_happy)
+freq_season <- table(clean_data$season)
+freq_expedited <- table(clean_data$is_expedited_delivery)
+freq_warehouse <- table(clean_data$nearest_warehouse)
+freq_happy <- table(clean_data$is_happy_customer)
+
+print(freq_season)
+print(freq_expedited)
+print(freq_warehouse)
+print(freq_happy)
     \end{lstlisting}
     \textbf{Kết quả thu được:}\\
     Dữ liệu số lượng được phân bổ cụ thể cho từng hạng mục:\\
@@ -60,7 +60,7 @@
     \textbf{Mùa:}
     \begin{figure}[H]
         \centering
-        \fbox{\includegraphics[width=0.9\linewidth]{hinh_2.png}}
+        \fbox{\includegraphics[width=0.5\linewidth]{Image/Chapter_4/hinh_2.png}}
         \caption{Kết quả số lượng theo mùa.}
         \label{Bang_thong_ke_mo_ta}
     \end{figure}
@@ -70,7 +70,7 @@
     \textbf{Trạng thái giao hàng nhanh:}
     \begin{figure}[H]
         \centering
-        \fbox{\includegraphics[width=0.3\linewidth]{hinh_3.png}}
+        \fbox{\includegraphics[width=0.2\linewidth]{Image/Chapter_4/hinh_3.png}}
         \caption{Kết quả số lượng theo trạng thái giao hàng nhanh.}
         \label{Bang_thong_ke_mo_ta}
     \end{figure}
@@ -80,7 +80,7 @@
     \textbf{Kho gần nhất:}
     \begin{figure}[H]
         \centering
-        \fbox{\includegraphics[width=0.9\linewidth]{hinh_4.png}}
+        \fbox{\includegraphics[width=0.5\linewidth]{Image/Chapter_4/hinh_4.png}}
         \caption{Kết quả số lượng theo kho gần nhất.}
         \label{Bang_thong_ke_mo_ta}
     \end{figure}
@@ -90,7 +90,7 @@
     \textbf{Mức độ hài lòng:}
     \begin{figure}[H]
         \centering
-        \fbox{\includegraphics[width=0.3\linewidth]{hinh_5.png}}
+        \fbox{\includegraphics[width=0.2\linewidth]{Image/Chapter_4/hinh_5.png}}
         \caption{Kết quả số lượng theo mức độ hài lòng.}
         \label{Bang_thong_ke_mo_ta}
     \end{figure}
@@ -102,12 +102,12 @@
     \subsubsection{Biểu đồ phân phối tần suất (Histogram)}
         Ta sử dụng lệnh \texttt{hist()} để vẽ biểu đồ phân phối.
         \begin{lstlisting}
-    hist(clean_data$delivery_charges, main="Histogram of Delivery Charges", col="lightblue", xlab="Delivery Charges (USD)")
+hist(clean_data$delivery_charges, main="Histogram of Delivery Charges", col="lightblue", xlab="Delivery Charges (USD)")
         \end{lstlisting}
 
         \begin{figure}[H]
             \centering
-            \fbox{\includegraphics[width=0.8\linewidth]{do_thi_1.png}}
+            \fbox{\includegraphics[width=0.8\linewidth]{Image/Chapter_4/do_thi_1.png}}
             \caption{Biểu đồ Histogram của chi phí giao hàng.}
             \label{Bieu_do_Histogram_Barplot}
         \end{figure}
@@ -116,12 +116,12 @@
     \subsubsection{Biểu đồ cột theo kho hàng (Barplot)}
         Mặc dù đồ thị Barplot giúp đếm số lượng đơn hàng theo kho, nhưng nó là nền tảng để giải thích yếu tố nearest\_warehouse - một biến độc lập sẽ được đưa vào mô hình hồi quy để dự báo deliver\_charges ở phần sau.
         \begin{lstlisting}
-    barplot(freq_warehouse, main="Orders by Warehouse", col="lightgreen")
+barplot(freq_warehouse, main="Orders by Warehouse", col="lightgreen")
         \end{lstlisting}
 
         \begin{figure}[H]
             \centering
-            \fbox{\includegraphics[width=0.8\linewidth]{do_thi_2.png}}
+            \fbox{\includegraphics[width=0.8\linewidth]{Image/Chapter_4/do_thi_2.png}}
             \caption{Biểu đồ Barplot của số lượng đơn hàng tại các kho.}
             \label{Bieu_do_Barplot}
         \end{figure}
@@ -130,12 +130,12 @@
     \subsubsection{Biểu đồ hộp theo mùa (Boxplot)}
         Để kiểm tra sự phân phối của biến delivery\_charge theo season, ta sử dụng biểu đồ hộp (Boxplot) bằng lệnh boxplot().
         \begin{lstlisting}
-    boxplot(delivery_charges ~ season, data=clean_data, main="Delivery Charges by Season", col=c("pink","lightblue","lightgreen","yellow"), ylab="Delivery Charges")
+boxplot(delivery_charges ~ season, data=clean_data, main="Delivery Charges by Season", col=c("pink","lightblue","lightgreen","yellow"), ylab="Delivery Charges")
         \end{lstlisting}
 
         \begin{figure}[H]
             \centering
-            \fbox{\includegraphics[width=1\linewidth]{do_thi_3.png}}
+            \fbox{\includegraphics[width=1\linewidth]{Image/Chapter_4/do_thi_3.png}}
             \caption{Biểu đồ Boxplot theo mùa.}
             \label{Bieu_do_Tuong_quan}
         \end{figure}
@@ -144,12 +144,12 @@
     \subsubsection{Biểu đồ hộp theo trạng thái giao hàng (Boxplot)}
         Biểu đồ Boxplot theo trạng thái giao hàng trực tiếp đối chiếu mức phí giao hàng giữa nhóm khách yêu cầu giao hàng nhanh (TRUE) và không yêu cầu giao hàng nhanh (FALSE).
         \begin{lstlisting}
-    boxplot(delivery_charges ~ is_expedited_delivery, data=clean_data, main="Delivery Charges by Expedited Status", col=c("pink","lightblue"), ylab="Delivery Charges")
+boxplot(delivery_charges ~ is_expedited_delivery, data=clean_data, main="Delivery Charges by Expedited Status", col=c("pink","lightblue"), ylab="Delivery Charges")
         \end{lstlisting}
 
         \begin{figure}[H]
             \centering
-            \fbox{\includegraphics[width=0.8\linewidth]{do_thi_4.png}}
+            \fbox{\includegraphics[width=0.8\linewidth]{Image/Chapter_4/do_thi_4.png}}
             \caption{Biểu đồ Boxplot theo trạng thái giao hàng.}
             \label{Bieu_do_QQ_Plot}
         \end{figure}
@@ -158,15 +158,15 @@
         \subsubsection{Đồ thị ma trận tương quan (Correlation Matrix)}
         Ma trận tương quan giúp tính toán mối liên hệ tuyến tính trực tiếp giữa delivery\_charges với khoảng cách (distance\_to\_nearest\_warehouse) và vị trí (ccustomer\_lat, customer\_long), nhằm loại trừ hiện tượng đa cộng tuyến trước khi xây dựng mô hình dự báo. Ta sử dụng thư viện Corrplot. 
         \begin{lstlisting}
-    library(corrplot)
-    cor_vars <- c("delivery_charges", "customer_lat", "customer_long", "distance_to_nearest_warehouse")
-    cor_matrix <- cor(clean_data[, cor_vars])
-    corrplot(cor_matrix, method="number")
+library(corrplot)
+cor_vars <- c("delivery_charges", "customer_lat", "customer_long", "distance_to_nearest_warehouse")
+cor_matrix <- cor(clean_data[, cor_vars])
+corrplot(cor_matrix, method="number")
         \end{lstlisting}
 
         \begin{figure}[H]
             \centering
-            \fbox{\includegraphics[width=0.8\linewidth]{do_thi_5.png}}            \caption{Đồ thị ma trận tương quan (Correlation Matrix)}
+            \fbox{\includegraphics[width=0.8\linewidth]{Image/Chapter_4/do_thi_5.png}}            \caption{Đồ thị ma trận tương quan (Correlation Matrix)}
             \label{Bieu_do_QQ_Plot}
         \end{figure}
         \textbf{Nhận xét:} Dựa vào đồ thị ma trận tương quan, ta nhận thấy được hệ số tương quan ứng với từng cặp biến độc lập gần bằng 0. Từ đó ta suy ra được các biến độc lập không có quan hệ tuyến tính với nhau, dẫn đến không xảy ra hiện tượng đa cộng tuyến.
@@ -174,40 +174,40 @@
         \subsubsection{Biểu đồ phân tán (Scatter Plot)}
         Biểu đồ phân tán thể hiện mối quan hệ tuyến tính giữa delivery\_charges với các biến distance\_to\_nearest\_warehouse, customer\_lat và customer\_long. Nó làm cơ sở cho mô hình hồi quy tuyến tính. 
         \begin{lstlisting}
-    plot(clean_data$distance_to_nearest_warehouse, clean_data$delivery_charges,
-     main = "Scatter Plot: Distance vs Delivery Charges",
-     xlab = "Distance to Nearest Warehouse",
-     ylab = "Delivery Charges",
-     col = "darkred", pch = 16)
-    plot(clean_data$customer_lat, clean_data$delivery_charges,
-     main = "Scatter Plot: Customer lat vs Delivery Charges",
-     xlab = "Customer lat ",
-     ylab = "Delivery Charges ",
-     col = "darkred", pch = 16)
-    plot(clean_data$customer_long, clean_data$delivery_charges,
-     main = "Scatter Plot: customer long vs Delivery Charges",
-     xlab = "Customer long ",
-     ylab = "Delivery Charges ",
-     col = "darkred", pch = 16)
+plot(clean_data$distance_to_nearest_warehouse, clean_data$delivery_charges,
+    main = "Scatter Plot: Distance vs Delivery Charges",
+    xlab = "Distance to Nearest Warehouse",
+    ylab = "Delivery Charges",
+    col = "darkred", pch = 16)
+plot(clean_data$customer_lat, clean_data$delivery_charges,
+    main = "Scatter Plot: Customer lat vs Delivery Charges",
+    xlab = "Customer lat ",
+    ylab = "Delivery Charges ",
+    col = "darkred", pch = 16)
+plot(clean_data$customer_long, clean_data$delivery_charges,
+    main = "Scatter Plot: customer long vs Delivery Charges",
+    xlab = "Customer long ",
+    ylab = "Delivery Charges ",
+    col = "darkred", pch = 16)
         \end{lstlisting}
 
         \begin{figure}[H]
             \centering
-            \fbox{\includegraphics[width=0.7\linewidth]{do_thi_6.1.png}}
+            \fbox{\includegraphics[width=0.7\linewidth]{Image/Chapter_4/do_thi_6.1.png}}
             \caption{Biểu đồ phân tán giữa Delivery Charge và Distance to Nearest Warehouse}
             \label{Bieu_do_QQ_Plot}
         \end{figure}
 
         \begin{figure}[H]
             \centering
-            \fbox{\includegraphics[width=0.7\linewidth]{do_thi_6.2.png}}
+            \fbox{\includegraphics[width=0.7\linewidth]{Image/Chapter_4/do_thi_6.2.png}}
             \caption{Biểu đồ phân tán giữa Delivery Charge và Customer lat}
             \label{Bieu_do_QQ_Plot}
         \end{figure}
 
         \begin{figure}[H]
             \centering
-            \fbox{\includegraphics[width=0.7\linewidth]{do_thi_6.3.png}}
+            \fbox{\includegraphics[width=0.7\linewidth]{Image/Chapter_4/do_thi_6.3.png}}
             \caption{Biểu đồ phân tán giữa Delivery Charge và Customer long}
             \label{Bieu_do_QQ_Plot}
         \end{figure}
@@ -216,15 +216,15 @@
         \subsubsection{Biểu đồ kiểm tra phân phối chuẩn (QQ-Plot)}
         Biểu đồ QQ-Plot kiểm tra trực tiếp xem biến delivery\_charges có tuân theo phân phối chuẩn hay không.
         \begin{lstlisting}
-    qqnorm(clean_data$delivery_charges, 
-       main = "Normal Q-Q Plot of Delivery Charges", 
-       col = "black")
-       qqline(clean_data$delivery_charges, col = "red", lwd = 2)
+qqnorm(clean_data$delivery_charges, 
+main = "Normal Q-Q Plot of Delivery Charges", 
+col = "black")
+qqline(clean_data$delivery_charges, col = "red", lwd = 2)
         \end{lstlisting}
 
         \begin{figure}[H]
             \centering
-            \fbox{\includegraphics[width=0.8\linewidth]{do_thi_7.png}}
+            \fbox{\includegraphics[width=0.8\linewidth]{Image/Chapter_4/do_thi_7.png}}
             \caption{Biểu đồ QQ-Plot kiểm tra phân phối chuẩn.}
             \label{Bieu_do_QQ_Plot}
         \end{figure}
