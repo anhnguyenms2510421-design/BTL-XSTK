@@ -1,7 +1,7 @@
 \section{Thống kê suy diễn}
-\textbf{Bối cảnh và mục tiêu của chương.} Trong thương mại điện tử, chi phí giao hàng là khoản khách hàng phải trả thêm ngoài giá hàng, đồng thời là yếu tố mà cửa hàng có thể điều chỉnh thông qua chính sách giá cước. Biết được chi phí giao hàng phụ thuộc vào những yếu tố nào (mùa vụ, loại hình giao hàng, kho xuất hàng, khoảng cách, mã giảm giá, \ldots) giúp cửa hàng định giá cước hợp lý và dự báo chi phí cho các đơn hàng mới. Vì vậy, trong chương này nhóm sử dụng các phương pháp thống kê suy diễn để đưa ra kết luận cho tổng thể toàn bộ đơn hàng của cửa hàng, nhằm trả lời ba câu hỏi nghiên cứu đã nêu ở phần kiến thức nền.
+\textbf{Bối cảnh và mục tiêu của chương:} Trong thương mại điện tử, chi phí giao hàng là khoản khách hàng phải trả thêm ngoài giá hàng, đồng thời là yếu tố mà cửa hàng có thể điều chỉnh thông qua chính sách giá cước. Biết được chi phí giao hàng phụ thuộc vào những yếu tố nào (mùa vụ, loại hình giao hàng, kho xuất hàng, khoảng cách, mã giảm giá, \ldots) giúp cửa hàng định giá cước hợp lý và dự báo chi phí cho các đơn hàng mới. Vì vậy, trong chương này nhóm sử dụng các phương pháp thống kê suy diễn để đưa ra kết luận cho tổng thể toàn bộ đơn hàng của cửa hàng, nhằm trả lời ba câu hỏi nghiên cứu đã nêu ở phần kiến thức nền.
 
-Nhóm sử dụng bộ dữ liệu \texttt{clean\_data\_full} gồm $n = 500$ đơn hàng (đã chuẩn hóa nhãn và tính lại \texttt{order\_total}, \textbf{chưa} loại ngoại lai của \texttt{order\_total}). Biến phụ thuộc chính là chi phí giao hàng \texttt{delivery\_charges} (USD), được giữ nguyên giá trị gốc. Riêng \texttt{order\_total} có phân phối lệch phải rất mạnh do 18 đơn hàng giá trị cực lớn (lớn nhất khoảng 853\,013 USD, trong khi trung vị chỉ khoảng 11\,294 USD); trong chương này biến đó chỉ tham gia với vai trò biến giải thích. Mức ý nghĩa được dùng xuyên suốt là $\alpha = 0.05$. Mỗi phương pháp dưới đây được trình bày theo bốn phần: \textbf{Mục tiêu}, \textbf{Kết quả}, \textbf{Nhận xét} và \textbf{Kết luận}; toàn bộ tính toán được thực hiện bằng R, đoạn mã và kết quả chạy được đặt trong phần Kết quả của từng mục.
+Nhóm sử dụng bộ dữ liệu \texttt{clean\_data\_full} gồm $n = 500$ đơn hàng (đã chuẩn hóa nhãn và tính lại \texttt{order\_total}, chưa loại ngoại lai của \texttt{order\_total}). Biến phụ thuộc chính là chi phí giao hàng \texttt{delivery\_charges} (USD), được giữ nguyên giá trị gốc. Riêng \texttt{order\_total} có phân phối lệch phải rất mạnh do 18 đơn hàng giá trị cực lớn (lớn nhất khoảng 853\,013 USD, trong khi trung vị chỉ khoảng 11\,294 USD); trong chương này biến đó chỉ tham gia với vai trò biến giải thích. Mức ý nghĩa được dùng xuyên suốt là $\alpha = 0.05$.
 
 \textbf{Mã R chuẩn bị dữ liệu (dùng cho toàn chương):}
 \begin{lstlisting}
@@ -93,9 +93,9 @@ is_happy_customer : p = 0.718  CI = 0.6786 - 0.7574  (np = 359 , n(1-p) = 141 )
 \subsubsection{So sánh phí giao hàng giữa giao nhanh và giao thường}
 \textbf{Mục tiêu:} Kiểm tra xem chi phí giao hàng trung bình của nhóm giao nhanh ($\mu_1$) có cao hơn nhóm giao thường ($\mu_2$) hay không. Hai mẫu độc lập và cỡ mẫu lớn ($n_1 = 249$, $n_2 = 251$, đều $\ge 30$) nên ta áp dụng kiểm định so sánh hai trung bình tổng thể theo công thức (11):
 \begin{itemize}
-    \item Giả thuyết kiểm định: $H_0: \mu_1 = \mu_2$ đối với $H_1: \mu_1 > \mu_2$.
-    \item Thống kê kiểm định: $\displaystyle z_0 = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{\dfrac{s_1^2}{n_1} + \dfrac{s_2^2}{n_2}}}$.
-    \item Quy tắc quyết định: với mức ý nghĩa $\alpha = 5\%$, ta bác bỏ $H_0$ nếu $p\text{-value} = P(Z > z_0) < \alpha$.
+    \item[-] Giả thuyết kiểm định: $H_0: \mu_1 = \mu_2$ đối với $H_1: \mu_1 > \mu_2$.
+    \item[-] Thống kê kiểm định: $\displaystyle z_0 = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{\dfrac{s_1^2}{n_1} + \dfrac{s_2^2}{n_2}}}$.
+    \item[-] Quy tắc quyết định: với mức ý nghĩa $\alpha = 5\%$, ta bác bỏ $H_0$ nếu $p\text{-value} = P(Z > z_0) < \alpha$.
 \end{itemize}
 
 \textbf{Kết quả:} Từ mẫu, $\bar{x}_1 = 85.43$ USD, $s_1 = 13.61$ USD (giao nhanh) và $\bar{x}_2 = 67.96$ USD, $s_2 = 9.07$ USD (giao thường), do đó $z_0 = 16.868$ và $p\text{-value} \approx 3.9 \times 10^{-64}$.
@@ -122,9 +122,9 @@ z0 = 16.86784  p = 3.879417e-64
 \subsubsection{So sánh hai tỷ lệ theo mã giảm giá}
 \textbf{Mục tiêu:} Kiểm tra xem việc đơn hàng có áp dụng mã giảm giá hay không có làm thay đổi tỷ lệ khách hàng hài lòng và tỷ lệ chọn giao nhanh hay không. Chia đơn hàng thành nhóm có mã giảm giá ($n_1 = 396$) và nhóm không có ($n_2 = 104$); ta áp dụng kiểm định so sánh hai tỷ lệ theo công thức (12):
 \begin{itemize}
-    \item Giả thuyết kiểm định: $H_0: p_1 = p_2$ đối với $H_1: p_1 \ne p_2$.
-    \item Tỷ lệ mẫu gộp và thống kê kiểm định: $\displaystyle \hat{p}_c = \frac{x_1 + x_2}{n_1 + n_2}$, \quad $\displaystyle z_0 = \frac{\hat{p}_1 - \hat{p}_2}{\sqrt{\hat{p}_c(1-\hat{p}_c)\left(\dfrac{1}{n_1} + \dfrac{1}{n_2}\right)}}$.
-    \item Quy tắc quyết định: bác bỏ $H_0$ nếu $p\text{-value} < \alpha = 5\%$.
+    \item[-] Giả thuyết kiểm định: $H_0: p_1 = p_2$ đối với $H_1: p_1 \ne p_2$.
+    \item[-] Tỷ lệ mẫu gộp và thống kê kiểm định: $\displaystyle \hat{p}_c = \frac{x_1 + x_2}{n_1 + n_2}$, \quad $\displaystyle z_0 = \frac{\hat{p}_1 - \hat{p}_2}{\sqrt{\hat{p}_c(1-\hat{p}_c)\left(\dfrac{1}{n_1} + \dfrac{1}{n_2}\right)}}$.
+    \item[-] Quy tắc quyết định: bác bỏ $H_0$ nếu $p\text{-value} < \alpha = 5\%$.
 \end{itemize}
 
 \textbf{Kết quả:} Kết quả được tổng hợp ở Bảng~\ref{tab:hai_tyle}.
@@ -184,16 +184,16 @@ sample estimates:
 \end{lstlisting}
 (Khi \texttt{correct = FALSE}, thống kê \texttt{X-squared} của \texttt{prop.test} bằng $z_0^2$, nên $|z_0| = \sqrt{0.6641} = 0.815$ và $\sqrt{2.5231} = 1.588$; dấu âm vì $\hat p_1 < \hat p_2$.)
 
-\textbf{Nhận xét:} Trong mẫu, nhóm không dùng mã giảm giá có tỷ lệ hài lòng và tỷ lệ chọn giao nhanh nhỉnh hơn một chút, nhưng chênh lệch ($4.0$ và $8.8$ điểm phần trăm) nhỏ so với dao động ngẫu nhiên, nhất là khi nhóm không có mã chỉ có $104$ đơn.
+\textbf{Nhận xét:} Trong mẫu, nhóm không dùng mã giảm giá có tỷ lệ hài lòng và tỷ lệ chọn giao nhanh nhỉnh hơn một chút, nhưng chênh lệch ($4.0$ và $8.8$ phần trăm) nhỏ so với thay đổi ngẫu nhiên, nhất là khi nhóm không có mã chỉ có $104$ đơn.
 
 \textbf{Kết luận:} Cả hai $p\text{-value} > 0.05$ nên ta chưa đủ cơ sở bác bỏ $H_0$: chưa có bằng chứng cho thấy mã giảm giá làm thay đổi tỷ lệ khách hàng hài lòng hay tỷ lệ chọn giao nhanh.
 
 \subsubsection{Tương quan giữa phí giao hàng và các biến định lượng}\label{sec:pearson}
 \textbf{Mục tiêu:} Đánh giá mức độ liên hệ tuyến tính giữa chi phí giao hàng với khoảng cách đến kho gần nhất, tổng giá trị đơn hàng và mức chiết khấu. Ta tính hệ số tương quan mẫu Pearson $r$ theo công thức (7) và kiểm định theo công thức (8):
 \begin{itemize}
-    \item Giả thuyết kiểm định: $H_0: \rho = 0$ đối với $H_1: \rho \ne 0$.
-    \item Thống kê kiểm định: $\displaystyle t_0 = \frac{r\sqrt{n-2}}{\sqrt{1-r^2}} \sim t(n-2)$.
-    \item Quy tắc quyết định: bác bỏ $H_0$ nếu $p\text{-value} < \alpha = 5\%$.
+    \item[-] Giả thuyết kiểm định: $H_0: \rho = 0$ đối với $H_1: \rho \ne 0$.
+    \item[-] Thống kê kiểm định: $\displaystyle t_0 = \frac{r\sqrt{n-2}}{\sqrt{1-r^2}} \sim t(n-2)$.
+    \item[-] Quy tắc quyết định: bác bỏ $H_0$ nếu $p\text{-value} < \alpha = 5\%$.
 \end{itemize}
 
 \textbf{Kết quả:} Kết quả được tổng hợp ở Bảng~\ref{tab:pearson}.
@@ -234,7 +234,7 @@ So don co khoang cach > 10 km: 9
 \subsection{Phân tích phương sai 2 nhân tố (Two-Way ANOVA) và So sánh bội}\label{sec:anova}
 
 \subsubsection{Mục tiêu và Đặt giả thuyết}
-\textbf{Mục tiêu:} Đánh giá ảnh hưởng của mùa vụ (nhân tố $A$: Spring, Summer, Autumn, Winter, $a = 4$ mức), kho hàng gần nhất (nhân tố $B$: Bakers, Nickolson, Thompson, $b = 3$ mức) và hiệu ứng tương tác giữa chúng lên chi phí giao hàng. Mô hình ANOVA hai nhân tố có tương tác theo công thức (13):
+\textbf{Mục tiêu:} Đánh giá ảnh hưởng của mùa (nhân tố $A$: Spring, Summer, Autumn, Winter, $a = 4$ mức), kho hàng gần nhất (nhân tố $B$: Bakers, Nickolson, Thompson, $b = 3$ mức) và hiệu ứng tương tác giữa chúng lên chi phí giao hàng. Mô hình ANOVA hai nhân tố có tương tác theo công thức (13):
 $$ x_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \varepsilon_{ijk}, \qquad \varepsilon_{ijk} \sim N(0, \sigma^2). $$
 Ba cặp giả thuyết được kiểm định:
 \begin{itemize}
@@ -247,9 +247,9 @@ Quy tắc quyết định: với mỗi nguồn biến thiên, nếu $p\text{-val
 \subsubsection{Kiểm tra giả định mô hình}
 \textbf{Kết quả kiểm tra:} Ba giả định của mô hình ANOVA được kiểm tra như sau.
 \begin{itemize}
-    \item \textbf{Tính độc lập:} Mỗi dòng dữ liệu là một đơn hàng riêng biệt, không có quan sát lặp trên cùng một đối tượng; giả định được chấp nhận theo cách thu thập dữ liệu.
-    \item \textbf{Phân phối chuẩn của phần dư (Shapiro-Wilk):} $W = 0.9907$, $p\text{-value} = 0.0031 < 0.05$. Đồ thị Q-Q Plot (Hình~\ref{fig:qq}) cho thấy các điểm bám sát đường chuẩn ở vùng giữa và chỉ lệch nhẹ ở hai đuôi.
-    \item \textbf{Đồng nhất phương sai (Levene):} $F = 6.44$, $p\text{-value} = 5.1 \times 10^{-10} < 0.05$. Thiết kế cũng không cân bằng (cỡ ô từ 26 đến 52 đơn).
+    \item[-] \textbf{Tính độc lập:} Mỗi dòng dữ liệu là một đơn hàng riêng biệt, không có quan sát lặp trên cùng một đối tượng; giả định được chấp nhận theo cách thu thập dữ liệu.
+    \item[-] \textbf{Phân phối chuẩn của phần dư (Shapiro-Wilk):} $W = 0.9907$, $p\text{-value} = 0.0031 < 0.05$. Đồ thị Q-Q Plot (Hình~\ref{fig:qq}) cho thấy các điểm bám tương đối sát đường chuẩn ở vùng giữa và chỉ lệch nhẹ ở hai đuôi.
+    \item[-] \textbf{Đồng nhất phương sai (Levene):} $F = 6.44$, $p\text{-value} = 5.1 \times 10^{-10} < 0.05$. Thiết kế cũng không cân bằng (cỡ ô từ 26 đến 52 đơn).
 \end{itemize}
 
 \begin{figure}[H]
@@ -262,7 +262,7 @@ Quy tắc quyết định: với mỗi nguồn biến thiên, nếu $p\text{-val
 \textbf{Mã R:}
 \begin{lstlisting}
 m_aov <- aov(delivery_charges ~ season * nearest_warehouse, data = dat)
-print(table(dat$season, dat$nearest_warehouse))   # thiet ke KHONG can bang
+print(table(dat$season, dat$nearest_warehouse))   # thiet ke khong can bang
 res <- resid(m_aov)
 print(shapiro.test(res))
 png("qqplot_anova.png")
@@ -291,7 +291,7 @@ group  11  6.4355 5.142e-10 ***
 
 \textbf{Nhận xét:} Hai giả định về phân phối chuẩn và đồng nhất phương sai không được thỏa mãn chặt chẽ ($p\text{-value} < 0.05$). Với $n = 500$, kiểm định Shapiro-Wilk rất nhạy với những lệch nhỏ khỏi phân phối chuẩn, và đồ thị Q-Q chỉ cho thấy lệch nhẹ ở hai đuôi.
 
-\textbf{Kết luận:} Theo yêu cầu của giảng viên, khi các giả định không được thỏa mãn thì vẫn tiến hành phân tích. Nhóm ghi nhận các vi phạm trên và tiếp tục thực hiện ANOVA; các kết luận ở các mục sau cần được hiểu với lưu ý này.
+\textbf{Kết luận:} Theo yêu cầu khi các giả định không được thỏa mãn thì vẫn tiến hành phân tích. Nhóm ghi nhận các vi phạm trên và tiếp tục thực hiện ANOVA.
 
 \subsubsection{Kết quả phân tích ANOVA, Nhận xét và Kết luận}
 \textbf{Kết quả:} Bảng ANOVA thu được từ R (Bảng~\ref{tab:anova}).
@@ -337,12 +337,12 @@ Residuals                488  76001     156
 
 \textbf{Nhận xét:} Theo quy tắc đọc kết quả, ta xét tương tác trước.
 \begin{itemize}
-    \item \textbf{Tương tác:} $Pr(>F) = 0.591 > 0.05$, chưa đủ cơ sở bác bỏ $H_0$. Các đường trong Hình~\ref{fig:int} có hình dạng tương tự nhau (cùng đạt đỉnh ở mùa Xuân và thấp nhất ở mùa Thu/Đông); chúng cắt nhau ở khoảng giữa mùa Xuân và mùa Hạ, nhưng chênh lệch giữa các kho trong cùng một mùa chỉ khoảng 1--4 USD, nhỏ so với độ lệch chuẩn khoảng 14.5 USD, phù hợp với kết quả kiểm định. Vì vậy có thể diễn giải các hiệu ứng chính.
-    \item \textbf{Mùa vụ:} $Pr(>F) < 2 \times 10^{-16}$, bác bỏ $H_0$.
-    \item \textbf{Kho hàng:} $Pr(>F) = 0.880 > 0.05$, chưa đủ cơ sở bác bỏ $H_0$.
+    \item[-] \textbf{Tương tác:} $Pr(>F) = 0.591 > 0.05$, chưa đủ cơ sở bác bỏ $H_0$. Các đường trong Hình~\ref{fig:int} có hình dạng tương tự nhau (cùng đạt đỉnh ở mùa Xuân và thấp nhất ở mùa Thu/Đông); chúng cắt nhau ở khoảng giữa mùa Xuân và mùa Hạ, nhưng chênh lệch giữa các kho trong cùng một mùa chỉ khoảng 1--4 USD. Vì vậy có thể diễn giải các hiệu ứng chính.
+    \item[-] \textbf{Mùa:} $Pr(>F) < 2 \times 10^{-16}$, bác bỏ $H_0$.
+    \item[-] \textbf{Kho hàng:} $Pr(>F) = 0.880 > 0.05$, chưa đủ cơ sở bác bỏ $H_0$.
 \end{itemize}
 
-\textbf{Kết luận:} Không có hiệu ứng tương tác giữa mùa vụ và kho hàng. Mùa vụ có tác động đến chi phí giao hàng, còn vị trí kho hàng không tạo ra sự khác biệt đáng kể về chi phí khi chỉ xét hai nhân tố này.
+\textbf{Kết luận:} Không có hiệu ứng tương tác giữa mùa và kho hàng. Mùa có tác động đến chi phí giao hàng, còn vị trí kho hàng không tạo ra sự khác biệt đáng kể về chi phí khi chỉ xét hai nhân tố này.
 
 \subsubsection{So sánh bội (Tukey HSD)}
 \textbf{Mục tiêu:} Do tương tác không có ý nghĩa, ta ước lượng lại mô hình cộng tính (chỉ gồm hai hiệu ứng chính) và dùng kiểm định hậu định Tukey HSD cho nhân tố có ý nghĩa và có từ 3 mức trở lên là \texttt{season}, nhằm chỉ ra cụ thể cặp mùa nào có chi phí trung bình khác nhau.
@@ -464,11 +464,11 @@ AIC day du = 3198.743  AIC toi uu = 3196.43
 
 \textbf{Kết quả:} Các kết quả kiểm tra ở Hình~\ref{fig:diag} và phần kết quả chạy; mọi kiểm tra đều chạy trên \texttt{lm\_opt}.
 \begin{itemize}
-    \item \textbf{Tuyến tính và kỳ vọng sai số bằng 0:} Trong đồ thị Residuals vs Fitted (Hình~\ref{fig:diag}) đường làm trơn nằm gần $e_i = 0$, chỉ cong nhẹ.
-    \item \textbf{Phương sai sai số đồng nhất:} Đồ thị Scale-Location không có hình phễu; kiểm định Breusch--Pagan cho $BP = 13.05$, $df = 8$, $p = 0.110 > 0.05$.
-    \item \textbf{Phân phối chuẩn phần dư:} Shapiro--Wilk $W = 0.979$, $p = 1.28 \times 10^{-6} < 0.05$; Q-Q Plot cho thấy lệch chủ yếu ở hai đuôi.
-    \item \textbf{Đa cộng tuyến:} VIF của \texttt{coupon\_discount}, \texttt{is\_expedited\_delivery}, \texttt{is\_happy\_customer} lần lượt là $1.006$, $1.013$, $1.014$; $GVIF^{1/(2\cdot df)}$ của \texttt{season} và \texttt{nearest\_warehouse} lần lượt là $1.004$ và $1.003$.
-    \item \textbf{Điểm ảnh hưởng mạnh (Cook's Distance):} Với ngưỡng $D_i > 4/n$ có 29 quan sát vượt ngưỡng, giá trị lớn nhất là $D = 0.046$ (quan sát 468).
+    \item[-] \textbf{Tuyến tính và kỳ vọng sai số bằng 0:} Trong đồ thị Residuals vs Fitted (Hình~\ref{fig:diag}) đường làm trơn nằm gần $e_i = 0$, chỉ cong nhẹ.
+    \item[-] \textbf{Phương sai sai số đồng nhất:} Đồ thị Scale-Location không có hình phễu; kiểm định Breusch--Pagan cho $BP = 13.05$, $df = 8$, $p = 0.110 > 0.05$.
+    \item[-] \textbf{Phân phối chuẩn phần dư:} Shapiro--Wilk $W = 0.979$, $p = 1.28 \times 10^{-6} < 0.05$; Q-Q Plot cho thấy lệch chủ yếu ở hai đuôi.
+    \item[-] \textbf{Đa cộng tuyến:} VIF của \texttt{coupon\_discount}, \texttt{is\_expedited\_delivery}, \texttt{is\_happy\_customer} lần lượt là $1.006$, $1.013$, $1.014$; $GVIF^{1/(2\cdot df)}$ của \texttt{season} và \texttt{nearest\_warehouse} lần lượt là $1.004$ và $1.003$.
+    \item[-] \textbf{Điểm ảnh hưởng mạnh (Cook's Distance):} Với ngưỡng $D_i > 4/n$ có 29 quan sát vượt ngưỡng, giá trị lớn nhất là $D = 0.046$ (quan sát 468).
 \end{itemize}
 
 \begin{figure}[H]
@@ -510,7 +510,7 @@ Cook's D > 4/n: 29  | max = 0.04579479  | dong: 468
 
 \textbf{Nhận xét:} Giả định tuyến tính, phương sai sai số đồng nhất và không đa cộng tuyến được thỏa mãn (các hệ số VIF đều gần $1$, rất nhỏ so với ngưỡng $5$). Phần dư không chuẩn tuyệt đối. Có 29 quan sát vượt ngưỡng $4/n$, nhưng giá trị $D$ lớn nhất chỉ là $0.046$, xa mức $1$, nên không có điểm nào ảnh hưởng nghiêm trọng đến các hệ số hồi quy.
 
-\textbf{Kết luận:} Theo yêu cầu của giảng viên, khi một giả định (phân phối chuẩn của phần dư) không được thỏa mãn thì vẫn tiếp tục xây dựng hồi quy; với $n = 500$, các suy diễn về hệ số vẫn có thể xem là khá vững nhờ định lý giới hạn trung tâm.
+\textbf{Kết luận:} Theo yêu cầu khi một giả định (phân phối chuẩn của phần dư) không được thỏa mãn thì vẫn tiếp tục xây dựng hồi quy; với $n = 500$, các suy diễn về hệ số vẫn có thể xem là khá vững nhờ định lý giới hạn trung tâm.
 
 \subsubsection{Phương trình hồi quy, Nhận xét và Kết luận}
 \textbf{Kết quả:} Bảng hệ số của mô hình tối ưu (Bảng~\ref{tab:hq}) và phương trình hồi quy ước lượng.
@@ -540,12 +540,12 @@ Cook's D > 4/n: 29  | max = 0.04579479  | dong: 468
 
 \textbf{Nhận xét:}
 \begin{itemize}
-    \item \textbf{Độ phù hợp:} Mô hình giải thích được $83.68\%$ biến thiên của chi phí giao hàng ($R^2_{adj}$); $p\text{-value}$ của kiểm định F nhỏ hơn $\alpha$ nên bác bỏ $H_0$, mô hình có ý nghĩa thống kê.
-    \item \textbf{Giao hàng nhanh:} giữ nguyên các biến khác, chi phí tăng trung bình $18.36$ USD (tính chung cho các mùa).
-    \item \textbf{Mùa vụ:} so với mùa Thu, chi phí cao hơn $17.50$ USD (Xuân), $10.40$ USD (Hạ) và thấp hơn $2.29$ USD (Đông).
-    \item \textbf{Kho hàng:} kho Nickolson rẻ hơn kho Bakers khoảng $2.33$ USD; mức chênh nhỏ nhưng có ý nghĩa. Mức chênh này không xuất hiện trong ANOVA (mục~\ref{sec:anova}) vì khi chưa kiểm soát giao hàng nhanh và mức hài lòng, phương sai sai số còn rất lớn ($156$ so với $34$ ở mô hình này), làm che mờ hiệu ứng nhỏ.
-    \item \textbf{Mã giảm giá:} hệ số không có ý nghĩa ở mức 5\% ($p = 0.066$); chưa đủ cơ sở cho rằng mã giảm giá ảnh hưởng đến chi phí giao hàng.
-    \item \textbf{Mức hài lòng:} đơn có \texttt{is\_happy\_customer = TRUE} có chi phí cao hơn trung bình $14.05$ USD. Đây chỉ là mối liên hệ thống kê, không phải quan hệ nhân quả; hơn nữa mức hài lòng chỉ biết sau khi giao hàng nên biến này không dùng được để dự báo chi phí của đơn mới tại thời điểm đặt hàng (xem mục~\ref{sec:tt}).
+    \item[-] \textbf{Độ phù hợp:} Mô hình giải thích được $83.68\%$ biến thiên của chi phí giao hàng ($R^2_{adj}$); $p\text{-value}$ của kiểm định F nhỏ hơn $\alpha$ nên bác bỏ $H_0$, mô hình có ý nghĩa thống kê.
+    \item[-] \textbf{Giao hàng nhanh:} giữ nguyên các biến khác, chi phí tăng trung bình $18.36$ USD (tính chung cho các mùa).
+    \item[-] \textbf{Mùa:} so với mùa Thu, chi phí cao hơn $17.50$ USD (Xuân), $10.40$ USD (Hạ) và thấp hơn $2.29$ USD (Đông).
+    \item[-] \textbf{Kho hàng:} kho Nickolson rẻ hơn kho Bakers khoảng $2.33$ USD; mức chênh nhỏ nhưng có ý nghĩa. Mức chênh này không xuất hiện trong ANOVA (mục~\ref{sec:anova}) vì khi chưa kiểm soát giao hàng nhanh và mức hài lòng, phương sai sai số còn rất lớn ($156$ so với $34$ ở mô hình này), làm che mờ hiệu ứng nhỏ.
+    \item[-] \textbf{Mã giảm giá:} hệ số không có ý nghĩa ở mức 5\% ($p = 0.066$); chưa đủ cơ sở cho rằng mã giảm giá ảnh hưởng đến chi phí giao hàng.
+    \item[-] \textbf{Mức hài lòng:} đơn có \texttt{is\_happy\_customer = TRUE} có chi phí cao hơn trung bình $14.05$ USD. Đây chỉ là mối liên hệ thống kê, không phải quan hệ nhân quả; hơn nữa mức hài lòng chỉ biết sau khi giao hàng nên biến này không dùng được để dự báo chi phí của đơn mới tại thời điểm đặt hàng (xem mục~\ref{sec:tt}).
 \end{itemize}
 
 \textbf{Kết luận:} Chi phí giao hàng phụ thuộc chủ yếu vào loại hình giao hàng (giao nhanh), mùa vụ (Xuân cao nhất) và kho xuất hàng (Nickolson thấp hơn Bakers); khoảng cách và tổng giá trị đơn hàng không ảnh hưởng đáng kể.
@@ -581,7 +581,7 @@ Cook's D > 4/n: 29  | max = 0.04579479  | dong: 468
 
 \textbf{Mã R:}
 \begin{lstlisting}
-# Mo hinh KHONG dung is_happy_customer (bien chi biet sau khi giao hang)
+# Mo hinh khon dung is_happy_customer (bien chi biet sau khi giao hang)
 lm_nohappy <- step(update(lm_full, . ~ . - is_happy_customer), direction = "both", trace = 0)
 print(summary(lm_nohappy))
 
@@ -643,7 +643,7 @@ MAE      6.847 0.444
 R2_test  0.630 0.054
 \end{lstlisting}
 
-\textbf{Nhận xét:} Độ lệch chuẩn của chi phí giao hàng là $s = 14.48$ USD. Với \texttt{set.seed(42)}, RMSE của mô hình cuối là $4.876$ USD, chỉ bằng khoảng $34\%$ giá trị này, và $R^2_{test} = 0.886$ cao hơn $R^2$ trên toàn mẫu ($0.839$). Tuy nhiên lần chia này khá thuận lợi: kết quả của \texttt{set.seed(42)} cách mức trung bình khoảng $2$ độ lệch chuẩn (RMSE: $4.876$ so với $5.837 \pm 0.506$). Theo trung bình $200$ lần chia, RMSE là $5.84$ USD (khoảng $40\%$ độ lệch chuẩn) và $R^2_{test} \approx 0.83$, rất gần $R^2$ trên toàn mẫu, nên số liệu trung bình $200$ lần chia đáng tin cậy hơn để báo cáo. Khi bỏ \texttt{is\_happy\_customer}, $R^2_{test}$ giảm từ khoảng $0.83$ xuống khoảng $0.63$ và RMSE tăng từ $5.84$ lên $8.63$ USD.
+\textbf{Nhận xét:} Độ lệch chuẩn của chi phí giao hàng là $s = 14.48$ USD. Với \texttt{set.seed(42)}, RMSE của mô hình cuối là $4.876$ USD, chỉ bằng khoảng $34\%$ giá trị này, và $R^2_{test} = 0.886$ cao hơn $R^2$ trên toàn mẫu ($0.839$). Tuy nhiên lần chia này khá thuận lợi: kết quả của \texttt{set.seed(42)} cách mức trung bình khoảng $2$ độ lệch chuẩn (RMSE: $4.876$ so với $5.837 \pm 0.506$). Theo trung bình $200$ lần chia, RMSE là $5.84$ USD (khoảng $40\%$ độ lệch chuẩn) và $R^2_{test} \approx 0.83$, rất gần $R^2$ trên toàn mẫu, nên số liệu trung bình $200$ lần chia đáng tin cậy hơn. Khi bỏ \texttt{is\_happy\_customer}, $R^2_{test}$ giảm từ khoảng $0.83$ xuống khoảng $0.63$ và RMSE tăng từ $5.84$ lên $8.63$ USD.
 
 \textbf{Kết luận:} Mô hình cuối giảm đáng kể sai số so với việc dự báo bằng trung bình và không có dấu hiệu quá khớp. Tuy nhiên vì mức hài lòng chưa biết tại thời điểm đặt hàng, mô hình thực sự dùng được để dự báo chi phí cho đơn hàng mới là mô hình không có \texttt{is\_happy\_customer} (gồm \texttt{season} và \texttt{is\_expedited\_delivery}), với $R^2_{test} \approx 0.63$ và RMSE khoảng $8.6$ USD.
 
