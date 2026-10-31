@@ -1,20 +1,107 @@
-\usepackage[utf8]{vietnam}
-\usepackage{graphicx}
-\usepackage{geometry}
+% =====================================================================
+%  Package/package.tex  -  PACKAGE DÙNG CHUNG (nạp 1 lần duy nhất)
+%  Quy ước:
+%   - Package dùng cho >= 2 chapter (hoặc main.tex) đặt ở file này.
+%   - Package/cấu hình chỉ 1 chapter dùng đặt ở Package/Chapter_N/package.tex.
+%   - Không \usepackage lại package chung trong file của chapter.
+% =====================================================================
+
+% ---------- Ngôn ngữ & mã hoá (thay cho vietnam + inputenc/fontenc rải rác) ----------
+\usepackage[T5]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[vietnamese]{babel}
-\usepackage{tikz}
-\usetikzlibrary{calc}
-\usepackage[backend=biber, style=numeric, sorting=none, language=english]{biblatex}
-\addbibresource{reference.bib}
 
-\usepackage{hyperref}
-\hypersetup{
-	colorlinks=true,
-	linkcolor=black,
-	urlcolor=blue
+% ---------- Bố cục trang: canh lề cấu hình 1 chỗ duy nhất ----------
+% (a4paper đã khai báo ở \documentclass nên không lặp lại)
+\usepackage[margin=2cm]{geometry}
+
+% ---------- Hình ảnh, màu, TikZ ----------
+\usepackage{graphicx}             % Ch3, Ch4, Ch5, main (logo)
+\usepackage{xcolor}               % màu listings (Ch3, Ch4, Ch5), TikZ
+\usepackage{tikz}                 % main.tex (viền trang bìa)
+\usetikzlibrary{calc}
+
+% ---------- Toán ----------
+\usepackage{amsmath, amssymb}     % Ch2, Ch3, Ch5
+
+% ---------- Hình/bảng nổi, danh sách, giãn đoạn ----------
+\usepackage{float}                % [H]: Ch1, Ch4, Ch5
+\usepackage{enumitem}             % Ch2 (label=, leftmargin=*) + định dạng itemize/enumerate toàn bài
+\setlist[itemize]{label=-, topsep=4pt, itemsep=3pt}
+\setlist[enumerate]{topsep=4pt, itemsep=3pt}
+\usepackage{parskip}              % giãn đoạn toàn bài (parindent = 0)
+
+% ---------- Mã nguồn (listings): 1 định dạng chuẩn cho TOÀN BỘ chapter ----------
+\usepackage{listings}
+\definecolor{mybackground}{HTML}{FFFFFF}
+\definecolor{mykeyword}{HTML}{000000}
+\definecolor{mystring}{HTML}{990099}
+\definecolor{mycomment}{HTML}{008000}
+
+% Style nền: đặt lại mọi thuộc tính về giá trị xác định
+\lstdefinestyle{lstbase}{
+    language={},
+    basicstyle=\ttfamily\small,
+    keywordstyle=\bfseries,
+    commentstyle=\itshape,
+    stringstyle={},
+    numbers=none,
+    numberstyle=\tiny,
+    stepnumber=1,
+    numbersep=10pt,
+    backgroundcolor={},
+    frame=single,
+    rulecolor={},
+    xleftmargin=0pt,
+    xrightmargin=0pt,
+    framexleftmargin=0pt,
+    aboveskip=\medskipamount,
+    belowskip=\medskipamount,
+    columns=fullflexible,   % giữ hiệu lực thực tế trước đây; copy code từ PDF không bị tách ký tự
+    keepspaces=true,
+    breaklines=true,
+    breakatwhitespace=false,
+    showspaces=false,
+    showtabs=false,
+    showstringspaces=false,
+    tabsize=2,
+    captionpos=t,
+    escapeinside={}{}
 }
 
+% Style chuẩn dùng cho mọi \begin{lstlisting} (Ch3, Ch4, Ch5, ...)
+\lstdefinestyle{lstmain}{
+    style=lstbase,
+    language=R,
+    backgroundcolor=\color{mybackground},
+    basicstyle=\ttfamily\small\color{black},
+    keywordstyle=\color{mykeyword}\bfseries,
+    stringstyle=\color{mystring},
+    commentstyle=\color{mycomment}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=10pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    frame=single,
+    rulecolor=\color{black},
+    tabsize=2,
+    captionpos=b,
+    breaklines=true,
+    breakatwhitespace=false,
+    escapeinside={\%*}{*)},
+    xleftmargin=15pt,
+    framexleftmargin=15pt
+}
+\lstset{style=lstmain}
+
+% ---------- Tài liệu tham khảo ----------
+\usepackage[backend=biber, style=numeric, sorting=none, language=english]{biblatex}
+\addbibresource{reference/reference.bib}
+
+% ---------- Package riêng của từng chapter ----------
 \input{Package/Chapter_1/package.tex}
 \input{Package/Chapter_2/package.tex}
 \input{Package/Chapter_3/package.tex}
@@ -22,3 +109,11 @@
 \input{Package/Chapter_5/package.tex}
 \input{Package/Chapter_6/package.tex}
 \input{Package/Chapter_7/package.tex}
+
+% ---------- hyperref: luôn nạp CUỐI CÙNG ----------
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black,
+	urlcolor=blue
+}

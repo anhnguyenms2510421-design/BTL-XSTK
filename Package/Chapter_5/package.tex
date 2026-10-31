@@ -1,37 +1,13 @@
-\usepackage[utf8]{inputenc}
-\usepackage[T5]{fontenc}
-\usepackage{amsmath, amssymb}
-\usepackage{graphicx}
-\usepackage{float}
-\usepackage{geometry}
-\geometry{a4paper, left=2.5cm, right=2cm, top=2cm, bottom=2cm}
-\usepackage{indentfirst}
+% Chapter 5 - Thống kê suy diễn
+% Dùng chung (nạp ở Package/package.tex): amsmath, graphicx, float [H], listings (lstmain), xcolor, enumitem
 \usepackage{setspace}
-\usepackage{xcolor}
-\usepackage{listings}
-\onehalfspacing
+\onehalfspacing   % LƯU Ý: đặt ở preamble nên giãn dòng 1.5 áp dụng cho TOÀN BÀI (giữ nguyên như cũ)
 
-% Định dạng khung mã R (mã trong khung chỉ dùng ký tự ASCII để tránh lỗi mã hóa)
-\lstdefinestyle{rcode}{
-    language=R,
-    basicstyle=\ttfamily\footnotesize,
-    commentstyle=\color{gray}\itshape,
-    keywordstyle=\color{blue},
-    stringstyle=\color{teal},
-    breaklines=true,
-    breakatwhitespace=false,
-    columns=fullflexible,
-    keepspaces=true,
-    frame=single,
-    rulecolor=\color{black!30},
-    backgroundcolor=\color{black!3},
-    xleftmargin=0.3cm,
-    xrightmargin=0.2cm,
-    aboveskip=0.6em,
-    belowskip=0.6em
-}
+% Khung hiển thị KẾT QUẢ R (dùng: \begin{lstlisting}[style=rout]); code R dùng style chuẩn lstmain ở root
 \lstdefinestyle{rout}{
     language={},
+    numbers=none,
+    framexleftmargin=0pt,
     basicstyle=\ttfamily\scriptsize,
     breaklines=true,
     columns=fullflexible,
@@ -44,4 +20,3 @@
     aboveskip=0.6em,
     belowskip=0.6em
 }
-\lstset{style=rcode}
