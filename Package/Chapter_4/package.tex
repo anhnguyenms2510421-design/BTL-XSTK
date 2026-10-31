@@ -1,3 +1,52 @@
-% Chapter 4 - Thống kê mô tả
-% Không cần package riêng. Dùng chung (nạp ở Package/package.tex):
-%   listings (style lstmain), xcolor, graphicx, float [H], enumitem
+\usepackage[utf8]{vietnam}
+\usepackage{graphicx}     
+\usepackage{subcaption}
+\usepackage{amsmath}      
+\usepackage{float}
+\usepackage{listings}      
+\usepackage{xcolor}  
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{1ex plus 1ex minus .2ex}{1ex plus .2ex}
+\titlespacing*{\subsection}{0pt}{1ex plus 1ex minus .2ex}{1ex plus .2ex}
+\usepackage[margin=2cm]{geometry}
+\lstset{
+    language=R,
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{green!60!black}
+}
+\usepackage{listings}
+\usepackage{xcolor}
+\definecolor{mybackground}{HTML}{FFFFFF} 
+\definecolor{mykeyword}{HTML}{000000} 
+\definecolor{mystring}{HTML}{990099} 
+\definecolor{mycomment}{HTML}{008000}
+
+\lstset{
+    language=R,
+    backgroundcolor=\color{mybackground},
+    basicstyle=\ttfamily\footnotesize\color{black},
+    aboveskip=5pt,
+    belowskip=5pt,
+    keywordstyle=\color{mykeyword}\bfseries,
+    stringstyle=\color{mystring},
+    commentstyle=\color{mycomment}\itshape, 
+    numbers=left, 
+    numberstyle=\tiny\color{gray}, 
+    stepnumber=1,
+    numbersep=10pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    frame=single, 
+    rulecolor=\color{black}, 
+    tabsize=2,
+    captionpos=b,
+    breaklines=true,
+    breakatwhitespace=false,
+    escapeinside={\%*}{*)},
+    xleftmargin=15pt, 
+    framexleftmargin=15pt
+}
