@@ -24,14 +24,14 @@ print(des_table)
         \fbox{\includegraphics[width=0.9\linewidth]{Image/Chapter_4/hinh_1.jpg} }
         \caption{Kết quả bảng thống kê mô tả các biến định lượng.}
         \label{Bang_thong_ke_mo_ta}
-    \end{figure}\\
-    Mặc dù trong clean\_data thì customer\_lat và customer\_long là hai biến định lượng, nhưng ta không đưa vào bảng để tính 5 thông số thống kê cơ bản (Mean, Median, SD, Min, Max) vì:\\
+    \end{figure}
+    Mặc dù trong clean\_data thì customer\_lat và customer\_long là hai biến định lượng, nhưng ta không đưa vào bảng để tính 5 thông số thống kê cơ bản (Mean, Median, SD, Min, Max) vì:
     
         \textbf{Ý nghĩa thống kê thực tiễn:} Việc tính trung bình (Mean) hay độ lệch chuẩn (SD) của vĩ độ và kinh độ khách hàng không mang lại bất kỳ ý nghĩa phân tích kinh tế hay logistics nào.\\
         
         \textbf{Vai trò riêng:} Các biến customer\_lat và customer\_long không dùng để tính toán các đại lượng đặc trưng trung tâm hay phân tán, mà chỉ được giữ lại chủ yếu để kiểm tra sự phân bố không gian và vẽ các biểu đồ (thường liên quan đến biến distance\_to\_nearest\_warehouse).  
 \subsection{Thống kê số lượng cho các biến phân loại}
-    Tiếp theo, ta lập bảng thống kê số lượng (tần số) để xem xét sự phân bố đơn hàng theo các biến định tính: mùa vụ (season), trạng thái giao hàng nhanh (is\_expedited\_delivery), kho hàng (nearest\_warehouse) và mức độ hài lòng của khách hàng (is\_happy\_customer).
+    Tiếp theo, ta lập bảng thống kê số lượng (tần số) để xem xét sự phân bố đơn hàng theo các biến định tính: mùa vụ (season), trạng thái giao hàng nhanh (is\_expedited\_delivery), kho hàng (nearest\_warehouse) và mức độ hài lòng của khách hàng (is\_happy\_customer). \\
     Ta sử dụng lệnh:
     \begin{enumerate}
         \item table(): lập bảng tần số đếm số lượng phần tử thuộc mỗi nhóm phân loại.
@@ -50,12 +50,12 @@ print(freq_happy)
     \end{lstlisting}
     \end{minipage}
     \textbf{Kết quả thu được:}\\
-    Dữ liệu số lượng được phân bổ cụ thể cho từng hạng mục:\\
+    Dữ liệu số lượng được phân bổ cụ thể cho từng hạng mục:
     
     \textbf{Mùa:}
     \begin{figure}[H]
         \centering
-        \fbox{\includegraphics[width=0.5\linewidth]{Image/Chapter_4/hinh_2.png}}
+        \fbox{\includegraphics[width=0.4\linewidth]{Image/Chapter_4/hinh_2.png}}
         \caption{Kết quả số lượng theo mùa.}
         \label{Bang_thong_ke_mo_ta}
     \end{figure}
@@ -65,7 +65,7 @@ print(freq_happy)
     \textbf{Trạng thái giao hàng nhanh:}
     \begin{figure}[H]
         \centering
-        \fbox{\includegraphics[width=0.2\linewidth]{Image/Chapter_4/hinh_3.png}}
+        \fbox{\includegraphics[width=0.15\linewidth]{Image/Chapter_4/hinh_3.png}}
         \caption{Kết quả số lượng theo trạng thái giao hàng nhanh.}
         \label{Bang_thong_ke_mo_ta}
     \end{figure}
@@ -75,7 +75,7 @@ print(freq_happy)
     \textbf{Kho gần nhất:}
     \begin{figure}[H]
         \centering
-        \fbox{\includegraphics[width=0.5\linewidth]{Image/Chapter_4/hinh_4.png}}
+        \fbox{\includegraphics[width=0.4\linewidth]{Image/Chapter_4/hinh_4.png}}
         \caption{Kết quả số lượng theo kho gần nhất.}
         \label{Bang_thong_ke_mo_ta}
     \end{figure}
@@ -85,7 +85,7 @@ print(freq_happy)
     \textbf{Mức độ hài lòng:}
     \begin{figure}[H]
         \centering
-        \fbox{\includegraphics[width=0.2\linewidth]{Image/Chapter_4/hinh_5.png}}
+        \fbox{\includegraphics[width=0.15\linewidth]{Image/Chapter_4/hinh_5.png}}
         \caption{Kết quả số lượng theo mức độ hài lòng.}
         \label{Bang_thong_ke_mo_ta}
     \end{figure}
@@ -102,7 +102,7 @@ hist(clean_data$delivery_charges, main="Histogram of Delivery Charges", col="lig
 
         \begin{figure}[H]
             \centering
-            \fbox{\includegraphics[width=0.65\linewidth]{do_thi_1.png}}
+            \fbox{\includegraphics[width=0.6\linewidth]{Image/Chapter_4/do_thi_1.png}}
             \caption{Biểu đồ Histogram của chi phí giao hàng.}
             \label{Bieu_do_Histogram_Barplot}
         \end{figure}
@@ -116,7 +116,7 @@ barplot(freq_warehouse, main="Orders by Warehouse", col="lightgreen")
 
         \begin{figure}[H]
             \centering
-            \fbox{\includegraphics[width=0.65\linewidth]{do_thi_2.png}}
+            \fbox{\includegraphics[width=0.6\linewidth]{Image/Chapter_4/do_thi_2.png}}
             \caption{Biểu đồ Barplot của số lượng đơn hàng tại các kho.}
             \label{Bieu_do_Barplot}
         \end{figure}
@@ -130,7 +130,7 @@ boxplot(delivery_charges ~ season, data=clean_data, main="Delivery Charges by Se
 
         \begin{figure}[H]
             \centering
-            \fbox{\includegraphics[width=0.65\linewidth]{do_thi_3.png}}
+            \fbox{\includegraphics[width=0.65\linewidth]{Image/Chapter_4/do_thi_3.png}}
             \caption{Biểu đồ Boxplot theo mùa.}
             \label{Bieu_do_Tuong_quan}
         \end{figure}
@@ -144,7 +144,7 @@ boxplot(delivery_charges ~ is_expedited_delivery, data=clean_data, main="Deliver
 
         \begin{figure}[H]
             \centering
-            \fbox{\includegraphics[width=0.6\linewidth]{do_thi_4.png}}
+            \fbox{\includegraphics[width=0.6\linewidth]{Image/Chapter_4/do_thi_4.png}}
             \caption{Biểu đồ Boxplot theo trạng thái giao hàng.}
             \label{Bieu_do_QQ_Plot}
         \end{figure}
@@ -161,7 +161,8 @@ corrplot(cor_matrix, method="number")
 
         \begin{figure}[H]
             \centering
-            \fbox{\includegraphics[width=0.6\linewidth]{do_thi_5.png}}            \caption{Đồ thị ma trận tương quan (Correlation Matrix)}
+            \fbox{\includegraphics[width=0.6\linewidth]{Image/Chapter_4/do_thi_5.png}}            
+            \caption{Đồ thị ma trận tương quan (Correlation Matrix)}
             \label{Bieu_do_QQ_Plot}
         \end{figure}
         \textbf{Nhận xét:} Dựa vào đồ thị ma trận tương quan, ta nhận thấy được hệ số tương quan ứng với từng cặp biến độc lập gần bằng 0. Từ đó ta suy ra được các biến độc lập không có quan hệ tuyến tính với nhau, dẫn đến không xảy ra hiện tượng đa cộng tuyến.
@@ -192,21 +193,21 @@ plot(clean_data$customer_long, clean_data$delivery_charges,
     \centering
     \begin{subfigure}[b]{0.45\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{do_thi_6.1.png} 
+        \includegraphics[width=\textwidth]{Image/Chapter_4/do_thi_6.1.png} 
         \caption{Distance vs Delivery}
         \label{fig:scatter_dist}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.45\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{do_thi_6.2.png}
+        \includegraphics[width=\textwidth]{Image/Chapter_4/do_thi_6.2.png}
         \caption{Lat vs Delivery}
         \label{fig:scatter_lat}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.45\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{do_thi_6.3.png}
+        \includegraphics[width=\textwidth]{Image/Chapter_4/do_thi_6.3.png}
         \caption{Long vs Delivery}
         \label{fig:scatter_long}
     \end{subfigure}
@@ -226,7 +227,7 @@ qqline(clean_data$delivery_charges, col = "red", lwd = 2)
 
         \begin{figure}[H]
             \centering
-            \fbox{\includegraphics[width=0.65\linewidth]{do_thi_7.png}}
+            \fbox{\includegraphics[width=0.65\linewidth]{Image/Chapter_4/do_thi_7.png}}
             \caption{Biểu đồ QQ-Plot kiểm tra phân phối chuẩn.}
             \label{Bieu_do_QQ_Plot}
         \end{figure}
