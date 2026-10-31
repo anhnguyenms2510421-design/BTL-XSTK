@@ -1,12 +1,6 @@
 \section{Thống kê mô tả}
-
 \subsection{Thống kê mô tả cho các biến định lượng}
-    Đầu tiên, ta tiến hành tính các đại lượng thống kê mô tả cơ bản (Mean, Median, SD, Min, Max) cho các biến định lượng, với trọng tâm phân tích là biến chi phí giao hàng (delivery\_charges).
-    Ta sử dụng các tập lệnh (command):
-    \begin{enumerate}
-        \item function(x): tự định nghĩa hàm để tính 5 thông số thống kê.
-        \item apply(X, MARGIN, FUN): áp dụng hàm tính toán vừa tạo lên toàn bộ các cột dữ liệu định lượng.
-    \end{enumerate}
+    Đầu tiên, ta tiến hành tính các đại lượng thống kê mô tả cơ bản (Mean, Median, SD, Min, Max) cho các biến định lượng, với trọng tâm phân tích là biến chi phí giao hàng (delivery\_charges).\\
     Phần code lập trình xử lý các thông số thống kê:
 
     \begin{lstlisting}
@@ -25,7 +19,7 @@
     \end{lstlisting}
     \textbf{Kết quả thu được:}\\
     Bảng thống kê mô tả cho thấy chi tiết giá trị trung bình, trung vị, độ lệch chuẩn, giá trị lớn nhất và nhỏ nhất của chi phí giao hàng cùng các biến liên quan.
-    \begin{figure}[htbp]
+    \begin{figure}[H]
         \centering
         \fbox{\includegraphics[width=0.9\linewidth]{hinh_1.jpg} }
         \caption{Kết quả bảng thống kê mô tả các biến định lượng.}
@@ -42,7 +36,7 @@
     \begin{enumerate}
         \item table(): lập bảng tần số đếm số lượng phần tử thuộc mỗi nhóm phân loại.
     \end{enumerate}
-
+    \begin{minipage}{\textwidth}
     \begin{lstlisting}
     freq_season <- table(clean_data$season)
     freq_expedited <- table(clean_data$is_expedited_delivery)
@@ -54,6 +48,7 @@
     print(freq_warehouse)
     print(freq_happy)
     \end{lstlisting}
+    \end{minipage}
     \textbf{Kết quả thu được:}\\
     Dữ liệu số lượng được phân bổ cụ thể cho từng hạng mục:\\
     
@@ -107,7 +102,7 @@
 
         \begin{figure}[H]
             \centering
-            \fbox{\includegraphics[width=0.8\linewidth]{do_thi_1.png}}
+            \fbox{\includegraphics[width=0.65\linewidth]{do_thi_1.png}}
             \caption{Biểu đồ Histogram của chi phí giao hàng.}
             \label{Bieu_do_Histogram_Barplot}
         \end{figure}
@@ -121,7 +116,7 @@
 
         \begin{figure}[H]
             \centering
-            \fbox{\includegraphics[width=0.8\linewidth]{do_thi_2.png}}
+            \fbox{\includegraphics[width=0.65\linewidth]{do_thi_2.png}}
             \caption{Biểu đồ Barplot của số lượng đơn hàng tại các kho.}
             \label{Bieu_do_Barplot}
         \end{figure}
@@ -135,7 +130,7 @@
 
         \begin{figure}[H]
             \centering
-            \fbox{\includegraphics[width=1\linewidth]{do_thi_3.png}}
+            \fbox{\includegraphics[width=0.65\linewidth]{do_thi_3.png}}
             \caption{Biểu đồ Boxplot theo mùa.}
             \label{Bieu_do_Tuong_quan}
         \end{figure}
@@ -149,7 +144,7 @@
 
         \begin{figure}[H]
             \centering
-            \fbox{\includegraphics[width=0.8\linewidth]{do_thi_4.png}}
+            \fbox{\includegraphics[width=0.6\linewidth]{do_thi_4.png}}
             \caption{Biểu đồ Boxplot theo trạng thái giao hàng.}
             \label{Bieu_do_QQ_Plot}
         \end{figure}
@@ -166,13 +161,15 @@
 
         \begin{figure}[H]
             \centering
-            \fbox{\includegraphics[width=0.8\linewidth]{do_thi_5.png}}            \caption{Đồ thị ma trận tương quan (Correlation Matrix)}
+            \fbox{\includegraphics[width=0.6\linewidth]{do_thi_5.png}}            \caption{Đồ thị ma trận tương quan (Correlation Matrix)}
             \label{Bieu_do_QQ_Plot}
         \end{figure}
         \textbf{Nhận xét:} Dựa vào đồ thị ma trận tương quan, ta nhận thấy được hệ số tương quan ứng với từng cặp biến độc lập gần bằng 0. Từ đó ta suy ra được các biến độc lập không có quan hệ tuyến tính với nhau, dẫn đến không xảy ra hiện tượng đa cộng tuyến.
 
         \subsubsection{Biểu đồ phân tán (Scatter Plot)}
         Biểu đồ phân tán thể hiện mối quan hệ tuyến tính giữa delivery\_charges với các biến distance\_to\_nearest\_warehouse, customer\_lat và customer\_long. Nó làm cơ sở cho mô hình hồi quy tuyến tính. 
+        
+        \begin{minipage}{\textwidth}
         \begin{lstlisting}
     plot(clean_data$distance_to_nearest_warehouse, clean_data$delivery_charges,
      main = "Scatter Plot: Distance vs Delivery Charges",
@@ -190,28 +187,33 @@
      ylab = "Delivery Charges ",
      col = "darkred", pch = 16)
         \end{lstlisting}
-
+        \end{minipage}
         \begin{figure}[H]
-            \centering
-            \fbox{\includegraphics[width=0.7\linewidth]{do_thi_6.1.png}}
-            \caption{Biểu đồ phân tán giữa Delivery Charge và Distance to Nearest Warehouse}
-            \label{Bieu_do_QQ_Plot}
-        \end{figure}
-
-        \begin{figure}[H]
-            \centering
-            \fbox{\includegraphics[width=0.7\linewidth]{do_thi_6.2.png}}
-            \caption{Biểu đồ phân tán giữa Delivery Charge và Customer lat}
-            \label{Bieu_do_QQ_Plot}
-        \end{figure}
-
-        \begin{figure}[H]
-            \centering
-            \fbox{\includegraphics[width=0.7\linewidth]{do_thi_6.3.png}}
-            \caption{Biểu đồ phân tán giữa Delivery Charge và Customer long}
-            \label{Bieu_do_QQ_Plot}
-        \end{figure}
-        \textbf{Nhận xét:} Dựa vào 3 biểu đồ phân tán giữa delivery\_charges với customer\_lat, customer\_long và distance\_to\_nearest\_warehouse, ta nhận thấy các điểm dữa liệu phân bố không đồng đều hoặc tập trung thành từng cụm, không có một xu hướng tuyến tính rõ ràng. Điều này phù hợp với hệ số tương quan tương ứng với từng cặp biến độc lập gần bằng 0 như ở đồ thị ma trận tương quan. Chứng minh rằng khoảng cách hoặc tọa độ thông thường không có quan hệ tuyến tính với chi phí giao hàng.
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{do_thi_6.1.png} 
+        \caption{Distance vs Delivery}
+        \label{fig:scatter_dist}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{do_thi_6.2.png}
+        \caption{Lat vs Delivery}
+        \label{fig:scatter_lat}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{do_thi_6.3.png}
+        \caption{Long vs Delivery}
+        \label{fig:scatter_long}
+    \end{subfigure}
+    \caption{Biểu đồ phân tán giữa Delivery Charge với Distance, Latitude và Longitude}
+    \label{fig:scatter_group}
+\end{figure}
+        \textbf{Nhận xét:} Dựa vào 3 biểu đồ phân tán giữa delivery\_charges với customer\_lat, customer\_long và distance\_to\_nearest\_warehouse, ta nhận thấy các điểm dữ liệu phân bố không đồng đều hoặc tập trung thành từng cụm, không có một xu hướng tuyến tính rõ ràng. Điều này phù hợp với hệ số tương quan tương ứng với từng cặp biến độc lập gần bằng 0 như ở đồ thị ma trận tương quan. Chứng minh rằng khoảng cách hoặc tọa độ thông thường không có quan hệ tuyến tính với chi phí giao hàng.
 
         \subsubsection{Biểu đồ kiểm tra phân phối chuẩn (QQ-Plot)}
         Biểu đồ QQ-Plot kiểm tra trực tiếp xem biến delivery\_charges có tuân theo phân phối chuẩn hay không.
@@ -224,7 +226,7 @@
 
         \begin{figure}[H]
             \centering
-            \fbox{\includegraphics[width=0.8\linewidth]{do_thi_7.png}}
+            \fbox{\includegraphics[width=0.65\linewidth]{do_thi_7.png}}
             \caption{Biểu đồ QQ-Plot kiểm tra phân phối chuẩn.}
             \label{Bieu_do_QQ_Plot}
         \end{figure}

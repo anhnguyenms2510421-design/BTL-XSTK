@@ -1,9 +1,13 @@
 \usepackage[utf8]{vietnam}
 \usepackage{graphicx}     
+\usepackage{subcaption}
 \usepackage{amsmath}      
 \usepackage{float}
 \usepackage{listings}      
 \usepackage{xcolor}  
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{1ex plus 1ex minus .2ex}{1ex plus .2ex}
+\titlespacing*{\subsection}{0pt}{1ex plus 1ex minus .2ex}{1ex plus .2ex}
 \usepackage[margin=2cm]{geometry}
 \lstset{
     language=R,
@@ -23,7 +27,9 @@
 \lstset{
     language=R,
     backgroundcolor=\color{mybackground},
-    basicstyle=\ttfamily\small\color{black},
+    basicstyle=\ttfamily\footnotesize\color{black},
+    aboveskip=5pt,
+    belowskip=5pt,
     keywordstyle=\color{mykeyword}\bfseries,
     stringstyle=\color{mystring},
     commentstyle=\color{mycomment}\itshape, 
@@ -42,5 +48,5 @@
     breakatwhitespace=false,
     escapeinside={\%*}{*)},
     xleftmargin=15pt, 
-    framexleftmargin=15pt 
+    framexleftmargin=15pt
 }
