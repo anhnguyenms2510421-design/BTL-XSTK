@@ -1,27 +1,19 @@
-# =====================================================================
-# BÀI TẬP LỚN XÁC SUẤT THỐNG KÊ - CHƯƠNG 1: THỐNG KÊ SUY DIỄN (bản sửa)
-# Chạy: đặt file cùng thư mục với clean_data_full.csv (500 đơn, chưa loại ngoại lai order_total)
-# Package: readr, car, lmtest
-# =====================================================================
 library(readr)
-library(car)     # leveneTest, vif
-library(lmtest)  # bptest (Breusch-Pagan) - lý thuyết mục 2.5.5 yêu cầu
-
+library(car)     
+library(lmtest) 
 dat <- read_csv("clean_data_full.csv", show_col_types = FALSE)
-dat$season                <- factor(dat$season)             # mức cơ sở: Autumn
-dat$nearest_warehouse     <- factor(dat$nearest_warehouse)  # mức cơ sở: Bakers
+dat$season                <- factor(dat$season)             
+dat$nearest_warehouse     <- factor(dat$nearest_warehouse)  
 dat$is_expedited_delivery <- factor(dat$is_expedited_delivery, levels = c(FALSE, TRUE))
 dat$is_happy_customer     <- factor(dat$is_happy_customer,     levels = c(FALSE, TRUE))
 n <- nrow(dat); alpha <- 0.05
 cat("n =", n, "\n")
-print(summary(dat$order_total))   # lệch phải rất mạnh (max ~853 000, trung vị ~11 300)
+print(summary(dat$order_total))   
 
-# =====================================================================
-# 1. ƯỚC LƯỢNG KHOẢNG TIN CẬY
-# =====================================================================
+
 cat("\n=== 1.1 CI 95% cho trung bình phí giao hàng ===\n")
 x <- dat$delivery_charges
-me_z <- qnorm(0.975) * sd(x) / sqrt(n)       # công thức (9) trong lý thuyết
+me_z <- qnorm(0.975) * sd(x) / sqrt(n)      
 cat("mean =", mean(x), " sd =", sd(x), " sai so =", me_z, "\n")
 cat("CI (z):", mean(x) - me_z, "-", mean(x) + me_z, "\n")
 
@@ -33,9 +25,7 @@ for (v in c("is_expedited_delivery", "is_happy_customer")) {
       " (np =", k, ", n(1-p) =", n - k, ")\n")
 }
 
-# =====================================================================
-# 2. KIỂM ĐỊNH HAI MẪU
-# =====================================================================
+
 cat("\n=== 2.1 Phí giao nhanh > giao thường (z-test, công thức (11)) ===\n")
 g1 <- dat$delivery_charges[dat$is_expedited_delivery == TRUE]
 g0 <- dat$delivery_charges[dat$is_expedited_delivery == FALSE]
@@ -60,59 +50,50 @@ for (v in c("distance_to_nearest_warehouse", "order_total", "coupon_discount")) 
 }
 cat("So don co khoang cach > 10 km:", sum(dat$distance_to_nearest_warehouse > 10), "\n")
 
-# =====================================================================
-# 3. ANOVA 2 NHÂN TỐ: season x nearest_warehouse
-# =====================================================================
+
 cat("\n=== 3. ANOVA season x nearest_warehouse ===\n")
 m_aov <- aov(delivery_charges ~ season * nearest_warehouse, data = dat)
-print(table(dat$season, dat$nearest_warehouse))        # thiết kế KHÔNG cân bằng
+print(table(dat$season, dat$nearest_warehouse))        
 res <- resid(m_aov)
-print(shapiro.test(res))                               # n < 5000 nên dùng toàn bộ
+print(shapiro.test(res))                               
 png("qqplot_anova.png"); qqnorm(res, main = "Q-Q Plot of ANOVA Residuals"); qqline(res, col = "red"); dev.off()
 print(leveneTest(delivery_charges ~ season * nearest_warehouse, data = dat))
 cat("Giả định độc lập: mỗi dòng là một đơn hàng riêng, không lặp lại trên cùng đối tượng.\n")
 print(summary(m_aov))
 
-# Tương tác không ý nghĩa -> mô hình cộng tính (đúng hướng dẫn mục 2.4.3)
+
 m_add <- aov(delivery_charges ~ season + nearest_warehouse, data = dat)
 print(summary(m_add))
-print(TukeyHSD(m_add, "season"))                       # chỉ so sánh nhân tố có ý nghĩa
-
+print(TukeyHSD(m_add, "season"))                       
 png("interaction_plot.png")
 interaction.plot(dat$season, dat$nearest_warehouse, dat$delivery_charges, fun = mean,
                  col = c("blue", "red", "green"), lty = 1, lwd = 2,
                  xlab = "Season", ylab = "Mean Delivery Charges", trace.label = "Warehouse")
 dev.off()
 
-# =====================================================================
-# 4. HỒI QUY TUYẾN TÍNH BỘI
-# =====================================================================
+
 cat("\n=== 4. Hồi quy: mô hình đầy đủ (7 biến) ===\n")
 lm_full <- lm(delivery_charges ~ distance_to_nearest_warehouse + order_total + coupon_discount +
                 season + nearest_warehouse + is_expedited_delivery + is_happy_customer, data = dat)
 print(summary(lm_full))
-lm_opt <- step(lm_full, direction = "both", trace = 0)   # MÔ HÌNH CUỐI
+lm_opt <- step(lm_full, direction = "both", trace = 0)   
 print(summary(lm_opt))
 cat("Công thức:", deparse(formula(lm_opt)), "\n")
 cat("AIC đầy đủ =", AIC(lm_full), " AIC tối ưu =", AIC(lm_opt), "\n")
 
-# --- TẤT CẢ kiểm tra giả định phải chạy trên lm_opt (mô hình cuối) ---
 cat("\n--- Giả định trên mô hình cuối ---\n")
-print(vif(lm_opt))                                   # GVIF^(1/(2Df)) cho biến phân loại
+print(vif(lm_opt))                                   
 print(shapiro.test(resid(lm_opt)))
-print(bptest(lm_opt))                                # Breusch-Pagan (mục 2.5.5)
+print(bptest(lm_opt))                                
 cd <- cooks.distance(lm_opt)
 cat("Cook's D > 4/n:", sum(cd > 4 / n), " | max =", max(cd), " | dòng:", which.max(cd), "\n")
 png("lm_diagnostics.png", width = 800, height = 600)
 par(mfrow = c(2, 2)); plot(lm_opt); par(mfrow = c(1, 1)); dev.off()
 
-# --- Mô hình KHÔNG dùng is_happy_customer (biến chỉ biết sau khi giao hàng) ---
 lm_nohappy <- step(update(lm_full, . ~ . - is_happy_customer), direction = "both", trace = 0)
 print(summary(lm_nohappy))
 
-# =====================================================================
-# 5. TRAIN / TEST 80/20  (RMSE, MAE, MSE và R^2 test - mục 2.5.6)
-# =====================================================================
+
 cat("\n=== 5. Train/Test ===\n")
 evaluate <- function(fml, seed = 42) {
   set.seed(seed)
@@ -127,7 +108,7 @@ res_tab <- rbind(`Mo hinh cuoi`   = evaluate(formula(lm_opt)),
                  `Khong co happy` = evaluate(formula(lm_nohappy)))
 print(round(res_tab, 3))
 cat("sd(delivery_charges) =", sd(dat$delivery_charges), "\n")
-# Kiểm tra ổn định: lặp 200 lần chia ngẫu nhiên khác nhau
+
 for (nm in c("Mo hinh cuoi", "Khong co happy")) {
   f <- switch(nm, `Mo hinh cuoi` = formula(lm_opt), `Khong co happy` = formula(lm_nohappy))
   rr <- sapply(1:200, function(s) evaluate(f, seed = s))
