@@ -37,6 +37,14 @@ git push -u origin [tên tự đặt 1]
 Lưu ý phần [tên tự đặt 1] phải trùng với tên ở phần "git switch -c" ở B2 nhé.
 /******************************************************************/
 
+/*************** Nếu muốn cập nhật code từ main *******************/
+
+git branch <branch của mình>
+git pull origin main
+code .
+
+/******************************************************************/
+
 /********************************* Ví dụ **************************/
 
 Lấy folder:
@@ -58,3 +66,5 @@ git commit -m "Update Chapter 1"
 git push -u origin thanh_vien_1
 
 /******************************************************************/
+
+
