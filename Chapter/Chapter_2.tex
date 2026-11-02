@@ -1,10 +1,9 @@
 \section{Kiến thức nền}
 	\subsection{Câu hỏi và mục tiêu nghiên cứu}	
-	Nghiên cứu này tập trung vào việc ứng dụng hệ thống các phương pháp thống kê mô tả, thống kê suy diễn và mô hình hồi quy tuyến tính bội nhằm phân tích dữ liệu giao dịch của cửa hàng điện tử trực tuyến, từ đó khảo sát và dự báo Chi phí giao hàng (\texttt{delivery\_charges}).Trong đó nhóm đặt ra những câu hỏi sau:
-	
+	Nghiên cứu này tập trung vào việc ứng dụng hệ thống các phương pháp thống kê mô tả, thống kê suy diễn và mô hình hồi quy tuyến tính bội nhằm phân tích dữ liệu giao dịch của cửa hàng điện tử trực tuyến, từ đó khảo sát và dự báo Chi phí giao hàng (\texttt{delivery\_charges}). Trong đó nhóm đặt ra những câu hỏi sau:
 	
 	\begin{itemize}
-		\item Các đặc trưng của đơn hàng và dịch vụ vận chuyển --- bao gồm khoảng cách địa lý từ khách hàng đến kho hàng gần nhất, yêu cầu dịch vụ giao hàng nhanh, tổng giá trị đơn hàng, chính sách chiết khấu , vị trí kho xuất hàng, yếu tố mùa vụ  và mức độ hài lòng của khách hàng tác động theo chiều hướng và mức độ như thế nào đến chi phí giao hàng?
+		\item Các đặc trưng của đơn hàng và dịch vụ vận chuyển - bao gồm khoảng cách địa lý từ khách hàng đến kho hàng gần nhất, yêu cầu dịch vụ giao hàng nhanh, tổng giá trị đơn hàng, chính sách chiết khấu , vị trí kho xuất hàng, yếu tố mùa vụ  và mức độ hài lòng của khách hàng tác động theo chiều hướng và mức độ như thế nào đến chi phí giao hàng?
 		\item Có sự khác biệt có ý nghĩa thống kê về chi phí vận chuyển hoặc giá trị đơn hàng giữa nhóm sử dụng dịch vụ giao hàng nhanh so với giao hàng tiêu chuẩn, cũng như giữa 4 mùa: Xuân, Hạ, Thu, Đông trong năm và giữa 3 khu vực kho hàng (\textit{Bakers}, \textit{Nickolson}, \textit{Thompson}) hay không?
 		\item Mô hình hồi quy tuyến tính bội nào là tối ưu nhất sau khi sàng lọc biến để giải thích sự biến thiên và dự báo chính xác chi phí giao hàng cho các đơn hàng mới trong tương lai?
 	\end{itemize}
@@ -23,11 +22,11 @@
 	Giả sử có một mẫu ngẫu nhiên kích thước $n$ gồm các quan sát $x_1, x_2, \dots, x_n$ của một biến định lượng liên tục:
 	
 	\begin{itemize}
-		\item Trung bình mẫu ( $\bar{x}$): Đặc trưng cho xu hướng trung tâm của dữ liệu:
+		\item Trung bình mẫu ($\bar{x}$): Đặc trưng cho xu hướng trung tâm của dữ liệu:
 		\begin{equation}
 			\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i
 		\end{equation}
-		\item Trung vị mẫu ( $Me$): Là giá trị nằm ở vị trí chính giữa của mẫu sau khi đã sắp xếp theo thứ tự không giảm $x_{(1)} \le x_{(2)} \le \dots \le x_{(n)}$:
+		\item Trung vị mẫu ($Me$): Là giá trị nằm ở vị trí chính giữa của mẫu sau khi đã sắp xếp theo thứ tự không giảm $x_{(1)} \le x_{(2)} \le \dots \le x_{(n)}$:
 		\begin{equation}
 			Me = \begin{cases}
 				x_{\left(\frac{n+1}{2}\right)} & \text{nếu } n \text{ lẻ}, \\[6pt]
@@ -125,8 +124,6 @@
 		\end{itemize}
 		
 		\item Quy tắc quyết định: Với mức ý nghĩa $\alpha = 5\%$, ta bác bỏ giả thuyết $H_0$ nếu $p\text{-value} < \alpha$ hoặc khi thống kê $z_0$ rơi vào miền bác bỏ $W_\alpha$.
-		
-		
 	\end{itemize}
 	
 	\subsection{Phân tích phương sai ANOVA nhiều nhân tố }
@@ -234,7 +231,7 @@ Trung bình bình phương là $MS = SS/df$, và thống kê kiểm định củ
 		\item $\varepsilon_i \sim \mathcal{N}(0, \sigma^2)$: Sai số ngẫu nhiên độc lập, có kỳ vọng bằng 0 và phương sai $\sigma^2$ không đổi.
 	\end{itemize}
 	
-	\textbf{Quy tắc mã hóa biến giả:} Một biến phân loại có $m$ phạm trù sẽ được chuyển đổi thành $m - 1$ biến giả nhị phân (nhận giá trị 0 hoặc 1), trong đó 1 phạm trù được chọn làm nhóm cơ sở (nhóm tham chiếu -- Reference level):
+	\textbf{Quy tắc mã hóa biến giả:} Một biến phân loại có $m$ phạm trù sẽ được chuyển đổi thành $m - 1$ biến giả nhị phân (nhận giá trị 0 hoặc 1), trong đó 1 phạm trù được chọn làm nhóm cơ sở (nhóm tham chiếu - Reference level):
 	\begin{itemize}
 		\item Biến \texttt{season} (4 mùa, chọn \textit{Autumn} làm nhóm tham chiếu): Tạo 3 biến giả \texttt{seasonSpring}, \texttt{seasonSummer}, \texttt{seasonWinter}.
 		\item Biến \texttt{nearest\_warehouse} (3 kho, chọn \textit{Bakers} làm nhóm tham chiếu): Tạo 2 biến giả \\ \texttt{nearest\_warehouseNickolson}, \texttt{nearest\_warehouseThompson}.

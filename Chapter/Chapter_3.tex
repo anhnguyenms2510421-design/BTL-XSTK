@@ -72,20 +72,7 @@ print(names(new_data))
     Vì mục tiêu sau khi xử lý dữ liệu đầu vào được dùng để phân tích và thống kê liên quan đến phí giao hàng:
     \begin{itemize}
         \item[] \textbf{Các biến được loại bỏ:} các biến mang tính danh định và mang tính phân loại trong việc giao hàng: "order\_id", "customer\_id", "date", "shopping\_cart" và "date". 
-        \item[] \textbf{Các biến cần được giữ lại:} 
-            \begin{enumerate}
-                \item nearest\_warehouse: xác định kho gần nhất.
-                \item delivery\_charges: xác định cước phí giao hàng.
-                \item coupon\_discount: số tiền được giảm.
-                \item order\_total: tổng số tiền của đơn gian.
-                \item season: mùa mà đơn hàng được giao.
-                \item is\_expedited\_delivery: sự khác biệt giữa đơn giao nhanh và giao bình thường.
-                \item distance\_to\_nearest\_warehouse: khoảng cách giữa kho hàng so với nơi nhận.
-                \item is\_happy\_customer: thái độ của khách hàng khi nhận đơn
-                \item customer\_lat: vĩ độ của nơi nhận.
-                \item customer\_long: kinh độ của nơi nhận.
-                \item order\_price: giá tiền của đơn hàng có ảnh hưởng đến xu hướng của đơn giá.
-            \end{enumerate}
+        \item[] \textbf{Các biến cần được giữ lại:} nearest\_warehouse, delivery\_charges, coupon\_discount, order\_total, season, is\_expedited\_delivery, distance\_to\_nearest\_warehouse, is\_happy\_customer, customer\_lat, customer\_long, order\_price.
     \end{itemize}
 
 \subsection{Kiểm tra thiếu dữ liệu, chuẩn hoá dữ liệu, kiểm tra công thức}
@@ -202,10 +189,10 @@ cat("Rows outside tolerance after correction:", mismatch_after, "\n")
             \label{Ket_qua_the_hien_so_gia_tri_lech_sau_khi_sua}
         \end{figure}
         
-        Sau khi dữ liệu được xử lý và kiểm duyệt, ta có thể xoá cột "calculated\_total" (biến trung gian cho việc kiểm duyệt chính xác) và xuất đầu ra tập tin dữ liệu sạch "clean\_data.csv"
+        Sau khi dữ liệu được xử lý và kiểm duyệt, ta có thể xoá cột "calculated\_total" (biến trung gian cho việc kiểm duyệt chính xác) và xuất đầu ra tập tin dữ liệu sạch "clean\_data\_full.csv"
         \begin{lstlisting}
 new_data$calculated_total <- NULL
-write_csv(new_data, "clean_data.csv")
+write_csv(new_data, "clean_data_full.csv")
         \end{lstlisting}
 
         
