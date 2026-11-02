@@ -366,7 +366,7 @@ Winter-Summer  -8.62580996 -12.784816  -4.466804 0.0000008
 \textbf{Kết luận:} Chi phí giao hàng xếp theo thứ tự Xuân $>$ Hạ $>$ Thu $\approx$ Đông: mùa Xuân đắt hơn mùa Thu khoảng 17.8 USD và đắt hơn mùa Hạ khoảng 9.2 USD; Thu và Đông không khác biệt có ý nghĩa. Vị trí kho không tạo chênh lệch phí.
 
 % ==========================================
-\subsection{Hồi quy tuyến tính đa biến (Multivariate Linear Regression)}\label{sec:hoiquy}
+\subsection{Hồi quy tuyến tính đa biến}\label{sec:hoiquy}
 
 \subsubsection{Mục tiêu và Lựa chọn mô hình tối ưu}
 \textbf{Mục tiêu:} Xây dựng phương trình dự báo chi phí giao hàng theo mô hình (17) từ 7 biến: khoảng cách, tổng tiền, mã giảm giá, mùa vụ, kho hàng, giao hàng nhanh và mức độ hài lòng. Biến phân loại được mã hóa thành biến giả (mức cơ sở: Autumn, Bakers, FALSE), mô hình đầy đủ có 10 hệ số góc. Chọn biến bằng Stepwise hai chiều theo AIC (công thức (23)); kiểm định $H_0: \beta_j = 0$ bằng thống kê $t$ (22) và ý nghĩa tổng thể bằng thống kê $F$ (21), bác bỏ $H_0$ nếu $p\text{-value} < \alpha = 5\%$.
