@@ -27,7 +27,7 @@ print(des_table)
     \end{figure}
     Mặc dù trong clean\_data thì customer\_lat và customer\_long là hai biến định lượng, nhưng ta không đưa vào bảng để tính 5 thông số thống kê cơ bản (Mean, Median, SD, Min, Max) vì:
     
-        \textbf{Ý nghĩa thống kê thực tiễn:} Việc tính trung bình (Mean) hay độ lệch chuẩn (SD) của vĩ độ và kinh độ khách hàng không mang lại bất kỳ ý nghĩa phân tích kinh tế hay logistics nào.\\
+        \textbf{Ý nghĩa thống kê thực tiễn:} Việc tính trung bình (Mean) hay độ lệch chuẩn (SD) của vĩ độ và kinh độ khách hàng không mang lại bất kỳ ý nghĩa phân tích kinh tế hay logistics nào.
         
         \textbf{Vai trò riêng:} Các biến customer\_lat và customer\_long không dùng để tính toán các đại lượng đặc trưng trung tâm hay phân tán, mà chỉ được giữ lại chủ yếu để kiểm tra sự phân bố không gian và vẽ các biểu đồ (thường liên quan đến biến distance\_to\_nearest\_warehouse).  
 \subsection{Thống kê số lượng cho các biến phân loại}
@@ -60,7 +60,7 @@ print(freq_happy)
         \label{Bang_thong_ke_mo_ta}
     \end{figure}
     
-    \textbf{Nhận xét:} Dữ liệu cho thấy sự phân bố đơn hàng giữa các mùa có sự khác biệt. Cao nhất là mùa Xuân với 134 đơn hàng, tiếp đó là mùa Thu với 127 đơn, mùa Hè với 124 đơn và thấp nhất là mùa Đông với 115 đơn hàng. Từ đó cho thấy mức độ tiêu thụ ở mùa Xuân tăng cao sớm, trong khi đó lại giảm đi ở mùa Đông.\\
+    \textbf{Nhận xét:} Dữ liệu cho thấy sự phân bố đơn hàng giữa các mùa có sự khác biệt. Cao nhất là mùa Xuân với 134 đơn hàng, tiếp đó là mùa Thu với 127 đơn, mùa Hè với 124 đơn và thấp nhất là mùa Đông với 115 đơn hàng. Từ đó cho thấy mức độ tiêu thụ ở mùa Xuân tăng cao sớm, trong khi đó lại giảm đi ở mùa Đông.
     
     \textbf{Trạng thái giao hàng nhanh:}
     \begin{figure}[H]
@@ -70,7 +70,7 @@ print(freq_happy)
         \label{Bang_thong_ke_mo_ta}
     \end{figure}
     
-    \textbf{Nhận xét:} Sự phân bố đơn hàng theo trạng thái giao hàng nhanh cho thấy có 249 đơn yêu cầu giao hàng nhanh (TRUE) và còn lại 251 đơn không yêu cầu giao hàng nhanh (FALSE). Từ đó cho thấy xu hướng người mua không yêu cầu giao hàng nhanh cao, nhưng so với người mua yêu cầu giao hàng nhanh thì tỉ lệ này khá cân bằng, khẳng định vai trò của dịch vụ giao hàng nhanh.\\
+    \textbf{Nhận xét:} Sự phân bố đơn hàng theo trạng thái giao hàng nhanh cho thấy có 249 đơn yêu cầu giao hàng nhanh (TRUE) và còn lại 251 đơn không yêu cầu giao hàng nhanh (FALSE). Từ đó cho thấy xu hướng người mua không yêu cầu giao hàng nhanh cao, nhưng so với người mua yêu cầu giao hàng nhanh thì tỉ lệ này khá cân bằng, khẳng định vai trò của dịch vụ giao hàng nhanh.
     
     \textbf{Kho gần nhất:}
     \begin{figure}[H]
@@ -80,7 +80,7 @@ print(freq_happy)
         \label{Bang_thong_ke_mo_ta}
     \end{figure}
     
-    \textbf{Nhận xét:} Dữ liệu cho thấy sự phân bố đơn hàng giữa giữa các kho không đồng đều. Trong đó ta thấy Thompson chiếm số lượng nhiều nhất là 197 đơn, tiếp đó là Nickolson là 184 đơn và thấp nhất là Bakers với 119 đơn hàng. Điều này chỉ ra rằng kho Thompson phổ biến hơn cũng như chất lượng dịch vụ tốt hơn so với 2 kho còn lại.\\
+    \textbf{Nhận xét:} Dữ liệu cho thấy sự phân bố đơn hàng giữa giữa các kho không đồng đều. Trong đó ta thấy Thompson chiếm số lượng nhiều nhất là 197 đơn, tiếp đó là Nickolson là 184 đơn và thấp nhất và dáng kể nhất là Bakers với 119 đơn hàng. Điều này cho thấy rằng kho Bakers có độ phổ biến và chất lượng dịch vụ thấp nhất trong 3 kho, trong khi đó 2 kho còn lại có độ phổ biến và chất lượng dịch vụ gần như cân bằng.
 
     \textbf{Mức độ hài lòng:}
     \begin{figure}[H]
@@ -90,7 +90,7 @@ print(freq_happy)
         \label{Bang_thong_ke_mo_ta}
     \end{figure}
     
-    \textbf{Nhận xét:} Dữ liệu cho thấy đa số các khách hàng đều có đánh giá tốt với 359 đơn hàng với mức độ hài lòng cao (TRUE), nhiều hơn 2,5 lần so với số đơn có mức độ hài lòng thấp (FALSE).\\
+    \textbf{Nhận xét:} Dữ liệu cho thấy đa số các khách hàng đều có đánh giá tốt với 359 đơn hàng với mức độ hài lòng cao (TRUE), nhiều hơn 2,5 lần so với số đơn có mức độ hài lòng thấp (FALSE).
 \subsection{Mô tả dữ liệu bằng đồ thị}
     Sau khi ta thực hiện phân tích, tổng hợp về số lượng đơn hàng theo các biến nearest\_warehouse, season, is\_expedited\_delivery và is\_happy\_customer, để trực quan hóa sự phân bố và các mối liên hệ liên quan đến chi phí giao hàng (delivery\_charges), ta tiến hành vẽ các đồ thị chuyên sâu.
 

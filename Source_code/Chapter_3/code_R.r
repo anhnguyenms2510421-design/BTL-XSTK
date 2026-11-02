@@ -48,5 +48,5 @@ cat("Rows outside tolerance after correction:", mismatch_after, "\n")
 
 
 new_data$calculated_total <- NULL
-write_csv(new_data, "clean_data.csv")
+write_csv(new_data, "clean_data_full.csv")
 

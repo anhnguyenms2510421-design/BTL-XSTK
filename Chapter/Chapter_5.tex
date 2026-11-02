@@ -225,7 +225,7 @@ So don co khoang cach > 10 km: 9
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{qqplot_anova.png}
+    \includegraphics[width=0.5\textwidth]{Image/chapter_5/qqplot_anova.png}
     \caption{Đồ thị Q-Q Plot kiểm tra phân phối chuẩn của phần dư ANOVA}
     \label{fig:qq}
 \end{figure}
@@ -282,7 +282,7 @@ group  11  6.4355 5.142e-10 ***
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{interaction_plot.png}
+    \includegraphics[width=0.5\textwidth]{Image/chapter_5/interaction_plot.png}
     \caption{Đồ thị tương tác giữa Mùa vụ và Kho hàng lên Chi phí giao hàng}
     \label{fig:int}
 \end{figure}
@@ -308,7 +308,7 @@ Residuals                488  76001     156
 
 \textbf{Nhận xét:} Xét tương tác trước.
 \begin{itemize}
-    \item[-] \textbf{Tương tác:} $Pr(>F) = 0.591 > 0.05$, chưa đủ cơ sở bác bỏ $H_0$. Các đường trong Hình~\ref{fig:int} có hình dạng tương tự nhau (cùng đạt đỉnh ở mùa Xuân, thấp nhất ở mùa Thu/Đông); chúng cắt nhau ở khoảng giữa mùa Xuân và mùa Hạ nhưng chênh lệch giữa các kho trong cùng một mùa chỉ khoảng 1--4 USD. Vì vậy có thể diễn giải các hiệu ứng chính.
+    \item[-] \textbf{Tương tác:} $Pr(>F) = 0.591 > 0.05$, chưa đủ cơ sở bác bỏ $H_0$. Các đường trong Hình~\ref{fig:int} có hình dạng tương tự nhau (cùng đạt đỉnh ở mùa Spring, thấp nhất ở mùa Autumn/Winter); chúng cắt nhau ở khoảng giữa mùa Spring và mùa Summer nhưng chênh lệch giữa các kho trong cùng một mùa chỉ khoảng 1-4 USD. Vì vậy có thể diễn giải các hiệu ứng chính.
     \item[-] \textbf{Mùa:} $Pr(>F) < 2 \times 10^{-16}$, bác bỏ $H_0$.
     \item[-] \textbf{Kho hàng:} $Pr(>F) = 0.880 > 0.05$, chưa đủ cơ sở bác bỏ $H_0$.
 \end{itemize}
@@ -318,18 +318,18 @@ Residuals                488  76001     156
 \subsubsection{So sánh bội (Tukey HSD)}
 \textbf{Mục tiêu:} Do tương tác không có ý nghĩa, ước lượng lại mô hình cộng tính (hai hiệu ứng chính) và dùng Tukey HSD cho nhân tố có ý nghĩa và từ 3 mức trở lên là \texttt{season}, để chỉ ra cặp mùa nào khác nhau.
 
-\textbf{Kết quả:} Trung bình mẫu theo mùa: Xuân $87.58$, Hạ $78.34$, Thu $69.78$, Đông $69.71$ USD. Kết quả từng cặp ở Bảng~\ref{tab:tukey}.
+\textbf{Kết quả:} Trung bình mẫu theo mùa: Spring $87.58$, Summer $78.34$, Autumn $69.78$, Winter $69.71$ USD. Kết quả từng cặp ở Bảng~\ref{tab:tukey}.
 \begin{table}[H]
     \centering
     \begin{tabular}{|l|c|c|c|}
     \hline
     \textbf{Cặp mùa} & \textbf{Chênh lệch TB (USD)} & \textbf{KTC 95\%} & \textbf{$p$ adj} \\ \hline
-    Xuân -- Thu & 17.80 & (13.82; 21.77) & $< 0.001$ \\ \hline
-    Xuân -- Hạ  & 9.24  & (5.24; 13.24)  & $< 0.001$ \\ \hline
-    Xuân -- Đông & 17.87 & (13.78; 21.95) & $< 0.001$ \\ \hline
-    Hạ -- Thu   & 8.55  & (4.50; 12.61)  & $< 0.001$ \\ \hline
-    Hạ -- Đông  & 8.63  & (4.47; 12.78)  & $< 0.001$ \\ \hline
-    Đông -- Thu & $-0.07$ & ($-4.21$; 4.06) & 0.99997 \\ \hline
+    Spring - Autumn & 17.80 & (13.82; 21.77) & $< 0.001$ \\ \hline
+    Spring - Summer  & 9.24  & (5.24; 13.24)  & $< 0.001$ \\ \hline
+    Spring - Winter & 17.87 & (13.78; 21.95) & $< 0.001$ \\ \hline
+    Summer - Autumn   & 8.55  & (4.50; 12.61)  & $< 0.001$ \\ \hline
+    Summer - Winter  & 8.63  & (4.47; 12.78)  & $< 0.001$ \\ \hline
+    Winter - Autumn & $-0.07$ & ($-4.21$; 4.06) & 0.99997 \\ \hline
     \end{tabular}
     \caption{Tukey HSD theo mùa trên mô hình cộng tính (đầu ra \texttt{TukeyHSD(m\_add, \textquotedbl season\textquotedbl)})}
     \label{tab:tukey}
@@ -361,9 +361,9 @@ Winter-Spring -17.86767683 -21.951328 -13.784025 0.0000000
 Winter-Summer  -8.62580996 -12.784816  -4.466804 0.0000008
 \end{lstlisting}
 
-\textbf{Nhận xét:} Năm trong sáu cặp mùa có $p\text{ adj} < 0.05$; riêng cặp Đông -- Thu có $p\text{ adj} = 0.99997$ (khoảng tin cậy chứa $0$). Chênh lệch lớn nhất là giữa mùa Xuân với mùa Thu và Đông (khoảng $17.8$ USD).
+\textbf{Nhận xét:} Năm trong sáu cặp mùa có $p\text{ adj} < 0.05$; riêng cặp Winter - Autumn có $p\text{ adj} = 0.99997$ (khoảng tin cậy chứa $0$). Chênh lệch lớn nhất là giữa mùa Spring với mùa Autumn và Winter (khoảng $17.8$ USD).
 
-\textbf{Kết luận:} Chi phí giao hàng xếp theo thứ tự Xuân $>$ Hạ $>$ Thu $\approx$ Đông: mùa Xuân đắt hơn mùa Thu khoảng 17.8 USD và đắt hơn mùa Hạ khoảng 9.2 USD; Thu và Đông không khác biệt có ý nghĩa. Vị trí kho không tạo chênh lệch phí.
+\textbf{Kết luận:} Chi phí giao hàng xếp theo thứ tự Spring $>$ Summer $>$ Autumn $\approx$ Winter: mùa Xuân đắt hơn mùa Thu khoảng 17.8 USD và đắt hơn mùa Hạ khoảng 9.2 USD; Autumn và Winter không khác biệt có ý nghĩa. Vị trí kho không tạo chênh lệch phí.
 
 % ==========================================
 \subsection{Hồi quy tuyến tính đa biến}\label{sec:hoiquy}
@@ -384,7 +384,7 @@ cat("AIC day du =", AIC(lm_full), " AIC toi uu =", AIC(lm_opt), "\n")
 \end{lstlisting}
 \textbf{Kết quả chạy:}
 \begin{lstlisting}[style=rout]
---- lm_full ---
+-- lm_full --
 Coefficients:
                                 Estimate Std. Error t value Pr(>|t|)    
 (Intercept)                    5.112e+01  9.357e-01  54.627  < 2e-16 ***
@@ -402,7 +402,7 @@ Residual standard error: 5.853 on 489 degrees of freedom
 Multiple R-squared:  0.8399,	Adjusted R-squared:  0.8367 
 F-statistic: 256.6 on 10 and 489 DF,  p-value: < 2.2e-16
 
---- lm_opt ---
+-- lm_opt --
 lm(formula = delivery_charges ~ coupon_discount + season + nearest_warehouse + 
     is_expedited_delivery + is_happy_customer, data = dat)
 Coefficients:
@@ -433,15 +433,15 @@ AIC day du = 3198.743  AIC toi uu = 3196.43
 \textbf{Kết quả:} Xem Hình~\ref{fig:diag} và phần kết quả chạy.
 \begin{itemize}
     \item[-] \textbf{Tuyến tính, kỳ vọng sai số bằng 0:} Trong Residuals vs Fitted đường làm trơn nằm gần $e_i = 0$, chỉ cong nhẹ.
-    \item[-] \textbf{Phương sai sai số đồng nhất:} Scale-Location không có hình phễu; Breusch--Pagan cho $BP = 13.05$, $df = 8$, $p = 0.110 > 0.05$.
-    \item[-] \textbf{Phần dư chuẩn:} Shapiro--Wilk $W = 0.979$, $p = 1.28 \times 10^{-6} < 0.05$; Q-Q Plot lệch chủ yếu ở hai đuôi.
+    \item[-] \textbf{Phương sai sai số đồng nhất:} Scale-Location không có hình phễu; Breusch-Pagan cho $BP = 13.05$, $df = 8$, $p = 0.110 > 0.05$.
+    \item[-] \textbf{Phần dư chuẩn:} Shapiro-Wilk $W = 0.979$, $p = 1.28 \times 10^{-6} < 0.05$; Q-Q Plot lệch chủ yếu ở hai đuôi.
     \item[-] \textbf{Đa cộng tuyến:} VIF của \texttt{coupon\_discount}, \texttt{is\_expedited\_delivery}, \texttt{is\_happy\_customer} lần lượt là $1.006$, $1.013$, $1.014$; $GVIF^{1/(2\cdot df)}$ của \texttt{season} và \texttt{nearest\_warehouse} là $1.004$ và $1.003$.
     \item[-] \textbf{Điểm ảnh hưởng (Cook's Distance):} Với ngưỡng $D_i > 4/n$ có 29 quan sát vượt ngưỡng, giá trị lớn nhất $D = 0.046$ (quan sát 468).
 \end{itemize}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{lm_diagnostics.png}
+    \includegraphics[width=0.75\textwidth]{Image/chapter_5/lm_diagnostics.png}
     \caption{Các biểu đồ chẩn đoán của mô hình hồi quy cuối cùng}
     \label{fig:diag}
 \end{figure}
@@ -504,22 +504,22 @@ Cook's D > 4/n: 29  | max = 0.04579479  | dong: 468
 \widehat{delivery} &= 51.24 + 0.06\cdot coupon + 17.50\cdot Spring + 10.40\cdot Summer - 2.29\cdot Winter \\
 &\quad - 2.33\cdot Nickolson - 0.76\cdot Thompson + 18.36\cdot expedited + 14.05\cdot happy
 \end{align*}
-\textit{(Mức cơ sở: mùa Thu, kho Bakers, các biến nhị phân bằng FALSE.)} $R^2 = 0.8394$, $R^2_{adj} = 0.8368$; sai số chuẩn phần dư $5.851$ USD (491 bậc tự do); kiểm định F tổng thể $F = 320.8$ ($df = 8;\ 491$), $p < 2.2 \times 10^{-16}$.
+\textit{(Mức cơ sở: mùa Autumn, kho Bakers, các biến nhị phân bằng FALSE.)} $R^2 = 0.8394$, $R^2_{adj} = 0.8368$; sai số chuẩn phần dư $5.851$ USD (491 bậc tự do); kiểm định F tổng thể $F = 320.8$ ($df = 8;\ 491$), $p < 2.2 \times 10^{-16}$.
 
 \textbf{Nhận xét:}
 \begin{itemize}
     \item[-] \textbf{Độ phù hợp:} Mô hình giải thích $83.68\%$ biến thiên của chi phí giao hàng ($R^2_{adj}$); $p\text{-value}$ của kiểm định F nhỏ hơn $\alpha$ nên bác bỏ $H_0$, mô hình có ý nghĩa thống kê.
     \item[-] \textbf{Giao hàng nhanh:} giữ nguyên các biến khác, chi phí tăng trung bình $18.36$ USD (chung cho các mùa).
-    \item[-] \textbf{Mùa:} so với mùa Thu, chi phí cao hơn $17.50$ USD (Xuân), $10.40$ USD (Hạ) và thấp hơn $2.29$ USD (Đông).
+    \item[-] \textbf{Mùa:} so với mùa Autumn, chi phí cao hơn $17.50$ USD (Spring), $10.40$ USD (Summer) và thấp hơn $2.29$ USD (Winter).
     \item[-] \textbf{Kho hàng:} kho Nickolson rẻ hơn Bakers khoảng $2.33$ USD; mức chênh nhỏ nhưng có ý nghĩa. Mức chênh này không xuất hiện trong ANOVA (mục~\ref{sec:anova}) vì khi chưa kiểm soát giao hàng nhanh và mức hài lòng, phương sai sai số còn rất lớn ($156$ so với $34$ ở mô hình này) và che mờ hiệu ứng nhỏ.
     \item[-] \textbf{Mã giảm giá:} hệ số không có ý nghĩa ở mức 5\% ($p = 0.066$); chưa đủ cơ sở cho rằng mã giảm giá ảnh hưởng đến chi phí giao hàng.
     \item[-] \textbf{Mức hài lòng:} đơn có \texttt{is\_happy\_customer = TRUE} có chi phí cao hơn trung bình $14.05$ USD. Đây chỉ là mối liên hệ thống kê, không phải quan hệ nhân quả; mức hài lòng chỉ biết sau khi giao hàng nên không dùng được để dự báo đơn mới (xem mục~\ref{sec:tt}).
 \end{itemize}
 
-\textbf{Kết luận:} Chi phí giao hàng phụ thuộc chủ yếu vào loại hình giao hàng (giao nhanh), mùa vụ (Xuân cao nhất) và kho xuất hàng (Nickolson thấp hơn Bakers); khoảng cách và tổng giá trị đơn hàng không ảnh hưởng đáng kể.
+\textbf{Kết luận:} Chi phí giao hàng phụ thuộc chủ yếu vào loại hình giao hàng (giao nhanh), mùa vụ (Spring cao nhất) và kho xuất hàng (Nickolson thấp hơn Bakers); khoảng cách và tổng giá trị đơn hàng không ảnh hưởng đáng kể.
 
 \subsubsection{Đánh giá hiệu năng dự báo (Train/Test 80-20)}\label{sec:tt}
-\textbf{Mục tiêu:} Đánh giá khả năng dự báo trên dữ liệu mới bằng cách chia ngẫu nhiên $80\%$ huấn luyện, $20\%$ kiểm tra, rồi tính MSE, RMSE, MAE (công thức (26)--(28)) và $R^2_{test}$; RMSE, MAE càng nhỏ so với độ lệch chuẩn của \texttt{delivery\_charges} và $R^2_{test}$ càng cao thì dự báo càng tốt. So sánh hai mô hình: mô hình cuối (5 biến) và mô hình không dùng \texttt{is\_happy\_customer} (biến chỉ biết sau khi giao hàng).
+\textbf{Mục tiêu:} Đánh giá khả năng dự báo trên dữ liệu mới bằng cách chia ngẫu nhiên $80\%$ huấn luyện, $20\%$ kiểm tra, rồi tính MSE, RMSE, MAE (công thức (26)-(28)) và $R^2_{test}$; RMSE, MAE càng nhỏ so với độ lệch chuẩn của \texttt{delivery\_charges} và $R^2_{test}$ càng cao thì dự báo càng tốt. So sánh hai mô hình: mô hình cuối (5 biến) và mô hình không dùng \texttt{is\_happy\_customer} (biến chỉ biết sau khi giao hàng).
 
 \textbf{Kết quả:} Với \texttt{set.seed(42)}: $400$ đơn huấn luyện, $100$ đơn kiểm tra (Bảng~\ref{tab:tt42}). Để kết quả không phụ thuộc một lần chia, nhóm lặp $200$ lần chia ngẫu nhiên khác nhau (Bảng~\ref{tab:tt200}).
 \begin{table}[H]
@@ -575,7 +575,7 @@ for (nm in c("Mo hinh cuoi", "Khong co happy")) {
 \end{lstlisting}
 \textbf{Kết quả chạy:}
 \begin{lstlisting}[style=rout]
---- summary(lm_nohappy) ---
+-- summary(lm_nohappy) --
 lm(formula = delivery_charges ~ season + is_expedited_delivery, data = dat)
 Coefficients:
                           Estimate Std. Error t value Pr(>|t|)    
@@ -588,13 +588,13 @@ Residual standard error: 8.609 on 495 degrees of freedom
 Multiple R-squared:  0.6494,	Adjusted R-squared:  0.6466 
 F-statistic: 229.2 on 4 and 495 DF,  p-value: < 2.2e-16
 
---- print(round(res_tab, 3)) --- (set.seed(42))
+-- print(round(res_tab, 3)) -- (set.seed(42))
                    MSE  RMSE   MAE R2_test
 Mo hinh cuoi    23.774 4.876 3.732   0.886
 Khong co happy  59.465 7.711 6.150   0.715
 sd(delivery_charges) = 14.48146 
 
---- 200 lan chia ngau nhien: trung binh / do lech chuan ---
+-- 200 lan chia ngau nhien: trung binh / do lech chuan --
  Mo hinh cuoi
           mean    sd
 MSE     34.323 5.934
