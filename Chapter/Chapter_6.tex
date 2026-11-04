@@ -1,1 +1,76 @@
 \section{Thảo luận và mở rộng}
+
+\subsection{Tổng kết kết quả chính}
+Đề tài khảo sát các yếu tố ảnh hưởng đến phí giao hàng của cửa hàng bằng ba nhóm phương pháp: ước lượng và kiểm định giả thuyết, phân tích phương sai hai nhân tố kèm so sánh bội, và hồi quy tuyến tính bội. Các kết quả chính:
+\begin{itemize}
+    \item Phí giao hàng chịu ảnh hưởng rõ rệt của mùa vụ và hình thức giao hàng trong đó giao nhanh có phí cao hơn khoảng $18$ USD.
+    \item Khoảng cách, giá trị đơn hàng và mã giảm giá không có tác động đáng kể và kho hàng chỉ có tác động nhỏ.
+    \item Mô hình hồi quy giải thích khoảng $84\%$ biến thiên của phí giao hàng. Tuy nhiên mô hình này dùng cả mức độ hài lòng của khách , khi chỉ dùng các biến biết trước lúc đặt hàng thì khả năng dự báo đạt khoảng $63\%$.
+\end{itemize}
+Qua đó thấy được cửa hàng có thể định giá cước theo mùa vụ và hình thức giao hàng, thay vì theo khoảng cách hay giá trị đơn hàng.
+
+\subsection{Ưu điểm và hạn chế của các phương pháp}
+\begin{table}[H]
+\centering
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|p{2.8cm}|p{6.4cm}|p{6.4cm}|}
+\hline
+\textbf{Phương pháp} & \textbf{Ưu điểm} & \textbf{Hạn chế} \tabularnewline \hline
+\raggedright\textbf{Ước lượng và kiểm định giả thuyết} \newline (khoảng tin cậy, kiểm định hai mẫu, tương quan Pearson) &
+\raggedright\begin{itemize}[nosep,leftmargin=*]
+    \item Đơn giản, dễ thực hiện và dễ diễn giải.
+    \item Cho biết khoảng giá trị hợp lý của tham số và mức ý nghĩa thống kê của sự khác biệt.
+    \item Phù hợp để kiểm tra nhanh một giả thuyết cụ thể.
+    \item Hệ số tương quan cho biết nhanh mức độ liên hệ giữa hai biến định lượng.
+\end{itemize} &
+\raggedright\begin{itemize}[nosep,leftmargin=*]
+    \item Cần cỡ mẫu đủ lớn hoặc phân phối gần chuẩn.
+    \item Mỗi lần chỉ xét một biến hoặc hai nhóm; làm nhiều kiểm định riêng lẻ dễ tích lũy sai lầm loại I.
+    \item Chỉ trả lời có khác biệt hay không, không mô hình hóa mối quan hệ giữa các biến.
+    \item Hệ số tương quan Pearson chỉ đo quan hệ tuyến tính và nhạy với giá trị ngoại lai.
+\end{itemize} \tabularnewline \hline
+\raggedright\textbf{ANOVA hai nhân tố và so sánh bội (Tukey)} &
+\raggedright\begin{itemize}[nosep,leftmargin=*]
+    \item Dễ hiểu, so sánh trung bình giữa nhiều nhóm cùng lúc.
+    \item Xét được đồng thời nhiều nhân tố và tương tác giữa chúng.
+    \item Kết hợp so sánh bội cho biết nhóm nào khác nhau mà vẫn kiểm soát sai lầm loại I.
+\end{itemize} &
+\raggedright\begin{itemize}[nosep,leftmargin=*]
+    \item Đòi hỏi giả định: phần dư chuẩn, phương sai đồng nhất, quan sát độc lập, nếu vi phạm thì kết luận kém tin cậy.
+    \item Chỉ so sánh trung bình giữa các nhóm, không xây dựng được mô hình dự báo.
+    \item Không đo được ảnh hưởng của các biến liên tục.
+\end{itemize} \tabularnewline \hline
+\raggedright\textbf{Hồi quy tuyến tính bội và Stepwise} &
+\raggedright\begin{itemize}[nosep,leftmargin=*]
+    \item Lượng hóa tác động của từng yếu tố khi giữ các yếu tố khác cố định, hệ số dễ diễn giải.
+    \item Đánh giá được nhiều biến (liên tục và phân loại) cùng lúc.
+    \item Dùng được để dự báo, Stepwise tự động lọc biến, giúp mô hình gọn hơn.
+\end{itemize} &
+\raggedright\begin{itemize}[nosep,leftmargin=*]
+    \item Giả định mạnh: quan hệ tuyến tính, phần dư chuẩn, phương sai đồng nhất, không đa cộng tuyến.
+    \item Nhạy với quan sát ngoại lai và điểm ảnh hưởng.
+    \item Stepwise chọn biến theo tiêu chí thống kê (AIC) chứ không theo ý nghĩa nghiệp vụ.
+    \item Hệ số chỉ phản ánh mối liên hệ, không chứng minh quan hệ nhân quả.
+\end{itemize} \tabularnewline \hline
+\end{tabular}
+\caption{Ưu điểm và hạn chế của các phương pháp đã sử dụng}
+\label{tab:uu_nhuoc}
+\end{table}
+
+\textbf{Vai trò và cách kết hợp các phương pháp.} Mỗi phương pháp đảm nhận một vai trò riêng, và trong đề tài nhóm đã kết hợp chúng theo ba bước:
+\begin{itemize}
+    \item \textbf{Bước 1 -- Sàng lọc yếu tố:} dùng ước lượng, kiểm định và ANOVA để xem yếu tố nào thật sự ảnh hưởng đến phí giao hàng. Kết quả cho thấy mùa vụ và hình thức giao hàng có ảnh hưởng, còn mã giảm giá và khoảng cách thì không rõ rệt.
+    \item \textbf{Bước 2 -- Chọn biến:} dùng Stepwise để loại các biến thừa (khoảng cách, giá trị đơn hàng) và giúp giữ cho mô hình gọn.
+    \item \textbf{Bước 3 -- Lượng hóa và dự báo:} dùng hồi quy tuyến tính bội trên các biến đã chọn để đo mức tác động ($R^2_{adj} \approx 0.84$) và dự báo phí giao hàng.
+\end{itemize}
+
+\textbf{Đánh giá chung.} Cách kết hợp này cho kết quả nhất quán giữa các phương pháp, nhưng mỗi phương pháp chỉ đáng tin khi các giả định của nó được kiểm tra. Trong đề tài, ANOVA vi phạm cả giả định phần dư chuẩn và phương sai đồng nhất, còn hồi quy chỉ vi phạm giả định phần dư chuẩn với phương sai đồng nhất vẫn thỏa mãn. Cùng với việc dữ liệu chỉ gồm $500$ đơn hàng trong một năm, các kết quả nên được xem là mối liên hệ thống kê mang tính tham khảo, cần kiểm chứng thêm trên dữ liệu rộng hơn.
+
+\subsection{Đề xuất mở rộng}
+\begin{itemize}
+    \item Xét ANOVA hai nhân tố giữa mùa vụ và loại hình giao hàng (\texttt{is\_\allowbreak expedited\_\allowbreak delivery}), đồng thời thêm tương tác giao nhanh $\times$ mùa vào mô hình hồi quy, vì giao nhanh là yếu tố có tác động lớn nhất.
+    \item Khi phần dư không chuẩn, có thể biến đổi biến phụ thuộc (ví dụ lấy logarit) hoặc dùng kiểm định phi tham số như Kruskal--Wallis; khi phương sai không đồng nhất, có thể dùng Welch's ANOVA (cho một nhân tố) hoặc ước lượng sai số chuẩn vững.
+    \item Thử các mô hình học máy như Decision Tree, Random Forest hoặc Gradient Boosting: các mô hình này không giả định tuyến tính, nắm bắt được quan hệ phi tuyến và tương tác giữa các biến, xử lý biến phân loại tốt, và cho biết độ quan trọng của từng biến
+    \item Mở rộng dữ liệu theo nhiều năm hoặc nhiều cửa hàng để kiểm tra tính ổn định của kết quả.
+\end{itemize}
