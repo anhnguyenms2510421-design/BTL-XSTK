@@ -10,6 +10,8 @@
 *.synctex.gz
 *.bcf
 *.run.xml
+*.bbl
+*.blg
 
 # LaTeX output
 *.pdf
