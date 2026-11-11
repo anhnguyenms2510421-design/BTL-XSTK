@@ -12,6 +12,7 @@
 *.run.xml
 *.bbl
 *.blg
+*.synctex(busy)
 
 # LaTeX output
 *.pdf
