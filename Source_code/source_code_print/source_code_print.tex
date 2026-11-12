@@ -1,0 +1,723 @@
+\documentclass[12pt, a4paper]{article}
+
+% =====================================================================
+%  Package/package.tex  -  PACKAGE DÙNG CHUNG (nạp 1 lần duy nhất)
+%  Quy ước:
+%   - Package dùng cho >= 2 chapter (hoặc main.tex) đặt ở file này.
+%   - Package/cấu hình chỉ 1 chapter dùng đặt ở Package/Chapter_N/package.tex.
+%   - Không \usepackage lại package chung trong file của chapter.
+% =====================================================================
+
+% ---------- Ngôn ngữ & mã hoá (thay cho vietnam + inputenc/fontenc rải rác) ----------
+\usepackage[T5]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[vietnamese]{babel}
+
+\usepackage{array}      % \newcolumntype, \arraybackslash
+\usepackage{tabularx}   % bảng tabularx với cột Y, C tự định nghĩa trong chapter
+\usepackage{ragged2e}   % \RaggedRight, \Centering
+
+% ---------- Bố cục trang: canh lề cấu hình 1 chỗ duy nhất ----------
+% (a4paper đã khai báo ở \documentclass nên không lặp lại)
+\usepackage[margin=2cm]{geometry}
+
+% ---------- Hình ảnh, màu, TikZ ----------
+\usepackage{graphicx}             % Ch3, Ch4, Ch5, main (logo)
+\usepackage{xcolor}               % màu listings (Ch3, Ch4, Ch5), TikZ
+\usepackage{tikz}                 % main.tex (viền trang bìa)
+\usetikzlibrary{calc}
+
+% ---------- Toán ----------
+\usepackage{amsmath, amssymb}     % Ch2, Ch3, Ch5
+
+% ---------- Hình/bảng nổi, danh sách, giãn đoạn ----------
+\usepackage{float}                % [H]: Ch1, Ch4, Ch5
+\usepackage{enumitem}             % Ch2 (label=, leftmargin=*) + định dạng itemize/enumerate toàn bài
+\setlist[itemize]{label=-, topsep=4pt, itemsep=3pt}
+\setlist[enumerate]{topsep=4pt, itemsep=3pt}
+\usepackage{parskip}              % giãn đoạn toàn bài (parindent = 0)
+
+% ---------- Mã nguồn (listings): 1 định dạng chuẩn cho TOÀN BỘ chapter ----------
+\usepackage{xcolor}
+\usepackage{listings}
+
+\definecolor{mybackground}{HTML}{FFFFFF}
+\definecolor{myblack}{HTML}{000000}
+\definecolor{mynumber}{HTML}{808080}
+
+\lstdefinestyle{lstmain}{
+    language={},
+    basicstyle=\ttfamily\small\color{myblack},
+    identifierstyle=\color{myblack},
+    keywordstyle=\color{myblack},
+    stringstyle=\color{myblack},
+    commentstyle=\color{myblack},
+    numbers=left,
+    numberstyle=\tiny\color{mynumber},
+    stepnumber=1,
+    numbersep=10pt,
+    backgroundcolor=\color{mybackground},
+    frame=single,
+    rulecolor=\color{myblack},
+    xleftmargin=15pt,
+    xrightmargin=0pt,
+    framexleftmargin=15pt,
+    aboveskip=\medskipamount,
+    belowskip=\medskipamount,
+    columns=fullflexible,
+    keepspaces=true,
+    breaklines=true,
+    breakatwhitespace=false,
+    showspaces=false,
+    showtabs=false,
+    showstringspaces=false,
+    tabsize=2,
+    captionpos=b
+}
+
+\lstset{style=lstmain}
+
+% ---------- Tài liệu tham khảo ----------
+\usepackage{csquotes}
+\usepackage[backend=biber,style=ieee]{biblatex}
+\addbibresource{reference/reference.bib}
+
+% ---------- hyperref: luôn nạp CUỐI CÙNG ----------
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black,
+	urlcolor=blue
+}
+
+
+\geometry{a4paper, margin=2cm}
+
+
+\begin{document}
+
+	%Trang trí viền trang bìa
+	\begin{tikzpicture}[remember picture,overlay]
+            % Khung viền ngoài (nét đậm)
+            \draw[blue!70!black, line width=3pt] 
+                ([xshift=1.5cm, yshift=-1.5cm]current page.north west) 
+                rectangle 
+                ([xshift=-1.5cm, yshift=1.5cm]current page.south east);
+            % Khung viền trong (nét mảnh)
+            \draw[blue!70!black, line width=1pt] 
+                ([xshift=1.65cm, yshift=-1.65cm]current page.north west) 
+                rectangle 
+                ([xshift=-1.65cm, yshift=1.65cm]current page.south east);
+        \end{tikzpicture}
+	
+	%Trang 1 (trang bìa)
+	\thispagestyle{empty}
+	\begin{center}
+		{
+			\textbf{ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH} \\ [3pt]
+			\textbf{TRƯỜNG ĐẠI HỌC BÁCH KHOA} \\ [3pt]
+			\textbf{KHOA KHOA HỌC ỨNG DỤNG} \\ [3pt]
+		}
+		\begin{tikzpicture}
+			\draw[yshift=-0.3cm, dash pattern=on 3pt off 1pt] (0,0) -- (12,0);
+		\end{tikzpicture}
+	\end{center}
+	
+	\vspace{08pt}
+	
+	\begin{center}
+		\includegraphics[width=2.5in]{../../Image/logo}
+	\end{center}
+	
+	\begin{center}
+		{\Large \textbf{\MakeUppercase{MÃ NGUỒN CODE R VÀ KẾT QUẢ}}} \\ 
+		{\Large \textbf{\MakeUppercase{MÔN: XÁC SUẤT THỐNG KÊ (MT2013)}}} 
+		\rule{16cm}{1pt} % Gạch chân dài 16cm, dày 1pt
+		\\[10pt] % Khoảng cách giữa gạch chân và đề tài
+		{\Large \textbf{\MakeUppercase{ĐỀ TÀI: \\PHÂN TÍCH PHÍ GIAO HÀNG\\ CỦA CỬA HÀNG BÁN LẺ}}}  %Tên đề tài
+	\end{center}
+	\begin{center}
+		\rule{16cm}{1pt}
+	\end{center}
+	
+	\vspace{1cm}
+	
+	\begin{center}
+		\renewcommand{\arraystretch}{1.5}
+        \begin{tabular}{rl}
+            \Large \textbf{GVHD:} & \Large Nguyễn Bá Thi \\
+            \Large \textbf{Lớp:} & \Large A01 \\
+            \Large \textbf{Nhóm:} & \Large 12 \\
+			\Large \textbf{KHOA:} & \Large Điện - Điện tử\\
+        \end{tabular}
+        
+	\end{center}
+
+	\vfill
+	\begin{center}
+		{\footnotesize Tp. Hồ Chí Minh, Tháng 12/2026}
+	\end{center}
+	\vspace{1cm}
+	\pagebreak
+
+\input{../../Chapter/Trang2.tex}
+
+\newpage
+\begin{lstlisting}
+> options(useFancyQuotes = FALSE)
+> options(cli.unicode = FALSE)
+> 
+> library(readr)
+> library(car)
+> library(lmtest)
+> library(corrplot)
+> 
+> dirty_data <- read_csv("dirty_data.csv", show_col_types = FALSE)
+> cat("Rows:", nrow(dirty_data), "Columns:", ncol(dirty_data), "\n")                                                     
+Rows: 500 Columns: 16 
+> print(head(dirty_data))
+  order_id  customer_id  date     nearest_warehouse shopping_cart order_price delivery_charges customer_lat customer_long
+  <chr>     <chr>        <chr>    <chr>             <chr>               <dbl>            <dbl>        <dbl>         <dbl>
+1 ORD182494 ID6197211592 2019-06~ Thompson          [('Lucent 33~       12200             79.9        -37.8          145.
+2 ORD395518 ID0282825849 2019-12~ Thompson          [('Thunder l~        9080             62.7        -37.8          145.
+3 ORD494479 ID0579391891 2019-03~ Nickolson         [('Thunder l~       10670             65.9        -37.8          145.
+4 ORD019224 ID4544561904 2019-01~ Nickolson         [('Universe ~       24800             57.6        -37.8          145.
+5 ORD104032 ID6231506320 2019-11~ Nickolson         [('Universe ~        9145             75.5         37.8          145.
+6 ORD146760 ID0311654900 2019-09~ Bakers            [('Thunder l~        7810             71.2         37.8          145.
+> str(dirty_data)
+spc_tbl_ [500 x 16] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ order_id                     : chr [1:500] "ORD182494" "ORD395518" "ORD494479" "ORD019224" ...
+ $ customer_id                  : chr [1:500] "ID6197211592" "ID0282825849" "ID0579391891" "ID4544561904" ...
+ $ date                         : chr [1:500] "2019-06-22" "2019-12-29" "2019-03-02" "2019-01-12" ...
+ $ nearest_warehouse            : chr [1:500] "Thompson" "Thompson" "Nickolson" "Nickolson" ...
+ $ shopping_cart                : chr [1:500] "[('Lucent 330S', 1), ('Thunder line', 2), ('iStream', 2), ('pearTV', 1)]" "[('Thunder line', 1), ('Universe Note', 2)]" "[('Thunder line', 1), ('pearTV', 2)]" "[('Universe Note', 1), ('Alcon 10', 2), ('Olivia x460', 1), ('iAssist Line', 1)]" ...
+ $ order_price                  : num [1:500] 12200 9080 10670 24800 9145 ...
+ $ delivery_charges             : num [1:500] 79.9 62.7 65.9 57.6 75.5 ...
+ $ customer_lat                 : num [1:500] -37.8 -37.8 -37.8 -37.8 37.8 ...
+ $ customer_long                : num [1:500] 145 145 145 145 145 ...
+ $ coupon_discount              : num [1:500] 10 0 10 15 25 10 5 5 10 15 ...
+ $ order_total                  : num [1:500] 11060 9143 9669 21138 6934 ...
+ $ season                       : chr [1:500] "Winter" "Summer" "Autumn" "Summer" ...
+ $ is_expedited_delivery        : logi [1:500] TRUE FALSE FALSE FALSE FALSE FALSE ...
+ $ distance_to_nearest_warehouse: num [1:500] 1.28 1.162 1.095 0.857 0.587 ...
+ $ latest_customer_review       : chr [1:500] "perfect phone and trusted seller. phone itself is amazing. i got this phone as shown here on the description. i"| __truncated__ "it keeps dropping calls the wifi don't work this is a waste of money this phone is worthless, it keeps dropping"| __truncated__ "five stars this is a great cheap phone." "charger did not fit the charger didn't fit." ...
+ $ is_happy_customer            : logi [1:500] TRUE FALSE TRUE FALSE TRUE FALSE ...
+ - attr(*, "spec")=
+  .. cols(
+  ..   order_id = col_character(),
+  ..   customer_id = col_character(),
+  ..   date = col_character(),
+  ..   nearest_warehouse = col_character(),
+  ..   shopping_cart = col_character(),
+  ..   order_price = col_double(),
+  ..   delivery_charges = col_double(),
+  ..   customer_lat = col_double(),
+  ..   customer_long = col_double(),
+  ..   coupon_discount = col_double(),
+  ..   order_total = col_double(),
+  ..   season = col_character(),
+  ..   is_expedited_delivery = col_logical(),
+  ..   distance_to_nearest_warehouse = col_double(),
+  ..   latest_customer_review = col_character(),
+  ..   is_happy_customer = col_logical()
+  .. )
+ - attr(*, "problems")=<pointer: 0x000002ead88d08b0> 
+> 
+> selected_vars <- c("nearest_warehouse", "delivery_charges", "coupon_discount", "order_total",
++                    "season", "is_expedited_delivery", "distance_to_nearest_warehouse",
++                    "is_happy_customer", "customer_lat", "customer_long", "order_price")
+> new_data <- dirty_data[, selected_vars]
+> cat("Rows:", nrow(new_data), "Columns:", ncol(new_data), "\n")
+Rows: 500 Columns: 11 
+> print(names(new_data))
+ [1] "nearest_warehouse"             "delivery_charges"              "coupon_discount"              
+ [4] "order_total"                   "season"                        "is_expedited_delivery"        
+ [7] "distance_to_nearest_warehouse" "is_happy_customer"             "customer_lat"                 
+[10] "customer_long"                 "order_price"                  
+> 
+> missing_before <- apply(is.na(new_data), 2, sum)
+> empty_before <- sapply(new_data, function(x)
++   if (is.character(x)) sum(trimws(x) == "", na.rm = TRUE) else 0)
+> print(missing_before)
+            nearest_warehouse              delivery_charges               coupon_discount                   order_total 
+                            0                             0                             0                             0 
+                       season         is_expedited_delivery distance_to_nearest_warehouse             is_happy_customer 
+                            0                             0                             0                             0 
+                 customer_lat                 customer_long                   order_price 
+                            0                             0                             0 
+> print(empty_before)
+            nearest_warehouse              delivery_charges               coupon_discount                   order_total 
+                            0                             0                             0                             0 
+                       season         is_expedited_delivery distance_to_nearest_warehouse             is_happy_customer 
+                            0                             0                             0                             0 
+                 customer_lat                 customer_long                   order_price 
+                            0                             0                             0 
+> for (col in names(new_data)) {
++   if (is.character(new_data[[col]])) {
++     empty_index <- which(trimws(new_data[[col]]) == "")
++     new_data[[col]][empty_index] <- NA
++   }
++ }
+> rows_before_missing <- nrow(new_data)
+> new_data <- na.omit(new_data)
+> cat("Rows removed:", rows_before_missing - nrow(new_data), "\n")
+Rows removed: 0 
+> 
+> print(unique(new_data$nearest_warehouse))
+[1] "Thompson"  "Nickolson" "Bakers"    "nickolson" "thompson" 
+> print(unique(new_data$season))
+[1] "Winter" "Summer" "Autumn" "Spring" "winter" "spring" "autumn" "summer"
+> warehouse_map <- c(thompson = "Thompson", nickolson = "Nickolson", bakers = "Bakers")
+> warehouse_key <- tolower(trimws(new_data$nearest_warehouse))
+> new_data$nearest_warehouse <- unname(warehouse_map[warehouse_key])
+> season_map <- c(spring = "Spring", summer = "Summer", autumn = "Autumn", winter = "Winter")
+> season_key <- tolower(trimws(new_data$season))
+> new_data$season <- unname(season_map[season_key])
+> print(table(new_data$nearest_warehouse))
+
+   Bakers Nickolson  Thompson 
+      119       184       197 
+> print(table(new_data$season))
+
+Autumn Spring Summer Winter 
+   127    134    124    115 
+> 
+> new_data$calculated_total <- new_data$order_price * (1 - new_data$coupon_discount / 100) +
++   new_data$delivery_charges
+> mismatch_before <- sum(abs(new_data$order_total - new_data$calculated_total) > 0.01)
+> cat("Rows outside tolerance before correction:", mismatch_before, "\n")
+Rows outside tolerance before correction: 40 
+> new_data$order_total <- new_data$calculated_total
+> mismatch_after <- sum(abs(new_data$order_total - new_data$calculated_total) > 0.01)
+> cat("Rows outside tolerance after correction:", mismatch_after, "\n")
+Rows outside tolerance after correction: 0 
+> 
+> new_data$calculated_total <- NULL
+> write_csv(new_data, "clean_data_full.csv")
+>                                                                                                                      
+> clean_data <- read.csv("clean_data_full.csv")
+> 
+> describe_function <- function(x) {
++   c(Mean = mean(x, na.rm = TRUE),
++     Median = median(x, na.rm = TRUE),
++     SD = sd(x, na.rm = TRUE),
++     Min = min(x, na.rm = TRUE),
++     Max = max(x, na.rm = TRUE))
++ }
+> num_vars <- c("delivery_charges", "coupon_discount", "order_total", "distance_to_nearest_warehouse")
+> des_table <- apply(clean_data[, num_vars], 2, describe_function)
+> print(des_table)
+       delivery_charges coupon_discount order_total distance_to_nearest_warehouse
+Mean           76.65820       10.890000    22564.57                      2.204224
+Median         76.31000       10.000000    11293.96                      1.030100
+SD             14.48146        8.649134    75499.21                      8.812416
+Min            46.35000        0.000000      530.54                      0.107800
+Max           114.04000       25.000000   853012.72                     94.973400
+> 
+> freq_season <- table(clean_data$season)
+> freq_expedited <- table(clean_data$is_expedited_delivery)
+> freq_warehouse <- table(clean_data$nearest_warehouse)
+> freq_happy <- table(clean_data$is_happy_customer)
+> print(freq_season)
+
+Autumn Spring Summer Winter 
+   127    134    124    115 
+> print(freq_expedited)
+
+FALSE  TRUE 
+  251   249 
+> print(freq_warehouse)
+
+   Bakers Nickolson  Thompson 
+      119       184       197 
+> print(freq_happy)
+
+FALSE  TRUE 
+  141   359 
+> 
+> hist(clean_data$delivery_charges, main="Histogram of Delivery Charges",
++      col="lightblue", xlab="Delivery Charges (USD)")
+> 
+> barplot(freq_warehouse, main="Orders by Warehouse", col="lightgreen")
+> 
+> boxplot(delivery_charges ~ season, data=clean_data, main="Delivery Charges by Season",
++         col=c("pink","lightblue","lightgreen","yellow"), ylab="Delivery Charges")
+> 
+> boxplot(delivery_charges ~ is_expedited_delivery, data=clean_data,
++         main="Delivery Charges by Expedited Status",
++         col=c("pink","lightblue"), ylab="Delivery Charges")
+> 
+> cor_vars <- c("delivery_charges", "customer_lat", "customer_long", "distance_to_nearest_warehouse")
+> cor_matrix <- cor(clean_data[, cor_vars])
+> corrplot(cor_matrix, method="number")
+> 
+> plot(clean_data$distance_to_nearest_warehouse, clean_data$delivery_charges,
++      main = "Scatter Plot: Distance vs Delivery Charges",
++      xlab = "Distance to Nearest Warehouse ",
++      ylab = "Delivery Charges ",
++      col = "darkred", pch = 16)
+> plot(clean_data$customer_lat, clean_data$delivery_charges,
++      main = "Scatter Plot: Customer lat vs Delivery Charges",
++      xlab = "Customer lat ",
++      ylab = "Delivery Charges ",
++      col = "darkred", pch = 16)
+> plot(clean_data$customer_long, clean_data$delivery_charges,
++      main = "Scatter Plot: customer long vs Delivery Charges",
++      xlab = "Customer long ",
++      ylab = "Delivery Charges ",
++      col = "darkred", pch = 16)
+> qqnorm(clean_data$delivery_charges,
++        main = "Normal Q-Q Plot of Delivery Charges",
++        col = "black")
+> qqline(clean_data$delivery_charges, col = "red", lwd = 2)
+> 
+> dat <- read_csv("clean_data_full.csv", show_col_types = FALSE)
+> dat$season                <- factor(dat$season)                                                                        
+> dat$nearest_warehouse     <- factor(dat$nearest_warehouse)  
+> dat$is_expedited_delivery <- factor(dat$is_expedited_delivery, levels = c(FALSE, TRUE))
+> dat$is_happy_customer     <- factor(dat$is_happy_customer,     levels = c(FALSE, TRUE))
+> n <- nrow(dat); alpha <- 0.05
+> cat("n =", n, "\n")
+n = 500 
+> print(summary(dat$order_total))   
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+   530.5   6388.3  11294.0  22564.6  17926.9 853012.7 
+> 
+> cat("\n=== 1.1 CI 95% cho trung binh phi giao hang ===\n")
+
+=== 1.1 CI 95% cho trung binh phi giao hang ===
+> x <- dat$delivery_charges
+> me_z <- qnorm(0.975) * sd(x) / sqrt(n)       
+> cat("mean =", mean(x), " sd =", sd(x), " sai so =", me_z, "\n")
+mean = 76.6582  sd = 14.48146  sai so = 1.269333 
+> cat("CI (z):", mean(x) - me_z, "-", mean(x) + me_z, "\n")
+CI (z): 75.38887 - 77.92753 
+> 
+> cat("\n=== 1.2 CI 95% cho ty le (cong thuc (10)) ===\n")
+
+=== 1.2 CI 95% cho ty le (cong thuc (10)) ===
+> for (v in c("is_expedited_delivery", "is_happy_customer")) {
++   k <- sum(dat[[v]] == TRUE); p <- k / n
++   e <- qnorm(0.975) * sqrt(p * (1 - p) / n)
++   cat(v, ": p =", round(p, 4), " CI =", round(p - e, 4), "-", round(p + e, 4),
++       " (np =", k, ", n(1-p) =", n - k, ")\n")
++ }
+is_expedited_delivery : p = 0.498  CI = 0.4542 - 0.5418  (np = 249 , n(1-p) = 251 )
+is_happy_customer : p = 0.718  CI = 0.6786 - 0.7574  (np = 359 , n(1-p) = 141 )
+> 
+> cat("\n=== 2.1 Phi giao nhanh > giao thuong (z-test, cong thuc (11)) ===\n")
+
+=== 2.1 Phi giao nhanh > giao thuong (z-test, cong thuc (11)) ===
+> g1 <- dat$delivery_charges[dat$is_expedited_delivery == TRUE]
+> g0 <- dat$delivery_charges[dat$is_expedited_delivery == FALSE]
+> cat("mean:", mean(g1), mean(g0), " diff =", mean(g1) - mean(g0),
++     " sd:", sd(g1), sd(g0), "\n")
+mean: 85.42522 67.96104  diff = 17.46419  sd: 13.61355 9.068867 
+> z0 <- (mean(g1) - mean(g0)) / sqrt(var(g1)/length(g1) + var(g0)/length(g0))
+> cat("z0 =", z0, " p =", pnorm(z0, lower.tail = FALSE), "\n")
+z0 = 16.86784  p = 3.879417e-64 
+> 
+> cat("\n=== 2.2 So sanh hai ty le theo ma giam gia (cong thuc (12)) ===\n")
+
+=== 2.2 So sanh hai ty le theo ma giam gia (cong thuc (12)) ===
+> dat$has_coupon <- dat$coupon_discount > 0
+> for (v in c("is_happy_customer", "is_expedited_delivery")) {
++   tab <- table(dat$has_coupon, dat[[v]] == TRUE)
++   cat("\n", v, "\n"); print(tab)
++   print(prop.test(c(tab["TRUE", "TRUE"], tab["FALSE", "TRUE"]),
++                   c(sum(tab["TRUE", ]), sum(tab["FALSE", ])), correct = FALSE))
++ }
+
+ is_happy_customer 
+       
+        FALSE TRUE
+  FALSE    26   78
+  TRUE    115  281
+
+	2-sample test for equality of proportions without continuity correction
+
+data:  c(tab["TRUE", "TRUE"], tab["FALSE", "TRUE"]) out of c(sum(tab["TRUE", ]), sum(tab["FALSE", ]))
+X-squared = 0.6641, df = 1, p-value = 0.4151
+alternative hypothesis: two.sided
+95 percent confidence interval:
+ -0.13487476  0.05406668
+sample estimates:
+  prop 1   prop 2 
+0.709596 0.750000 
+
+
+ is_expedited_delivery 
+       
+        FALSE TRUE
+  FALSE    45   59
+  TRUE    206  190
+
+	2-sample test for equality of proportions without continuity correction
+
+data:  c(tab["TRUE", "TRUE"], tab["FALSE", "TRUE"]) out of c(sum(tab["TRUE", ]), sum(tab["FALSE", ]))
+X-squared = 2.5231, df = 1, p-value = 0.1122
+alternative hypothesis: two.sided
+95 percent confidence interval:
+ -0.19469247  0.01967304
+sample estimates:
+   prop 1    prop 2 
+0.4797980 0.5673077 
+
+> 
+> cat("\n=== 2.3 Tuong quan Pearson (cong thuc (7)-(8)) ===\n")
+
+=== 2.3 Tuong quan Pearson (cong thuc (7)-(8)) ===
+> for (v in c("distance_to_nearest_warehouse", "order_total", "coupon_discount")) {
++   ct <- cor.test(dat[[v]], dat$delivery_charges)
++   cat(v, ": Pearson r =", round(ct$estimate, 4), " p =", round(ct$p.value, 4), "\n")
++ }
+distance_to_nearest_warehouse : Pearson r = -0.0527  p = 0.2399 
+order_total : Pearson r = 0.032  p = 0.4752 
+coupon_discount : Pearson r = 0.004  p = 0.9293 
+> cat("So don co khoang cach > 10 km:", sum(dat$distance_to_nearest_warehouse > 10), "\n")
+So don co khoang cach > 10 km: 9 
+> 
+> cat("\n=== 3. ANOVA season x nearest_warehouse ===\n")
+
+=== 3. ANOVA season x nearest_warehouse ===
+> m_aov <- aov(delivery_charges ~ season * nearest_warehouse, data = dat)
+> print(table(dat$season, dat$nearest_warehouse))        
+        
+         Bakers Nickolson Thompson
+  Autumn     28        47       52
+  Spring     35        48       51
+  Summer     26        49       49
+  Winter     30        40       45
+> res <- resid(m_aov)
+> print(shapiro.test(res))                               
+
+	Shapiro-Wilk normality test
+
+data:  res
+W = 0.9907, p-value = 0.003062
+
+> png("qqplot_anova.png"); qqnorm(res, main = "Q-Q Plot of ANOVA Residuals")
+> qqline(res, col = "red"); dev.off()
+RStudioGD 
+        2 
+> print(leveneTest(delivery_charges ~ season * nearest_warehouse, data = dat))
+Levene's Test for Homogeneity of Variance (center = median)
+       Df F value    Pr(>F)    
+group  11  6.4355 5.142e-10 ***
+      488                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+> cat("Gia dinh doc lap: moi dong la mot don hang rieng, khong lap lai tren cung doi tuong.\n")
+Gia dinh doc lap: moi dong la mot don hang rieng, khong lap lai tren cung doi tuong.
+> print(summary(m_aov))
+                          Df Sum Sq Mean Sq F value Pr(>F)    
+season                     3  27883    9294  59.679 <2e-16 ***
+nearest_warehouse          2     40      20   0.127  0.880    
+season:nearest_warehouse   6    722     120   0.773  0.591    
+Residuals                488  76001     156                   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+> 
+> m_add <- aov(delivery_charges ~ season + nearest_warehouse, data = dat)
+> print(summary(m_add))
+                   Df Sum Sq Mean Sq F value Pr(>F)    
+season              3  27883    9294  59.844 <2e-16 ***
+nearest_warehouse   2     40      20   0.128   0.88    
+Residuals         494  76724     155                   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+> print(TukeyHSD(m_add, "season"))                       
+  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = delivery_charges ~ season + nearest_warehouse, data = dat)
+
+$season
+                      diff        lwr        upr     p adj
+Spring-Autumn  17.79567752  13.817205  21.774150 0.0000000
+Summer-Autumn   8.55381064   4.498030  12.609591 0.0000005
+Winter-Autumn  -0.07199932  -4.207301   4.063303 0.9999675
+Summer-Spring  -9.24186688 -13.244971  -5.238762 0.0000000
+Winter-Spring -17.86767683 -21.951328 -13.784025 0.0000000
+Winter-Summer  -8.62580996 -12.784816  -4.466804 0.0000008
+
+> 
+> png("interaction_plot.png")
+> interaction.plot(dat$season, dat$nearest_warehouse, dat$delivery_charges, fun = mean,
++                  col = c("blue", "red", "green"), lty = 1, lwd = 2,
++                  xlab = "Season", ylab = "Mean Delivery Charges", trace.label = "Warehouse")
+> dev.off()
+RStudioGD 
+        2 
+> 
+> cat("\n=== 4. Hoi quy: mo hinh day du (7 bien) ===\n")
+
+=== 4. Hoi quy: mo hinh day du (7 bien) ===
+> lm_full <- lm(delivery_charges ~ distance_to_nearest_warehouse + order_total + coupon_discount +
++                 season + nearest_warehouse + is_expedited_delivery + is_happy_customer, data = dat)
+> print(summary(lm_full))
+
+Call:
+lm(formula = delivery_charges ~ distance_to_nearest_warehouse + 
+    order_total + coupon_discount + season + nearest_warehouse + 
+    is_expedited_delivery + is_happy_customer, data = dat)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-21.051  -3.570  -0.223   3.121  23.797 
+
+Coefficients:
+                                Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                    5.112e+01  9.357e-01  54.627  < 2e-16 ***
+distance_to_nearest_warehouse  2.369e-02  3.000e-02   0.790 0.430063    
+order_total                   -3.524e-06  3.510e-06  -1.004 0.315862    
+coupon_discount                5.735e-02  3.042e-02   1.885 0.059962 .  
+seasonSpring                   1.756e+01  7.300e-01  24.055  < 2e-16 ***
+seasonSummer                   1.050e+01  7.451e-01  14.094  < 2e-16 ***
+seasonWinter                  -2.224e+00  7.582e-01  -2.934 0.003505 ** 
+nearest_warehouseNickolson    -2.334e+00  6.919e-01  -3.373 0.000803 ***
+nearest_warehouseThompson     -7.171e-01  6.825e-01  -1.051 0.293945    
+is_expedited_deliveryTRUE      1.840e+01  5.276e-01  34.865  < 2e-16 ***
+is_happy_customerTRUE          1.411e+01  5.878e-01  24.000  < 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 5.853 on 489 degrees of freedom
+Multiple R-squared:  0.8399,	Adjusted R-squared:  0.8367 
+F-statistic: 256.6 on 10 and 489 DF,  p-value: < 2.2e-16
+
+> lm_opt <- step(lm_full, direction = "both", trace = 0)   
+> print(summary(lm_opt))
+
+Call:
+lm(formula = delivery_charges ~ coupon_discount + season + nearest_warehouse + 
+    is_expedited_delivery + is_happy_customer, data = dat)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-21.0338  -3.6312  -0.2214   3.0808  23.8234 
+
+Coefficients:
+                           Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                51.23802    0.92042  55.668  < 2e-16 ***
+coupon_discount             0.05596    0.03037   1.842 0.066014 .  
+seasonSpring               17.49827    0.72534  24.124  < 2e-16 ***
+seasonSummer               10.39791    0.74049  14.042  < 2e-16 ***
+seasonWinter               -2.29359    0.75557  -3.036 0.002528 ** 
+nearest_warehouseNickolson -2.33431    0.69097  -3.378 0.000787 ***
+nearest_warehouseThompson  -0.76343    0.68132  -1.121 0.263040    
+is_expedited_deliveryTRUE  18.36457    0.52679  34.861  < 2e-16 ***
+is_happy_customerTRUE      14.04507    0.58559  23.984  < 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 5.851 on 491 degrees of freedom
+Multiple R-squared:  0.8394,	Adjusted R-squared:  0.8368 
+F-statistic: 320.8 on 8 and 491 DF,  p-value: < 2.2e-16
+
+> cat("Cong thuc:", deparse(formula(lm_opt)), "\n")
+Cong thuc: delivery_charges ~ coupon_discount + season + nearest_warehouse +      is_expedited_delivery + is_happy_customer 
+> cat("AIC day du =", AIC(lm_full), " AIC toi uu =", AIC(lm_opt), "\n")
+AIC day du = 3198.743  AIC toi uu = 3196.43 
+> 
+> cat("\n--- Gia dinh tren mo hinh cuoi ---\n")
+
+--- Gia dinh tren mo hinh cuoi ---
+> print(vif(lm_opt))                                   
+                          GVIF Df GVIF^(1/(2*Df))
+coupon_discount       1.005917  1        1.002954
+season                1.022484  3        1.003713
+nearest_warehouse     1.012268  2        1.003053
+is_expedited_delivery 1.013326  1        1.006641
+is_happy_customer     1.014163  1        1.007057
+> print(shapiro.test(resid(lm_opt)))
+
+	Shapiro-Wilk normality test
+
+data:  resid(lm_opt)
+W = 0.97897, p-value = 1.28e-06
+
+> print(bptest(lm_opt))                                
+
+	studentized Breusch-Pagan test
+
+data:  lm_opt
+BP = 13.053, df = 8, p-value = 0.11
+
+> cd <- cooks.distance(lm_opt)
+> cat("Cook's D > 4/n:", sum(cd > 4 / n), " | max =", max(cd), " | dong:", which.max(cd), "\n")
+Cook's D > 4/n: 29  | max = 0.04579479  | dong: 468 
+> png("lm_diagnostics.png", width = 800, height = 600)
+> par(mfrow = c(2, 2)); plot(lm_opt); par(mfrow = c(1, 1)); dev.off()
+RStudioGD 
+        2 
+> 
+> lm_nohappy <- step(update(lm_full, . ~ . - is_happy_customer), direction = "both", trace = 0)
+> print(summary(lm_nohappy))
+
+Call:
+lm(formula = delivery_charges ~ season + is_expedited_delivery, 
+    data = dat)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-25.865  -5.279   1.507   5.657  29.736 
+
+Coefficients:
+                          Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                61.1425     0.8496  71.970   <2e-16 ***
+seasonSpring               17.3072     1.0664  16.230   <2e-16 ***
+seasonSummer                9.3604     1.0875   8.608   <2e-16 ***
+seasonWinter               -1.7560     1.1106  -1.581    0.114    
+is_expedited_deliveryTRUE  17.9918     0.7738  23.252   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 8.609 on 495 degrees of freedom
+Multiple R-squared:  0.6494,	Adjusted R-squared:  0.6466 
+F-statistic: 229.2 on 4 and 495 DF,  p-value: < 2.2e-16
+
+> 
+> cat("\n=== 5. Train/Test ===\n")
+
+=== 5. Train/Test ===
+> evaluate <- function(fml, seed = 42) {
++   set.seed(seed)
++   idx   <- sample(seq_len(n), size = floor(0.8 * n))
++   train <- dat[idx, ]; test <- dat[-idx, ]
++   fit   <- lm(fml, data = train)
++   y <- test$delivery_charges; yhat <- predict(fit, test)
++   c(MSE = mean((y - yhat)^2), RMSE = sqrt(mean((y - yhat)^2)), MAE = mean(abs(y - yhat)),
++     R2_test = 1 - sum((y - yhat)^2) / sum((y - mean(y))^2))
++ }
+> res_tab <- rbind(`Mo hinh cuoi`   = evaluate(formula(lm_opt)),
++                  `Khong co happy` = evaluate(formula(lm_nohappy)))
+> print(round(res_tab, 3))
+                  MSE  RMSE   MAE R2_test
+Mo hinh cuoi   23.774 4.876 3.732   0.886
+Khong co happy 59.465 7.711 6.150   0.715
+> cat("sd(delivery_charges) =", sd(dat$delivery_charges), "\n")
+sd(delivery_charges) = 14.48146 
+> for (nm in c("Mo hinh cuoi", "Khong co happy")) {
++   f <- switch(nm, `Mo hinh cuoi` = formula(lm_opt), `Khong co happy` = formula(lm_nohappy))
++   rr <- sapply(1:200, function(s) evaluate(f, seed = s))
++   cat("\n", nm, "- trung binh / do lech chuan cua 200 lan chia\n")
++   print(round(cbind(mean = rowMeans(rr), sd = apply(rr, 1, sd)), 3))
++ }
+
+ Mo hinh cuoi - trung binh / do lech chuan cua 200 lan chia
+          mean    sd
+MSE     34.323 5.934
+RMSE     5.837 0.506
+MAE      4.367 0.366
+R2_test  0.830 0.034
+
+ Khong co happy - trung binh / do lech chuan cua 200 lan chia
+          mean    sd
+MSE     74.680 9.174
+RMSE     8.625 0.531
+MAE      6.847 0.444
+R2_test  0.630 0.054
+\end{lstlisting}
+
+\end{document}
