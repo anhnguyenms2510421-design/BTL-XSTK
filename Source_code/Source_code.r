@@ -1,3 +1,6 @@
+options(useFancyQuotes = FALSE)
+options(cli.unicode = FALSE)
+
 library(readr)
 library(car)
 library(lmtest)
