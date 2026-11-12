@@ -16,5 +16,73 @@
   {}
 \endgroup
 
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{nguyen2009xacsuat}{book}{}{}
+      \name{author}{2}{}{%
+        {{hash=b1b38dc7afd49ff3d3fbfdaecd014364}{%
+           family={Huy},
+           familyi={H\bibinitperiod},
+           given={Nguyễn\bibnamedelima Đình},
+           giveni={N\bibinitperiod\bibinitdelim Đ\bibinitperiod}}}%
+        {{hash=3cf752b7e3c373a59c47c8f844f50c6c}{%
+           family={Cấp},
+           familyi={C\bibinitperiod},
+           given={Đậu\bibnamedelima Thế},
+           giveni={Đ\bibinitperiod\bibinitdelim T\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Thành phố Hồ Chí Minh}%
+      }
+      \list{publisher}{1}{%
+        {Nhà xuất bản Đại học Quốc gia Thành phố Hồ Chí Minh}%
+      }
+      \strng{namehash}{e341942d515118b20042c8adb0e205fb}
+      \strng{fullhash}{e341942d515118b20042c8adb0e205fb}
+      \strng{fullhashraw}{e341942d515118b20042c8adb0e205fb}
+      \strng{bibnamehash}{e341942d515118b20042c8adb0e205fb}
+      \strng{authorbibnamehash}{e341942d515118b20042c8adb0e205fb}
+      \strng{authornamehash}{e341942d515118b20042c8adb0e205fb}
+      \strng{authorfullhash}{e341942d515118b20042c8adb0e205fb}
+      \strng{authorfullhashraw}{e341942d515118b20042c8adb0e205fb}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Xác suất và Thống kê}
+      \field{year}{2009}
+      \true{nocite}
+    \endentry
+    \entry{shahrayar_kaggle_retail}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=426d940fe4abd7f81164ec77214bec26}{%
+           family={muhammadshahrayar},
+           familyi={m\bibinitperiod}}}%
+      }
+      \strng{namehash}{426d940fe4abd7f81164ec77214bec26}
+      \strng{fullhash}{426d940fe4abd7f81164ec77214bec26}
+      \strng{fullhashraw}{426d940fe4abd7f81164ec77214bec26}
+      \strng{bibnamehash}{426d940fe4abd7f81164ec77214bec26}
+      \strng{authorbibnamehash}{426d940fe4abd7f81164ec77214bec26}
+      \strng{authornamehash}{426d940fe4abd7f81164ec77214bec26}
+      \strng{authorfullhash}{426d940fe4abd7f81164ec77214bec26}
+      \strng{authorfullhashraw}{426d940fe4abd7f81164ec77214bec26}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Kaggle}
+      \field{title}{Transactional Retail Dataset of Electronics Store}
+      \true{nocite}
+      \verb{urlraw}
+      \verb https://www.kaggle.com/datasets/muhammadshahrayar/transactional-retail-dataset-of-electronics-store
+      \endverb
+      \verb{url}
+      \verb https://www.kaggle.com/datasets/muhammadshahrayar/transactional-retail-dataset-of-electronics-store
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
 \endinput
 

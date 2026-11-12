@@ -3,9 +3,6 @@ library(car)
 library(lmtest)
 library(corrplot)
 
-# ============================================================
-# PHAN 1: TIEN XU LY DU LIEU (Chuong 3)
-# ============================================================
 dirty_data <- read_csv("dirty_data.csv", show_col_types = FALSE)
 cat("Rows:", nrow(dirty_data), "Columns:", ncol(dirty_data), "\n")
 print(head(dirty_data))
@@ -55,9 +52,6 @@ cat("Rows outside tolerance after correction:", mismatch_after, "\n")
 new_data$calculated_total <- NULL
 write_csv(new_data, "clean_data_full.csv")
 
-# ============================================================
-# PHAN 2: THONG KE MO TA (Chuong 4)
-# ============================================================
 clean_data <- read.csv("clean_data_full.csv")
 
 describe_function <- function(x) {
@@ -116,24 +110,18 @@ qqnorm(clean_data$delivery_charges,
        col = "black")
 qqline(clean_data$delivery_charges, col = "red", lwd = 2)
 
-# ============================================================
-# PHAN 3: THONG KE SUY DIEN (Chuong 5)
-# ============================================================
 dat <- read_csv("clean_data_full.csv", show_col_types = FALSE)
-dat$season                <- factor(dat$season)             # muc co so: Autumn
-dat$nearest_warehouse     <- factor(dat$nearest_warehouse)  # muc co so: Bakers
+dat$season                <- factor(dat$season)             
+dat$nearest_warehouse     <- factor(dat$nearest_warehouse)  
 dat$is_expedited_delivery <- factor(dat$is_expedited_delivery, levels = c(FALSE, TRUE))
 dat$is_happy_customer     <- factor(dat$is_happy_customer,     levels = c(FALSE, TRUE))
 n <- nrow(dat); alpha <- 0.05
 cat("n =", n, "\n")
-print(summary(dat$order_total))   # lech phai rat manh (max ~853 000, trung vi ~11 300)
+print(summary(dat$order_total))   
 
-# =====================================================================
-# 1. UOC LUONG KHOANG TIN CAY
-# =====================================================================
 cat("\n=== 1.1 CI 95% cho trung binh phi giao hang ===\n")
 x <- dat$delivery_charges
-me_z <- qnorm(0.975) * sd(x) / sqrt(n)       # cong thuc (9) trong ly thuyet
+me_z <- qnorm(0.975) * sd(x) / sqrt(n)       
 cat("mean =", mean(x), " sd =", sd(x), " sai so =", me_z, "\n")
 cat("CI (z):", mean(x) - me_z, "-", mean(x) + me_z, "\n")
 
@@ -145,9 +133,6 @@ for (v in c("is_expedited_delivery", "is_happy_customer")) {
       " (np =", k, ", n(1-p) =", n - k, ")\n")
 }
 
-# =====================================================================
-# 2. KIEM DINH HAI MAU
-# =====================================================================
 cat("\n=== 2.1 Phi giao nhanh > giao thuong (z-test, cong thuc (11)) ===\n")
 g1 <- dat$delivery_charges[dat$is_expedited_delivery == TRUE]
 g0 <- dat$delivery_charges[dat$is_expedited_delivery == FALSE]
@@ -172,24 +157,20 @@ for (v in c("distance_to_nearest_warehouse", "order_total", "coupon_discount")) 
 }
 cat("So don co khoang cach > 10 km:", sum(dat$distance_to_nearest_warehouse > 10), "\n")
 
-# =====================================================================
-# 3. ANOVA 2 NHAN TO: season x nearest_warehouse
-# =====================================================================
 cat("\n=== 3. ANOVA season x nearest_warehouse ===\n")
 m_aov <- aov(delivery_charges ~ season * nearest_warehouse, data = dat)
-print(table(dat$season, dat$nearest_warehouse))        # thiet ke KHONG can bang
+print(table(dat$season, dat$nearest_warehouse))        
 res <- resid(m_aov)
-print(shapiro.test(res))                               # n < 5000 nen dung toan bo
+print(shapiro.test(res))                               
 png("qqplot_anova.png"); qqnorm(res, main = "Q-Q Plot of ANOVA Residuals")
 qqline(res, col = "red"); dev.off()
 print(leveneTest(delivery_charges ~ season * nearest_warehouse, data = dat))
 cat("Gia dinh doc lap: moi dong la mot don hang rieng, khong lap lai tren cung doi tuong.\n")
 print(summary(m_aov))
 
-# Tuong tac khong y nghia -> mo hinh cong tinh (dung huong dan muc 2.4.3)
 m_add <- aov(delivery_charges ~ season + nearest_warehouse, data = dat)
 print(summary(m_add))
-print(TukeyHSD(m_add, "season"))                       # chi so sanh nhan to co y nghia
+print(TukeyHSD(m_add, "season"))                       
 
 png("interaction_plot.png")
 interaction.plot(dat$season, dat$nearest_warehouse, dat$delivery_charges, fun = mean,
@@ -197,35 +178,27 @@ interaction.plot(dat$season, dat$nearest_warehouse, dat$delivery_charges, fun = 
                  xlab = "Season", ylab = "Mean Delivery Charges", trace.label = "Warehouse")
 dev.off()
 
-# =====================================================================
-# 4. HOI QUY TUYEN TINH BOI
-# =====================================================================
 cat("\n=== 4. Hoi quy: mo hinh day du (7 bien) ===\n")
 lm_full <- lm(delivery_charges ~ distance_to_nearest_warehouse + order_total + coupon_discount +
                 season + nearest_warehouse + is_expedited_delivery + is_happy_customer, data = dat)
 print(summary(lm_full))
-lm_opt <- step(lm_full, direction = "both", trace = 0)   # MO HINH CUOI
+lm_opt <- step(lm_full, direction = "both", trace = 0)   
 print(summary(lm_opt))
 cat("Cong thuc:", deparse(formula(lm_opt)), "\n")
 cat("AIC day du =", AIC(lm_full), " AIC toi uu =", AIC(lm_opt), "\n")
 
-# --- TAT CA kiem tra gia dinh phai chay tren lm_opt (mo hinh cuoi) ---
 cat("\n--- Gia dinh tren mo hinh cuoi ---\n")
-print(vif(lm_opt))                                   # GVIF^(1/(2Df)) cho bien phan loai
+print(vif(lm_opt))                                   
 print(shapiro.test(resid(lm_opt)))
-print(bptest(lm_opt))                                # Breusch-Pagan (muc 2.5.5)
+print(bptest(lm_opt))                                
 cd <- cooks.distance(lm_opt)
 cat("Cook's D > 4/n:", sum(cd > 4 / n), " | max =", max(cd), " | dong:", which.max(cd), "\n")
 png("lm_diagnostics.png", width = 800, height = 600)
 par(mfrow = c(2, 2)); plot(lm_opt); par(mfrow = c(1, 1)); dev.off()
 
-# --- Mo hinh KHONG dung is_happy_customer (bien chi biet sau khi giao hang) ---
 lm_nohappy <- step(update(lm_full, . ~ . - is_happy_customer), direction = "both", trace = 0)
 print(summary(lm_nohappy))
 
-# =====================================================================
-# 5. TRAIN / TEST 80/20  (RMSE, MAE, MSE va R^2 test - muc 2.5.6)
-# =====================================================================
 cat("\n=== 5. Train/Test ===\n")
 evaluate <- function(fml, seed = 42) {
   set.seed(seed)
@@ -240,7 +213,6 @@ res_tab <- rbind(`Mo hinh cuoi`   = evaluate(formula(lm_opt)),
                  `Khong co happy` = evaluate(formula(lm_nohappy)))
 print(round(res_tab, 3))
 cat("sd(delivery_charges) =", sd(dat$delivery_charges), "\n")
-# Kiem tra on dinh: lap 200 lan chia ngau nhien khac nhau
 for (nm in c("Mo hinh cuoi", "Khong co happy")) {
   f <- switch(nm, `Mo hinh cuoi` = formula(lm_opt), `Khong co happy` = formula(lm_nohappy))
   rr <- sapply(1:200, function(s) evaluate(f, seed = s))
